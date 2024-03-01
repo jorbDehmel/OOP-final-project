@@ -10,6 +10,24 @@ Kate Eckhart
 
 # Abstract
 
+    Stratego is a board game in which two players command an
+army to try and capture the opposing player's flag or defeat
+every moveable piece.  Each player’s army has 40 pieces that
+they place on their side of the board as they please, with each
+piece having a different rank and some pieces having special
+abilities like full movement in one direction.  When a piece
+attacks another piece, the piece with the lower rank is removed
+from the board, if the ranks are the same then both pieces are
+removed from the board.  Exceptions are the Spy which can remove
+the Marshal, Bombs which can remove anything that attacks them,
+except Miners who are the only piece that can remove bombs. All
+of these rules can be done by setting up a base piece class
+which has child classes for each piece type.  PyGame can be of
+help when displaying the game to the player, and object-based
+Python networking can be used for multiplayer. This project
+outlines the construction of an Object-Oriented Python
+implementation of Stratego.
+
 # Outline
 
 ## Pieces Per Player
