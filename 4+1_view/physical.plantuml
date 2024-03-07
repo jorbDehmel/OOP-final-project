@@ -1,2 +1,67 @@
-@startuml view
+' Jordan
+@startuml Physical View
+' See docs on component diagrams
+' Interactions between real-world discrete objects
+' Sequence diagram, IE message exchange over time
+' Communication diagram, IE outline of possible messages
+
+' Player A
+' Computer A (initializer)
+'   Stratego API handler
+'    - Recieve board from other
+'    - Recieve player move and update
+'    - Send board to other
+'    - Send termination
+'    - Send win
+'    - Send lose
+'    - Recieve termination
+'    - Recieve win
+'    - Recieve lose
+'    - Host game + wait
+'    - Join game
+
+' Player B
+' Computer B (joiner)
+'   Stratego API handler
+'    - Recieve board from other
+'    - Recieve player move and update
+'    - Send board to other
+'    - Send termination
+'    - Send win
+'    - Send lose
+'    - Recieve termination
+'    - Recieve win
+'    - Recieve lose
+'    - Host game + wait
+'    - Join game
+
+actor PlayerA
+participant ComputerA
+participant ComputerB
+actor PlayerB
+
+PlayerA -> ComputerA : Host game and wait
+PlayerB -> ComputerB : Join game
+PlayerA -> ComputerA : Set up board
+PlayerB -> ComputerB : Set up board
+ComputerA <-> ComputerB : Syncronize boards
+
+PlayerA -> ComputerA : Make move
+ComputerA -> PlayerA : Validate move, perhaps require re-entry
+ComputerA -> ComputerB : Send board
+
+PlayerB -> ComputerB : Make move
+ComputerB -> PlayerB : Validate move, perhaps require re-entry
+ComputerB -> ComputerA : Send board
+
+ComputerA <-> ComputerB : (Game loop until someone wins)
+
+ComputerA -> ComputerB : One computer detects win (A or B)
+ComputerA <-> ComputerB : Syncronize win state
+
+ComputerA -> PlayerA : Show win/lose message
+ComputerB -> PlayerB : Show win/lose message
+
+ComputerA <-> ComputerB : Terminate connection and close
+
 @enduml
