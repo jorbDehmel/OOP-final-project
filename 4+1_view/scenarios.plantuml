@@ -1,3 +1,44 @@
 ' Nate
-@startuml view
+@startuml scenarios
+
+actor PlayerA
+
+package PlayerAPieces{
+  usecase "Move Piece if valid" as UCA1
+  usecase "Attack Piece" as UCA2
+  usecase "Remove Piece" as UCA3
+}
+
+package Game{
+  usecase "Start Game" as Start
+  usecase "Join Game" as Join
+  usecase "Exit Game" as Exit
+}
+
+package PlayerBPieces{
+  usecase "Move Piece if valid" as UCB1
+  usecase "Attack Piece" as UCB2
+  usecase "Remove Piece" as UCB3
+}
+
+actor PlayerB
+
+PlayerA -right-> UCA1
+PlayerB -left-> UCB1
+
+UCA1 --|> UCA2 : If an enemy piece is \nin the same location.
+UCB1 --|> UCB2 : If an enemy piece is \nin the same location.
+
+UCB2 --|> UCA3 : If the piece had \na lower power \nor in a speical case.
+UCB2 --|> UCB3 
+UCA2 --|> UCB3 
+UCA2 --|> UCA3 : If the piece had \na lower power \nor in a speical case.
+
+PlayerA -up-> Start
+PlayerA -up-> Join
+PlayerA -up-> Exit
+PlayerB -up-> Start
+PlayerB -up-> Join
+PlayerB -up-> Exit
+
 @enduml
