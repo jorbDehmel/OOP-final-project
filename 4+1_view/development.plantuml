@@ -1,4 +1,32 @@
 ' Jordan
-@startuml view
-' Internal objects and interactions
+@startuml development
+' Internal objects and interactions, IE API
+
+actor User
+cloud "Foreign Computer" as ComputerB
+
+frame "Local Computer" as Computer {
+    component "GUI + Player Controls" as GUI
+
+    package "Stratego Package API" as API {
+        component Board {
+            component "Pieces x80"
+        }
+        component "State Manager" as BoardState {
+            component "Game state"
+        }
+    }
+
+    interface "Network Interface" as Net
+
+    BoardState <--> Net : Send and recieve game state
+
+    GUI -> API : Make move
+    GUI <-> API : Join / host game, display board
+
+    BoardState <-> Board : Maintain board
+    User <..> GUI : User interaction and feedback
+    Net <..> ComputerB
+}
+
 @enduml

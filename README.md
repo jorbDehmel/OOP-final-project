@@ -10,7 +10,7 @@ Kate Eckhart
 
 # Abstract
 
-    Stratego is a board game in which two players command an
+Stratego is a board game in which two players command an
 army to try and capture the opposing player's flag or defeat
 every moveable piece.  Each player’s army has 40 pieces that
 they place on their side of the board as they please, with each
@@ -74,3 +74,20 @@ B    | Bomb    | 6     | Kills all non-miners
 - Scouts can move any number of spaces horizontally or
     vertically in a single turn, optionally challenging a piece
     in the same turn.
+
+## Project 4+1 Diagrams
+
+Development: \
+![Development view](4+1_view/development.png)
+
+Logical: \
+![Logical view](4+1_view/logical.png)
+
+Physical: \
+![Physical view](4+1_view/physical.png)
+
+Process: \
+![Process view](4+1_view/process.png)
+
+Scenarios: \
+![Scenarios view](4+1_view/scenarios.png)
