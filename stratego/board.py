@@ -15,6 +15,8 @@ class LakeSquare:
 
 
 Square = Optional[Union[p.Piece, LakeSquare]]
+
+
 class Board:
     '''
     A Stratego board. This should be a singleton class which

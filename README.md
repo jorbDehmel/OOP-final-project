@@ -1,12 +1,13 @@
+
 # OOP-final-project
 
 Final project for object oriented programming w/ Dr. Ram Basnet.
 
 ## Authors
 
-Nate Barnaik
-Jordan Dehmel
-Kate Eckhart
+Nate Barnaik \
+Jordan Dehmel \
+Kate Eckhart \
 
 # Abstract
 

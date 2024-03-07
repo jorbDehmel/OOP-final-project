@@ -8,3 +8,10 @@ import pickle
 import socket
 import stratego.board
 import stratego.pieces
+
+
+# To silence unused import warnings
+help(stratego.board)
+help(stratego.pieces)
+help(pickle)
+help(socket)

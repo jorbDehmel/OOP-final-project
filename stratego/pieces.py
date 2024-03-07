@@ -12,14 +12,7 @@ class Piece:
     which is inherited by specific pieces.
     '''
 
-    def __init__(self):
-        '''
-        Constructs a Stratego piece.
-        '''
-
-        raise TypeError('Cannot call method on abstract base class!')
-
-    def __repr__(self):
+    def __repr__(self) -> str:
         '''
         Returns a unique identifying char of this piece.
 
@@ -31,8 +24,7 @@ class Piece:
     def confront(self, other: "Piece") -> Optional["Piece"]:
         '''
         Move this piece onto the other. This will return the
-        piece which is the "winner". If the other piece is a
-        bomb, this will return None.
+        piece which is the "winner".
 
         :param other: The piece which was already on this
             square.
@@ -50,6 +42,26 @@ class Bomb(Piece):
     miners.
     '''
 
+    def __repr__(self) -> str:
+        '''
+        Returns a string representation of this object.
+        :returns: The string representing this object.
+        '''
+
+        return 'B'
+
+    def confront(self, other: Piece) -> Optional[Piece]:
+        '''
+        A confrontation between another piece and this one.
+
+        :returns: The winning piece.
+        '''
+
+        if repr(other) == '3':
+            return other
+
+        return self
+
 
 class Troop(Piece):
     '''
@@ -57,17 +69,62 @@ class Troop(Piece):
     properties, just a rank.
     '''
 
+    def __init__(self, rank: int) -> None:
+        '''
+        Initializes a new non-special ranked troop w/ the given
+        rank value.
+        '''
 
-class Flag(Troop):
+        self.__rank = rank
+
+    def confront(self, other: Piece) -> Optional[Piece]:
+        '''
+        Pit this item against another.
+        '''
+
+    def __repr__(self) -> str:
+        '''
+        Returns a string representation of this object.
+        :returns: The string representing this object.
+        '''
+
+        return str(self.__rank)
+
+
+class Flag(Piece):
     '''
     A Stratego piece which ends the game if captured.
     '''
+
+    def __repr__(self) -> str:
+        '''
+        Returns a string representation of this object.
+        :returns: The string representing this object.
+        '''
+
+        return 'F'
+
+    def confront(self, other: Piece) -> Optional[Piece]:
+        '''
+        A confrontation between another piece and this one.
+
+        :returns: The winning piece.
+        '''
+
+        return self
 
 
 class Spy(Troop):
     '''
     A Stratego piece which can kill marshals.
     '''
+
+    def __init__(self) -> None:
+        '''
+        Create this piece by calling the superclass constructor.
+        '''
+
+        super().__init__(1)
 
 
 class Scout(Troop):
@@ -77,14 +134,47 @@ class Scout(Troop):
     moving.
     '''
 
+    def __init__(self) -> None:
+        '''
+        Create this piece by calling the superclass constructor.
+        '''
+
+        super().__init__(2)
+
 
 class Miner(Troop):
     '''
     A Stratego piece which can diffuse bombs.
     '''
 
+    def __init__(self) -> None:
+        '''
+        Create this piece by calling the superclass constructor.
+        '''
+
+        super().__init__(3)
+
+    def confront(self, other: Piece) -> Optional[Piece]:
+        '''
+        A confrontation between another piece and this one.
+
+        :returns: The winning piece.
+        '''
+
+        if repr(other) == 'B':
+            return self
+
+        return super().confront(other)
+
 
 class Marshal(Troop):
     '''
     A Stratego piece which can only be killed by spies.
     '''
+
+    def __init__(self) -> None:
+        '''
+        Create this piece by calling the superclass constructor.
+        '''
+
+        super().__init__(10)
