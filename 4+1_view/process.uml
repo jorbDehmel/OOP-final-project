@@ -1,0 +1,113 @@
+@startuml
+
+GameOver : Display if game was a win/loss/draw and offer a rematch
+GameOver --> NetMode
+GameOver --> RematchOffer
+
+state UiThread {
+  [*] --> UiIdle
+
+  UiIdle : Wait for user action
+
+  PlayTurnAnim : Play turn animation
+  PlayTurnAnim --> MoveAnim
+  PlayTurnAnim --> BattleAnim
+
+  MoveAnim : The piece moves to the new square
+  MoveAnim --> BattleAnim : Scout
+  MoveAnim --> UiIdle
+
+  BattleAnim : Both pieces are reveled and the loser is eliminated
+  BattleAnim --> UiIdle
+}
+
+state Turn {
+  Wait4Turn : Wait for opponent
+  Wait4Turn -[#red]-> PlayTurnAnim
+  Wait4Turn --> UpdateBoard 
+
+  SelectPiece : Select a piece on the board
+  SelectPiece --> SelectDestination
+
+  SelectDestination : Select where your piece goes
+  SelectDestination --> MoveSend
+
+  MoveSend : Send move to opponent
+  MoveSend -[#red]-> PlayTurnAnim
+  MoveSend --> UpdateBoard
+  MoveSend -[#blue]-> Wait4Turn
+
+  UpdateBoard : Board is updated to after move
+  UpdateBoard --> DoneTurn
+
+  DoneTurn : Detect win/loss/draw
+  DoneTurn --> ContinueGame
+  DoneTurn --> GameOver
+
+  ContinueGame : The game is still ongoing
+  ContinueGame --> Wait4Turn : If just played
+  ContinueGame --> SelectPiece : If not just played
+}
+
+[*] --> NetMode
+NetMode : Ask for Client or Server
+NetMode --> ClientInit
+NetMode --> ServerInit
+
+ClientInit : Ask for ip and port of server
+ClientInit --> Connecting
+
+Connecting : Attempt to connect to server
+Connecting -[#blue]-> Wait4Client
+Connecting --> ConnectError
+Connecting --> ReceiveColor
+
+ConnectError : Show connection error
+ConnectError --> NetMode
+
+ServerInit : Ask for port to listen at
+ServerInit --> Wait4Client
+
+Wait4Client : Wait until a client connects to the server
+Wait4Client --> ClientFound
+
+ClientFound : Stop listening for other clients
+ClientFound --> RollColor
+
+RollColor : Randomly assign blue and red to the client and server
+RollColor --> SendColor
+
+SendColor : Tell client if it's red or blue
+SendColor --> GameSetup
+SendColor -[#blue]-> ReceiveColor
+
+ReceiveColor : Read socket to determine if red or blue
+ReceiveColor --> GameSetup
+
+GameSetup : Prompt player to setup board
+GameSetup : Both players must define the values/types of their 40 pieces
+GameSetup --> ExchangeBoard
+
+ExchangeBoard : Send pieces to other player
+ExchangeBoard -[#blue]-> GameSetup 
+ExchangeBoard -[#blue]-> ExchangeBoard
+ExchangeBoard -[#blue]-> Wait4Setup
+
+Wait4Setup : Wait until both players have defined their board
+Wait4Setup --> Wait4Turn : Blue Player
+Wait4Setup --> SelectPiece : Red Player 
+
+RematchOffer : Wait to see if opponent rematches as well
+RematchOffer -[#blue]-> RematchOffer
+RematchOffer --> NetMode : On decline
+RematchOffer --> GameSetup
+note left of RematchOffer
+  Colors are exchanged between players on accept
+end note
+
+note as N1
+  Blue arrows represent which states can send info to another player.
+  Red arrows represent animations that can be done concurrently with other actions.
+end note
+
+@enduml
