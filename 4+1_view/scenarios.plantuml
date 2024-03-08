@@ -13,6 +13,7 @@ package Game{
   usecase "Start Game" as Start
   usecase "Join Game" as Join
   usecase "Exit Game" as Exit
+  usecase "Rematch Game" as Rematch
 }
 
 package PlayerBPieces{
@@ -23,22 +24,24 @@ package PlayerBPieces{
 
 actor PlayerB
 
-PlayerA -right-> UCA1
-PlayerB -left-> UCB1
+PlayerA --> UCA1
+PlayerB --> UCB1
 
 UCA1 --|> UCA2 : If an enemy piece is \nin the same location.
 UCB1 --|> UCB2 : If an enemy piece is \nin the same location.
 
 UCB2 --|> UCA3 : If the piece had \na lower power \nor in a speical case.
-UCB2 --|> UCB3 
-UCA2 --|> UCB3 
+UCB2 --|> UCB3 : If the piece had \na lower power \nor in a speical case.
+UCA2 --|> UCB3 : If the piece had \na lower power \nor in a speical case.
 UCA2 --|> UCA3 : If the piece had \na lower power \nor in a speical case.
 
-PlayerA -up-> Start
-PlayerA -up-> Join
-PlayerA -up-> Exit
-PlayerB -up-> Start
-PlayerB -up-> Join
-PlayerB -up-> Exit
+PlayerA --> Start
+PlayerA --> Join
+PlayerA --> Exit
+PlayerA --> Rematch
+PlayerB --> Start
+PlayerB --> Join
+PlayerB --> Exit
+PlayerB --> Rematch
 
 @enduml
