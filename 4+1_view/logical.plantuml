@@ -1,3 +1,41 @@
-' ?
-@startuml view
+' Nate
+@startuml logic
+
+class Player{
+  Piece pieces[]
+}
+class Piece{
+  int rank
+  int movement
+  bool defuse
+  move()
+  attack()
+}
+class Marshal
+class General
+class Colonel
+class Major
+class Captain
+class Lieutenant
+class Sergeant
+class Miner
+class Scout
+class Spy
+class Flag{
+  endGame()
+}
+
+Player -down-> Piece
+Piece <|-down- Marshal
+Piece <|-down- General
+Piece <|-down- Colonel
+Piece <|-down- Major
+Piece <|-down- Captain
+Piece <|-down- Lieutenant
+Piece <|-down- Sergeant
+Piece <|-down- Miner
+Piece <|-down- Scout
+Piece <|-down- Spy
+Piece <|-down- Flag
+
 @enduml

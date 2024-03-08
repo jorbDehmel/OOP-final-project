@@ -37,18 +37,18 @@ implementation of Stratego.
 
 Rank | Name    | Count | Properties
 -----|---------|-------|----------------------------------------
-10   | Marshal | 1     | Killed by spies
-9    |         | 1     |
-8    |         | 2     |
-7    |         | 3     |
-6    |         | 4     |
-5    |         | 4     |
-4    |         | 4     |
-3    | Miner   | 5     | Can defuse bombs
-2    | Scout   | 8     | Moves any number of spaces
-1    | Spy     | 1     | Kills marshals
-F    | Flag    | 1     | Win condition
-B    | Bomb    | 6     | Kills all non-miners
+10   | Marshal    | 1     | Killed by spies
+9    | General    | 1     |
+8    | Colonel    | 2     |
+7    | Major      | 3     |
+6    | Captain    | 4     |
+5    | Lieutenant | 4     |
+4    | Sergeant   | 4     |
+3    | Miner      | 5     | Can defuse bombs
+2    | Scout      | 8     | Moves any number of spaces
+1    | Spy        | 1     | Kills marshals
+F    | Flag       | 1     | Win condition
+B    | Bomb       | 6     | Kills all non-miners
 
 ## Board
 
