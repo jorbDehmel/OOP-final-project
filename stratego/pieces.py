@@ -12,6 +12,19 @@ class Piece:
     which is inherited by specific pieces.
     '''
 
+    def __init__(self, color: str) -> None:
+        '''
+        A base constructor for a stratego piece. Must take the
+        color of the piece.
+
+        :param color: Either 'RED' or 'BLUE'.
+        '''
+
+        self.__color = color
+
+        if self.__color not in ('RED', 'BLUE'):
+            raise ValueError('Piece color must be either "RED" or "BLUE"')
+
     def __repr__(self) -> str:
         '''
         Returns a unique identifying char of this piece.
@@ -35,6 +48,16 @@ class Piece:
 
         raise TypeError('Cannot call method on abstract base class!')
 
+    @property
+    def color(self) -> str:
+        '''
+        Gets the color of this piece.
+
+        :returns: This piece's color.
+        '''
+
+        return self.__color
+
 
 class Bomb(Piece):
     '''
@@ -50,12 +73,15 @@ class Bomb(Piece):
 
         return 'B'
 
-    def confront(self, other: Piece) -> Optional[Piece]:
+    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
         '''
         A confrontation between another piece and this one.
 
         :returns: The winning piece.
         '''
+
+        if other is None:
+            return self
 
         if repr(other) == '3':
             return other
@@ -66,21 +92,40 @@ class Bomb(Piece):
 class Troop(Piece):
     '''
     A standard, non-special Stratego piece; This has no special
-    properties, just a rank.
+    properties, just a rank. If confront is called here, it is
+    assumed that the caller has no special properties. However,
+    the piece being confronted might.
     '''
 
-    def __init__(self, rank: int) -> None:
+    def __init__(self, color: str, rank: int) -> None:
         '''
         Initializes a new non-special ranked troop w/ the given
         rank value.
+
+        :param color: Either 'RED' or 'BLUE'
         '''
 
+        super().__init__(color)
         self.__rank = rank
 
-    def confront(self, other: Piece) -> Optional[Piece]:
+    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
         '''
         Pit this item against another.
         '''
+
+        if other is None:
+            return self
+
+        if isinstance(other, (Bomb, Flag)):
+            return other
+
+        if isinstance(other, Troop) and self.__rank < other.rank:
+            return other
+
+        if isinstance(other, Troop) and self.__rank == other.rank:
+            return None
+
+        return self
 
     def __repr__(self) -> str:
         '''
@@ -89,6 +134,16 @@ class Troop(Piece):
         '''
 
         return str(self.__rank)
+
+    @property
+    def rank(self) -> int:
+        '''
+        Return this piece's rank.
+
+        :returns: Rank.
+        '''
+
+        return self.__rank
 
 
 class Flag(Piece):
@@ -104,27 +159,35 @@ class Flag(Piece):
 
         return 'F'
 
-    def confront(self, other: Piece) -> Optional[Piece]:
-        '''
-        A confrontation between another piece and this one.
-
-        :returns: The winning piece.
-        '''
-
-        return self
-
 
 class Spy(Troop):
     '''
     A Stratego piece which can kill marshals.
     '''
 
-    def __init__(self) -> None:
+    def __init__(self, color: str) -> None:
         '''
         Create this piece by calling the superclass constructor.
+
+        :param color: Either 'RED' or 'BLUE'
         '''
 
-        super().__init__(1)
+        super().__init__(color, 1)
+
+    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
+        '''
+        A confrontation between another piece and this one.
+
+        :returns: The winning piece.
+        '''
+
+        if other is None:
+            return self
+
+        if isinstance(other, Marshal):
+            return self
+
+        return other
 
 
 class Scout(Troop):
@@ -134,12 +197,14 @@ class Scout(Troop):
     moving.
     '''
 
-    def __init__(self) -> None:
+    def __init__(self, color: str) -> None:
         '''
         Create this piece by calling the superclass constructor.
+
+        :param color: Either 'RED' or 'BLUE'
         '''
 
-        super().__init__(2)
+        super().__init__(color, 2)
 
 
 class Miner(Troop):
@@ -147,21 +212,26 @@ class Miner(Troop):
     A Stratego piece which can diffuse bombs.
     '''
 
-    def __init__(self) -> None:
+    def __init__(self, color: str) -> None:
         '''
         Create this piece by calling the superclass constructor.
+
+        :param color: Either 'RED' or 'BLUE'
         '''
 
-        super().__init__(3)
+        super().__init__(color, 3)
 
-    def confront(self, other: Piece) -> Optional[Piece]:
+    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
         '''
         A confrontation between another piece and this one.
 
         :returns: The winning piece.
         '''
 
-        if repr(other) == 'B':
+        if other is None:
+            return self
+
+        if isinstance(other, Bomb):
             return self
 
         return super().confront(other)
@@ -172,9 +242,26 @@ class Marshal(Troop):
     A Stratego piece which can only be killed by spies.
     '''
 
-    def __init__(self) -> None:
+    def __init__(self, color: str) -> None:
         '''
         Create this piece by calling the superclass constructor.
+
+        :param color: Either 'RED' or 'BLUE'.
         '''
 
-        super().__init__(10)
+        super().__init__(color, 10)
+
+    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
+        '''
+        A confrontation between another piece and this one.
+
+        :returns: The winning piece.
+        '''
+
+        if other is None:
+            return self
+
+        if isinstance(other, Troop) and other.rank == 1:
+            return other
+
+        return super().confront(other)

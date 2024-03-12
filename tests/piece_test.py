@@ -21,15 +21,15 @@ class TestStratego(TestCase):
         '''
 
         # Create a bomb and a regular troop
-        bomb: p.Bomb = p.Bomb()
-        troop: p.Troop = p.Troop(5)
+        bomb: p.Bomb = p.Bomb('RED')
+        troop: p.Troop = p.Troop('BLUE', 5)
 
         # Simulate an interaction between the two
         result: Optional[p.Piece] = troop.confront(bomb)
-        assert result is None
+        assert result is bomb
 
         # Simulate an interaction between a miner and a bomb
-        miner: p.Miner = p.Miner()
+        miner: p.Miner = p.Miner('BLUE')
         result = miner.confront(bomb)
         assert result is miner
 
