@@ -10,7 +10,7 @@ import stratego.pieces as p
 class LakeSquare:
     '''
     A lake square on a Stratego board. This may not be moved
-    into.
+    into, and never moves.
     '''
 
 

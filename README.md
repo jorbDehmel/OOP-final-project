@@ -94,3 +94,15 @@ Process: \
 
 Scenarios: \
 ![Scenarios view](4+1_view/scenarios.png)
+
+## Attribution
+Please enter what you have done below.
+
+Nate Barnaik:
+ - foobar
+
+Jordan Dehmel:
+ - foobar
+
+Kate Eckhart:
+ - foobar
