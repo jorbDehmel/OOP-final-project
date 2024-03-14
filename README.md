@@ -35,8 +35,8 @@ implementation of Stratego.
 
 ## Pieces Per Player
 
-Rank | Name    | Count | Properties
------|---------|-------|----------------------------------------
+Rank | Name       | Count | Properties
+-----|------------|-------|-------------------------------------
 10   | Marshal    | 1     | Killed by spies
 9    | General    | 1     |
 8    | Colonel    | 2     |

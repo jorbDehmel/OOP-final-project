@@ -3,7 +3,7 @@ This module defines the board class for an Object-Oriented
 Stratego game.
 '''
 
-from typing import Union, List, Optional
+from typing import Union, List, Optional, Tuple
 import stratego.pieces as p
 
 
@@ -98,21 +98,20 @@ class Board:
 
     def move(self,
              color: str,
-             from_x: int,
-             from_y: int,
-             to_x: int,
-             to_y: int) -> str:
+             from_pair: Tuple[int, int],
+             to_pair: Tuple[int, int]) -> str:
         '''
         Attempts to move from the given coordinates to the given
         coordinates. Raises error if the move is invalid. If
         the move was valid, updates the board accordingly.
 
-        :param from_x: The origin x.
-        :param from_y: The origin y.
-        :param to_x: The destination x.
-        :param to_y: The destination y.
+        :param from_pair: The origin (x, y).
+        :param to_pair: The destination (x, y).
         :returns: The game state.
         '''
+
+        from_x, from_y = from_pair
+        to_x, to_y = to_pair
 
         # This succeeding implies that temp is of type Piece
         if not self.__is_valid_move(from_x, from_y, to_x, to_y):
@@ -138,7 +137,8 @@ class Board:
         raise InvalidMoveError('Failure in move checking algorithm')
 
     @classmethod
-    def __move_is_inside_board(cls, from_x: int,
+    def __move_is_inside_board(cls,
+                               from_x: int,
                                to_x: int,
                                from_y: int,
                                to_y: int) -> bool:

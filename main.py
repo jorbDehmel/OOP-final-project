@@ -15,14 +15,20 @@ def main(_: List[str]) -> int:
     :returns: 0 on success, non-zero on error.
     '''
 
-    # Call the GUI
-    try:
+    __debug: bool = True
+
+    if __debug:
         StrategoGUI()
 
-    # Recover from caught errors
-    except Exception as e:
-        print(f'Unrecoverable error occurred: {e}')
-        return 255
+    else:
+        # Call the GUI
+        try:
+            StrategoGUI()
+
+        # Recover from caught errors
+        except Exception as e:
+            print(f'Unrecoverable error occurred: {e}')
+            return 255
 
     return 0
 
