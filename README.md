@@ -99,10 +99,13 @@ Scenarios: \
 Please enter what you have done below.
 
 Nate Barnaik:
- - foobar
+ - Abstract
+ - 1 UML diagram
 
 Jordan Dehmel:
- - foobar
+ - Basics framework for GUI, Networking, and Pieces
+ - Initial piece unit testing
+ - 2 UML diagrams
 
 Kate Eckhart:
- - foobar
+ - 2 UML diagrams
