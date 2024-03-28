@@ -5,9 +5,11 @@ presented to the user.
 '''
 
 import tkinter as tk
-from typing import Optional, List, Callable
+from typing import Optional, List, Callable, Tuple, Dict
+from PIL import Image, ImageTk
 import stratego.board as b
 import stratego.network as n
+import stratego.pieces as p
 
 
 class StrategoGUI:
@@ -17,6 +19,7 @@ class StrategoGUI:
     '''
 
     __INSTANCE: Optional['StrategoGUI'] = None
+    _BUTTON_SIZE: int = 32
 
     @classmethod
     def get_instance(cls) -> 'StrategoGUI':
@@ -35,7 +38,7 @@ class StrategoGUI:
     def __init__(self) -> None:
         '''
         Initialize the GUI window, given that none already
-        exists.
+        exist.
         '''
 
         assert type(self).__INSTANCE is None, 'Cannot reinstantiate singleton'
@@ -44,31 +47,183 @@ class StrategoGUI:
 
         self.__board: b.Board = b.Board()
         self.__networking: n.StrategoNetworker = n.StrategoNetworker()
-        self.__color: str = 'N/A'
+        self.__color: str = 'Stratego'
 
         self.__keybindings: List[str] = []
+        self.__image_cache: Dict[str, tk.PhotoImage] = {}
+
+        self.__from_selection: Optional[Tuple[int, int]] = None
+        self.__to_selection: Optional[Tuple[int, int]] = None
 
         # This keybinding is not tracked and thus not erased
         self.__root.bind('q', lambda _: self.__quit())
 
+        self.__root.title(self.__color)
         self.__home_screen()
+
+    def __piece_to_image_path(self, piece: b.Square) -> str:
+        '''
+        Given a piece, returns the filepath of the image which
+        should represent it.
+
+        :param piece: The square to represent.
+        :return: The filepath of the image.
+        '''
+
+        if piece is not None:
+
+            if isinstance(piece, b.LakeSquare):
+                return 'stratego/images/lake.png'
+
+            if isinstance(piece, p.Piece):
+
+                if piece.color != self.__color:
+                    return f'stratego/images/{piece.color}_blank.png'
+
+                return f'stratego/images/{piece.color}_{repr(piece)}.png'
+
+        return 'stratego/images/blank.png'
+
+    def __get_image(self, path: str) -> tk.PhotoImage:
+        '''
+        :param path: The path to load the image from.
+        :returns: A tk-compatible version of that image.
+        '''
+
+        if path not in self.__image_cache:
+            s: int = type(self)._BUTTON_SIZE
+
+            pil_image = Image.open(path).resize((s, s))
+
+            self.__image_cache[path] = ImageTk.PhotoImage(pil_image)
+
+        return self.__image_cache[path]
+
+    def __display_board(self,
+                        callback: Callable[[int, int], None]) -> None:
+        '''
+        Packs the board onto the end of the current screen. This
+        does NOT clear the screen!
+
+        :param callback: The function which button presses will
+            call.
+        '''
+
+        class Ret:
+            '''
+            An internal callable class for board button
+            callbacks.
+            '''
+
+            def __init__(self,
+                         x: int,
+                         y: int) -> None:
+                self.__x = x
+                self.__y = y
+                self.__c = callback
+
+            def __call__(self) -> None:
+                self.__c(self.__x, self.__y)
+
+        for y in range(self.__board.height - 1, -1, -1):
+
+            row: tk.Frame = tk.Frame(self.__root)
+
+            for x in range(self.__board.width):
+
+                callback: Ret = Ret(x, y)
+
+                path: str = self.__piece_to_image_path(self.__board.get(x, y))
+                image: tk.PhotoImage = self.__get_image(path)
+
+                tk.Button(row, command=callback,
+                          image=image, width=32, height=32).pack(side='left')
+            row.pack()
+
+    def __board_movement_callback(self,
+                                  x: int,
+                                  y: int) -> None:
+        '''
+        This is a callback function for board buttons. The first
+        time it is called, it loads into self.__from_selection.
+        The second time, it loads into self.__to_selection and
+        calls the given callback function. Then, it resets its
+        member variables.
+
+        :param x: The x-coord of the board button pressed.
+        :param y: The y-coord of the board button pressed.
+        :param when_complete: The callback function for when
+            two buttons have been pressed.
+        '''
+
+        print(f'Board button pressed: ({x}, {y})')
+
+        if self.__from_selection is None:
+            self.__from_selection = (x, y)
+            return
+
+        self.__to_selection = (x, y)
+
+        self.__check_move()
+
+        self.__from_selection = None
+        self.__to_selection = None
 
     def __home_screen(self) -> None:
         '''
         The host/connect screen of the app.
         '''
 
+        self.__clear()
+
         tk.Label(self.__root, text='Stratego').pack()
 
-        tk.Button(self.__root, text='Host Game', command=self.__host_game_screen).pack()
-        tk.Button(self.__root, text='Join Game', command=self.__join_game_screen).pack()
+        tk.Button(self.__root,
+                  text='Host Game',
+                  command=self.__host_game_screen).pack()
+        tk.Button(self.__root,
+                  text='Join Game',
+                  command=self.__join_game_screen).pack()
 
+        tk.Button(self.__root, text='Info', command=self.__info_screen).pack()
         tk.Button(self.__root, text='Quit', command=self.__quit).pack()
 
+        # Permanent keybindings
         self.__bind('h', self.__host_game_screen)
         self.__bind('j', self.__join_game_screen)
 
+        # Debugging keybindings
+        self.__bind('s', self.__setup_screen)
+        self.__bind('y', self.__your_turn_screen)
+        self.__bind('t', self.__their_turn_screen)
+        self.__bind('w', self.__win_screen)
+        self.__bind('l', self.__lose_screen)
+        self.__bind('e', self.__error_screen)
+
         self.__root.mainloop()
+
+    def __info_screen(self) -> None:
+        '''
+        The information screen.
+        '''
+
+        self.__clear()
+
+        tk.Label(self.__root,
+                 text='2024, N Barnaik, J Dehmel, K Eckhart').pack()
+        tk.Label(self.__root,
+                 text='This software was developed as an exercise,\n' +
+                      'and the authors lay no claim to the copyright\n' +
+                      'of Stratego. This software is not to be used\n' +
+                      'commercially.'
+                 ).pack()
+
+        tk.Button(self.__root,
+                  text='Home',
+                  command=self.__home_screen).pack()
+        tk.Button(self.__root,
+                  text='Quit',
+                  command=self.__quit).pack()
 
     def __bind(self, sequence: str, event: Callable[[], None]) -> None:
         '''
@@ -101,6 +256,10 @@ class StrategoGUI:
         # Unbind all keybindings registered herein
         for key in self.__keybindings:
             self.__root.unbind(key)
+
+        # Set title
+        if self.__color:
+            self.__root.title(self.__color)
 
     def __host_game_screen(self) -> None:
         '''
@@ -135,8 +294,8 @@ class StrategoGUI:
             tk.Label(self.__root,
                      text=f'IP: {ip_str} Port: {port_int}'
                           + f'Password: {password}').pack()
-            tk.Label(self.__root,
-                     text='Waiting for other player...').pack()
+            tk.Label(self.__root, text='Waiting for other player...').pack()
+            self.__root.update()
 
             # Make API call and wait
             self.__networking.host_wait_for_join()
@@ -148,6 +307,7 @@ class StrategoGUI:
         tk.Button(self.__root,
                   text='Host This Game',
                   command=host_game_callback).pack()
+        self.__bind('<Return>', host_game_callback)
 
     def __join_game_screen(self) -> None:
         '''
@@ -181,30 +341,93 @@ class StrategoGUI:
             password_str: str = password.get()
 
             # Make API call and wait
-            self.__networking.join_game(ip_str, port_int, password_str)
+            result: int = self.__networking.join_game(ip_str,
+                                                      port_int,
+                                                      password_str)
 
-            # When API call is done, advance to next screen
-            self.__color = 'BLUE'
-            self.__setup_screen()
+            if result == 0:
+                # When API call is done, advance to next screen
+                self.__color = 'BLUE'
+                self.__setup_screen()
+
+            else:
+                tk.Label(self.__root,
+                         text=f'Failed to connect (code: {result}).').pack()
 
         tk.Button(self.__root,
                   text='Join This Game',
                   command=join_game_callback).pack()
+        self.__bind('<Return>', join_game_callback)
 
     def __setup_screen(self) -> None:
         '''
         The board setup screen.
         '''
 
+        self.__clear()
+
+        tk.Label(self.__root, text='Set up your pieces.').pack()
+
+        def foobar(x, y) -> None:
+            pass
+
+        self.__display_board(foobar)
+
     def __your_turn_screen(self) -> None:
         '''
         Screen allowing our player to make a move.
         '''
 
+        # Update screen
+        self.__clear()
+        tk.Label(self.__root, text='Your turn.').pack()
+
+        self.__display_board(self.__board_movement_callback)
+
+    def __check_move(self) -> None:
+        # Check validity
+        try:
+            state = self.__board.move(self.__color,
+                                      self.__from_selection,
+                                      self.__to_selection)
+
+        except b.InvalidMoveError:
+            self.__your_turn_screen()
+            return
+
+        # Send to other player
+        self.__board, state = self.__networking.sync_game(self.__board, state)
+
+        # Check game state
+        if state == 'WIN':
+            self.__win_screen()
+        elif state == 'LOSE':
+            self.__lose_screen()
+        elif state == 'HALT':
+            self.__error_screen()
+
     def __their_turn_screen(self) -> None:
         '''
         Waiting screen while the other player moves.
         '''
+
+        # Update screen
+        self.__clear()
+        tk.Label(self.__root, text='Thier turn; Waiting.').pack()
+
+        self.__display_board(lambda _, __: None)
+        self.__root.update()
+
+        # Wait for move recv
+        self.__board, state = self.__networking.sync_game(self.__board, '')
+
+        # Check game state
+        if state == 'WIN':
+            self.__win_screen()
+        elif state == 'LOSE':
+            self.__lose_screen()
+        elif state == 'HALT':
+            self.__error_screen()
 
     def __win_screen(self) -> None:
         '''
@@ -252,7 +475,7 @@ class StrategoGUI:
 
         self.__networking.close_game()
 
-        tk.Label(self.__root, text='Erro: Connection terminated.').pack()
+        tk.Label(self.__root, text='Error: Connection terminated.').pack()
 
         tk.Button(self.__root,
                   text='Play Again',

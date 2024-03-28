@@ -59,16 +59,16 @@ class Board:
             self._places.append(row_temp)
 
         # Add "left" lake
+        self._places[4][2] = LakeSquare()
+        self._places[4][3] = LakeSquare()
         self._places[5][2] = LakeSquare()
         self._places[5][3] = LakeSquare()
-        self._places[6][2] = LakeSquare()
-        self._places[6][3] = LakeSquare()
 
         # Add "right" lake
+        self._places[4][6] = LakeSquare()
+        self._places[4][7] = LakeSquare()
         self._places[5][6] = LakeSquare()
         self._places[5][7] = LakeSquare()
-        self._places[6][6] = LakeSquare()
-        self._places[6][7] = LakeSquare()
 
     def __repr__(self) -> str:
         '''
@@ -95,6 +95,38 @@ class Board:
         top: str = '+' + ('-' * type(self)._WIDTH) + '+\n'
         out: str = top + ''.join(rows) + top
         return out
+
+    @property
+    def height(self) -> int:
+        '''
+        :return: The board height.
+        '''
+
+        return self._HEIGHT
+
+    @property
+    def width(self) -> int:
+        '''
+        :return: The board width.
+        '''
+
+        return self._WIDTH
+
+    def get(self, x: int, y: int) -> Square:
+        '''
+        Get the piece at the given point.
+
+        :param x: The x position.
+        :param y: The y position.
+        '''
+
+        if x >= self._WIDTH or y >= self._HEIGHT:
+            return None
+
+        if x < 0 or y < 0:
+            return None
+
+        return self._places[y][x]
 
     def move(self,
              color: str,

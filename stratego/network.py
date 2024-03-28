@@ -19,7 +19,7 @@ class StrategoNetworker:
 
     __SIZE_STR_MAX_SIZE: int = 16
     __STATE_STR_MAX_SIZE: int = 8
-    __PASSWORD_SIZE: int = 8
+    __PASSWORD_SIZE: int = 4
     __INSTANCE: Optional['StrategoNetworker'] = None
 
     @staticmethod
@@ -59,7 +59,10 @@ class StrategoNetworker:
         assert type(self).__INSTANCE is None, 'Cannot re-instantiate singleton'
 
         self.__is_connected: bool = False
-        self.__socket: socket.socket = socket.socket()
+
+        self.__host_socket: Optional[socket.socket] = None
+        self.__client_socket: Optional[socket.socket] = None
+
         self.__password: str = ''
 
     def host_game(self, ip: str, port: int) -> str:
@@ -72,7 +75,8 @@ class StrategoNetworker:
         :returns: The join password (randomly generated).
         '''
 
-        self.__socket.bind((ip, port))
+        self.__host_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.__host_socket.bind((ip, port))
 
         legal_chars: str = '0123456789ABCDEF'
         self.__password = ''
@@ -89,18 +93,31 @@ class StrategoNetworker:
         waiting.
         '''
 
+        assert self.__host_socket is not None
+
         while not self.__is_connected:
-            sock, _ = self.__socket.accept()
-
-            password: str = sock.recv(type(self).__PASSWORD_SIZE).decode('UTF-8')
-
-            if password != self.__password:
-                self.__send_game_state('HALT')
-
-            else:
-                self.__send_game_state('GOOD')
+            try:
+                self.__host_socket.listen(1)
+                self.__client_socket, _ = self.__host_socket.accept()
 
                 self.__is_connected = True
+
+                s: int = type(self).__PASSWORD_SIZE
+                b: bytes = self.__client_socket.recv(s)
+
+                password: str = b.decode('UTF-8')
+
+                if password != self.__password:
+                    self.__send_game_state('HALT')
+
+                    print('Failed password attempt.')
+                    self.__is_connected = False
+
+                else:
+                    self.__send_game_state('GOOD')
+
+            except OSError as e:
+                print(f'Caught OSError {e}')
 
     def join_game(self, ip: str, port: int, password: str) -> int:
         '''
@@ -117,17 +134,22 @@ class StrategoNetworker:
 
         # Connect to server
         try:
-            self.__socket.connect((ip, port))
-        except socket.error:
+            self.__client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.__client_socket.connect((ip, port))
+        except socket.error as e:
+            print(f'Caught socket error {e}')
             return 1
 
         # Send password
-        self.__socket.send(bytes(password, 'UTF-8'))
+        self.__is_connected = True
+        self.__client_socket.send(bytes(password, 'UTF-8'))
 
         state: str = self.__recv_game_state()
 
         if state != 'GOOD':
-            self.__socket.close()
+            self.__client_socket.close()
+            self.__client_socket = None
+            self.__is_connected = False
             return 2
 
         self.__is_connected = True
@@ -140,8 +162,9 @@ class StrategoNetworker:
         '''
 
         try:
-            self.__send_game_state('HALT')
-            self.__socket.close()
+            if self.__client_socket is not None:
+                self.__send_game_state('HALT')
+                self.__client_socket.close()
         except socket.error:
             pass
 
@@ -179,6 +202,7 @@ class StrategoNetworker:
         '''
 
         assert self.__is_connected, 'Cannot send before connecting'
+        assert self.__client_socket, 'Cannot send before connecting'
 
         serialized: bytes = pickle.dumps(to_send)
 
@@ -191,10 +215,10 @@ class StrategoNetworker:
         size_str += (' ' * (type(self).__SIZE_STR_MAX_SIZE - len(size_str)))
 
         # Send size
-        self.__socket.send(bytes(size_str, 'UTF-8'))
+        self.__client_socket.send(bytes(size_str, 'UTF-8'))
 
         # Send board
-        self.__socket.send(serialized)
+        self.__client_socket.send(serialized)
 
     def __recv_board(self) -> Board:
         '''
@@ -205,10 +229,11 @@ class StrategoNetworker:
         '''
 
         assert self.__is_connected, 'Cannot recv before connecting'
+        assert self.__client_socket, 'Cannot recv before connecting'
 
-        size_str: str = self.__socket.recv(type(self).__SIZE_STR_MAX_SIZE).decode('UTF-8')
+        size_str: str = self.__client_socket.recv(type(self).__SIZE_STR_MAX_SIZE).decode('UTF-8')
 
-        serialized: bytes = self.__socket.recv(int(size_str))
+        serialized: bytes = self.__client_socket.recv(int(size_str))
 
         out: Board = pickle.loads(serialized)
 
@@ -222,11 +247,12 @@ class StrategoNetworker:
         '''
 
         assert self.__is_connected, 'Cannot send before connecting'
+        assert self.__client_socket, 'Cannot send before connecting'
 
         to_send: str = state
         to_send += (' ' * (type(self).__STATE_STR_MAX_SIZE - len(to_send)))
 
-        self.__socket.send(bytes(to_send, 'UTF-8'))
+        self.__client_socket.send(bytes(to_send, 'UTF-8'))
 
     def __recv_game_state(self) -> str:
         '''
@@ -236,9 +262,9 @@ class StrategoNetworker:
         '''
 
         assert self.__is_connected, 'Cannot recv before connecting'
+        assert self.__client_socket, 'Cannot recv before connecting'
 
-        state: str = self.__socket.recv(
-            type(self).__STATE_STR_MAX_SIZE).decode('UTF-8')
-        state = state.strip(' ')
+        b: bytes = self.__client_socket.recv(type(self).__STATE_STR_MAX_SIZE)
+        state: str = b.decode('UTF-8').strip(' ')
 
         return state

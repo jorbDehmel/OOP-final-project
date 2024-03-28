@@ -9,7 +9,7 @@ Final project for object oriented programming w/ Dr. Ram Basnet.
 
 Nate Barnaik \
 Jordan Dehmel \
-Kate Eckhart \
+Kate Eckhart
 
 # Abstract
 
@@ -105,7 +105,9 @@ Nate Barnaik:
 Jordan Dehmel:
  - Basics framework for GUI, Networking, and Pieces
  - Initial piece unit testing
- - 2 UML diagrams
+ - 2 UML diagrams (development and physical)
+ - KanBan board management
+ - Github issues
 
 Kate Eckhart:
  - 2 UML diagrams
