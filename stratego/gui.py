@@ -5,7 +5,7 @@ presented to the user.
 '''
 
 import tkinter as tk
-from typing import Optional, List
+from typing import Optional, List, Callable
 import stratego.board as b
 import stratego.network as n
 
@@ -70,7 +70,7 @@ class StrategoGUI:
 
         self.__root.mainloop()
 
-    def __bind(self, sequence: str, event: callable) -> None:
+    def __bind(self, sequence: str, event: Callable[[], None]) -> None:
         '''
         Bind the given sequence to the given callable. The
         callable will be passed no arguments. Any keybinding
@@ -96,7 +96,7 @@ class StrategoGUI:
 
         # Destroy all children
         for child in self.__root.winfo_children():
-            child.destroy() # Metal
+            child.destroy()  # Metal
 
         # Unbind all keybindings registered herein
         for key in self.__keybindings:
