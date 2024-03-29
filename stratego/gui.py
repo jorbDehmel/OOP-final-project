@@ -377,6 +377,52 @@ class StrategoGUI:
                   command=join_game_callback).pack()
         self.__bind('<Return>', join_game_callback)
 
+    def __setup_left_to_place(self) -> None:
+        '''
+        '''
+
+        # 6 Bombs
+        for _ in range(6):
+            self.__left_to_place.append(p.Bomb(self.__color))
+
+        # 8 Scouts
+        for _ in range(8):
+            self.__left_to_place.append(p.Scout(self.__color))
+
+        # 5 Miners
+        for _ in range(5):
+            self.__left_to_place.append(p.Miner(self.__color))
+
+        # 1 Marshal
+        # 1 Spy
+        # 1 Flag
+        # 1x9
+        # 2x8
+        self.__left_to_place += [p.Marshal(self.__color),
+                                 p.Spy(self.__color),
+                                 p.Flag(self.__color),
+                                 p.Troop(self.__color, 9),
+                                 p.Troop(self.__color, 8),
+                                 p.Troop(self.__color, 8)]
+
+        # 3x7
+        for _ in range(3):
+            self.__left_to_place.append(p.Troop(self.__color, 7))
+
+        # 4x6
+        for _ in range(4):
+            self.__left_to_place.append(p.Troop(self.__color, 6))
+
+        # 4x5
+        for _ in range(4):
+            self.__left_to_place.append(p.Troop(self.__color, 5))
+
+        # 4x4
+        for _ in range(4):
+            self.__left_to_place.append(p.Troop(self.__color, 4))
+
+        assert len(self.__left_to_place) == 40
+
     def __setup_screen(self, first: bool = False) -> None:
         '''
         The board setup screen.
@@ -389,51 +435,7 @@ class StrategoGUI:
 
         # Setup pieces left to place if need be
         if first:
-            # 6 Bombs
-            for _ in range(6):
-                self.__left_to_place.append(p.Bomb(self.__color))
-
-            # 8 Scouts
-            for _ in range(8):
-                self.__left_to_place.append(p.Scout(self.__color))
-
-            # 5 Miners
-            for _ in range(5):
-                self.__left_to_place.append(p.Miner(self.__color))
-
-            # 1 Marshal
-            self.__left_to_place.append(p.Marshal(self.__color))
-
-            # 1 Spy
-            self.__left_to_place.append(p.Spy(self.__color))
-
-            # 1 Flag
-            self.__left_to_place.append(p.Flag(self.__color))
-
-            # 1x9
-            self.__left_to_place.append(p.Troop(self.__color, 9))
-
-            # 2x8
-            self.__left_to_place.append(p.Troop(self.__color, 8))
-            self.__left_to_place.append(p.Troop(self.__color, 8))
-
-            # 3x7
-            for _ in range(3):
-                self.__left_to_place.append(p.Troop(self.__color, 7))
-
-            # 4x6
-            for _ in range(4):
-                self.__left_to_place.append(p.Troop(self.__color, 6))
-
-            # 4x5
-            for _ in range(4):
-                self.__left_to_place.append(p.Troop(self.__color, 5))
-
-            # 4x4
-            for _ in range(4):
-                self.__left_to_place.append(p.Troop(self.__color, 4))
-
-            assert len(self.__left_to_place) == 40
+            self.__setup_left_to_place()
 
         # If done w/ setup, continue to play
         if len(self.__left_to_place) == 0:
