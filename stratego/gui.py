@@ -55,6 +55,8 @@ class StrategoGUI:
         self.__from_selection: Optional[Tuple[int, int]] = None
         self.__to_selection: Optional[Tuple[int, int]] = None
 
+        self.__left_to_place: List[p.Piece] = []
+
         # This keybinding is not tracked and thus not erased
         self.__root.bind('q', lambda _: self.__quit())
 
@@ -117,10 +119,11 @@ class StrategoGUI:
 
             def __init__(self,
                          x: int,
-                         y: int) -> None:
+                         y: int,
+                         c: Callable[[int, int], None]) -> None:
                 self.__x = x
                 self.__y = y
-                self.__c = callback
+                self.__c = c
 
             def __call__(self) -> None:
                 self.__c(self.__x, self.__y)
@@ -131,18 +134,17 @@ class StrategoGUI:
 
             for x in range(self.__board.width):
 
-                callback: Ret = Ret(x, y)
-
                 path: str = self.__piece_to_image_path(self.__board.get(x, y))
                 image: tk.PhotoImage = self.__get_image(path)
 
-                tk.Button(row, command=callback,
-                          image=image, width=32, height=32).pack(side='left')
+                tk.Button(row,
+                          command=Ret(x, y, callback),
+                          image=image,
+                          width=32,
+                          height=32).pack(side='left')
             row.pack()
 
-    def __board_movement_callback(self,
-                                  x: int,
-                                  y: int) -> None:
+    def __board_movement_callback(self, x: int, y: int) -> None:
         '''
         This is a callback function for board buttons. The first
         time it is called, it loads into self.__from_selection.
@@ -152,11 +154,27 @@ class StrategoGUI:
 
         :param x: The x-coord of the board button pressed.
         :param y: The y-coord of the board button pressed.
-        :param when_complete: The callback function for when
-            two buttons have been pressed.
         '''
 
-        print(f'Board button pressed: ({x}, {y})')
+        if self.__from_selection is None:
+            self.__from_selection = (x, y)
+            return
+
+        self.__to_selection = (x, y)
+
+        self.__check_move()
+
+        self.__from_selection = None
+        self.__to_selection = None
+
+    def __board_setup_callback(self, x: int, y: int) -> None:
+        '''
+        This is a callback function for board buttons. This is
+        used for setting up the board.
+
+        :param x: The x-coord of the board button pressed.
+        :param y: The y-coord of the board button pressed.
+        '''
 
         if self.__from_selection is None:
             self.__from_selection = (x, y)
@@ -302,7 +320,7 @@ class StrategoGUI:
 
             # When API call is done, advance to next screen
             self.__color = 'RED'
-            self.__setup_screen()
+            self.__setup_screen(True)
 
         tk.Button(self.__root,
                   text='Host This Game',
@@ -348,7 +366,7 @@ class StrategoGUI:
             if result == 0:
                 # When API call is done, advance to next screen
                 self.__color = 'BLUE'
-                self.__setup_screen()
+                self.__setup_screen(True)
 
             else:
                 tk.Label(self.__root,
@@ -359,19 +377,78 @@ class StrategoGUI:
                   command=join_game_callback).pack()
         self.__bind('<Return>', join_game_callback)
 
-    def __setup_screen(self) -> None:
+    def __setup_screen(self, first: bool = False) -> None:
         '''
         The board setup screen.
+
+        :param first: Only true the first time this function is
+            called.
         '''
 
         self.__clear()
 
+        # Setup pieces left to place if need be
+        if first:
+            # 6 Bombs
+            for _ in range(6):
+                self.__left_to_place.append(p.Bomb(self.__color))
+
+            # 8 Scouts
+            for _ in range(8):
+                self.__left_to_place.append(p.Scout(self.__color))
+
+            # 5 Miners
+            for _ in range(5):
+                self.__left_to_place.append(p.Miner(self.__color))
+
+            # 1 Marshal
+            self.__left_to_place.append(p.Marshal(self.__color))
+
+            # 1 Spy
+            self.__left_to_place.append(p.Spy(self.__color))
+
+            # 1 Flag
+            self.__left_to_place.append(p.Flag(self.__color))
+
+            # 1x9
+            self.__left_to_place.append(p.Troop(self.__color, 9))
+
+            # 2x8
+            self.__left_to_place.append(p.Troop(self.__color, 8))
+            self.__left_to_place.append(p.Troop(self.__color, 8))
+
+            # 3x7
+            for _ in range(3):
+                self.__left_to_place.append(p.Troop(self.__color, 7))
+
+            # 4x6
+            for _ in range(4):
+                self.__left_to_place.append(p.Troop(self.__color, 6))
+
+            # 4x5
+            for _ in range(4):
+                self.__left_to_place.append(p.Troop(self.__color, 5))
+
+            # 4x4
+            for _ in range(4):
+                self.__left_to_place.append(p.Troop(self.__color, 4))
+
+            assert len(self.__left_to_place) == 40
+
+        # If done w/ setup, continue to play
+        if len(self.__left_to_place) == 0:
+
+            if self.__color == 'RED':
+                self.__your_turn_screen()
+
+            else:
+                self.__their_turn_screen()
+
+            return
+
         tk.Label(self.__root, text='Set up your pieces.').pack()
 
-        def foobar(x, y) -> None:
-            pass
-
-        self.__display_board(foobar)
+        self.__display_board(self.__board_setup_callback)
 
     def __your_turn_screen(self) -> None:
         '''
@@ -385,6 +462,10 @@ class StrategoGUI:
         self.__display_board(self.__board_movement_callback)
 
     def __check_move(self) -> None:
+
+        assert self.__from_selection
+        assert self.__to_selection
+
         # Check validity
         try:
             state = self.__board.move(self.__color,
