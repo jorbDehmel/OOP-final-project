@@ -128,6 +128,23 @@ class Board:
 
         return self._places[y][x]
 
+    def set(self, x: int, y: int, what: Square) -> None:
+        '''
+        Set the piece at the given point.
+
+        :param x: The x position.
+        :param y: The y position.
+        :param what: The item to set.
+        '''
+
+        if x >= self._WIDTH or y >= self._HEIGHT:
+            raise ValueError('Invalid dimension')
+
+        if x < 0 or y < 0:
+            raise ValueError('Invalid dimension')
+
+        self._places[y][x] = what
+
     def move(self,
              color: str,
              from_pair: Tuple[int, int],

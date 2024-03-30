@@ -73,21 +73,6 @@ class Bomb(Piece):
 
         return 'B'
 
-    def confront(self, other: Optional[Piece]) -> Optional[Piece]:
-        '''
-        A confrontation between another piece and this one.
-
-        :returns: The winning piece.
-        '''
-
-        if other is None:
-            return self
-
-        if repr(other) == '3':
-            return other
-
-        return self
-
 
 class Troop(Piece):
     '''

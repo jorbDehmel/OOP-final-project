@@ -2,16 +2,35 @@
 Tests the `Piece` classes for OOP Stratego.
 '''
 
-from typing import Optional
+from typing import Optional, List, TypeAlias, Dict
 from unittest import TestCase
 from stratego import pieces as p
+from stratego import board as b
 
 
-class TestStratego(TestCase):
+class TestStrategoPiece(TestCase):
     '''
     A test case for stratego, inheriting from the
     unittest.TestCase class.
     '''
+
+    def test_piece(self) -> None:
+        '''
+        Tests attributes of the piece class which are not
+        otherwise covered.
+        '''
+
+        with self.assertRaises(ValueError):
+            p.Piece('foobar')
+
+        with self.assertRaises(TypeError):
+            repr(p.Piece('RED'))
+
+        with self.assertRaises(TypeError):
+            p.Piece('RED').confront(p.Piece('BLUE'))
+
+        self.assertEqual(p.Piece('RED').color, 'RED')
+        self.assertEqual(p.Piece('BLUE').color, 'BLUE')
 
     def test_bomb(self) -> None:
         '''
@@ -23,6 +42,9 @@ class TestStratego(TestCase):
         # Create a bomb and a regular troop
         bomb: p.Bomb = p.Bomb('RED')
         troop: p.Troop = p.Troop('BLUE', 5)
+
+        self.assertEqual(repr(bomb), 'B')
+        self.assertEqual(repr(troop), '5')
 
         # Simulate an interaction between the two
         result: Optional[p.Piece] = troop.confront(bomb)
@@ -74,6 +96,45 @@ class TestStratego(TestCase):
 
     def test_confrontation(self) -> None:
         '''
-        Tests random confrontations between arbitrary pieces using
-        the hypothesis library.
+        Tests random confrontations between arbitrary pieces.
         '''
+
+        # Options to permute over
+        possible_types: List[TypeAlias] = [None, b.LakeSquare,
+                                           p.Bomb, p.Flag, p.Marshal,
+                                           p.Miner, p.Scout, p.Spy]
+        possible_colors: List[str] = ['BLUE', 'RED']
+        possible_troop_ranks: List[int] = [4, 5, 6, 7, 8, 9]
+
+        all_pieces: List[b.Square] = []
+
+        for color in possible_colors:
+
+            for possible_type in possible_types:
+                if possible_type is None:
+                    all_pieces.append(None)
+
+                elif possible_type is b.LakeSquare:
+                    all_pieces.append(b.LakeSquare())
+
+                else:
+                    all_pieces.append(possible_type(color))
+
+            for rank in possible_troop_ranks:
+                all_pieces.append(p.Troop(color, rank))
+
+        for attacker in all_pieces:
+            if attacker is None:
+                continue
+
+            elif not isinstance(attacker, p.Troop):
+                continue
+
+            for defender in all_pieces:
+                if defender is attacker:
+                    continue
+
+                attacker.confront(defender)
+
+                repr(attacker)
+                repr(defender)

@@ -45,6 +45,9 @@ class StrategoGUI:
 
         self.__root: tk.Tk = tk.Tk()
 
+        self.__root.option_add('*Font', 'Times 16')
+        self.__root.geometry("384x416")
+
         self.__board: b.Board = b.Board()
         self.__networking: n.StrategoNetworker = n.StrategoNetworker()
         self.__color: str = 'Stratego'
@@ -140,6 +143,7 @@ class StrategoGUI:
                 tk.Button(row,
                           command=Ret(x, y, callback),
                           image=image,
+                          border=0,
                           width=32,
                           height=32).pack(side='left')
             row.pack()

@@ -18,6 +18,7 @@ def main(_: List[str]) -> int:
     __debug: bool = True
 
     if __debug:
+        print('Running in debug mode: Errors will not be caught.')
         StrategoGUI()
 
     else:

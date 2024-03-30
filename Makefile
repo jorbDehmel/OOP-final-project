@@ -2,7 +2,7 @@ TEST = python -m pytest
 TEST_ARGS = -s --verbose --color=yes
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
-COVERAGE = pytest --cov
+COVERAGE = pytest --cov --cov-report term-missing
 TARGETS := main.py stratego/*.py
 
 .PHONY: all

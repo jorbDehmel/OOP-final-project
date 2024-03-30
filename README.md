@@ -108,6 +108,7 @@ Jordan Dehmel:
  - 2 UML diagrams (development and physical)
  - KanBan board management
  - Github issues
+ - GUI + artwork
 
 Kate Eckhart:
  - 2 UML diagrams
