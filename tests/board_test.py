@@ -2,6 +2,7 @@
 Tests the `Board` class for OOP Stratego.
 '''
 
+<<<<<<< Updated upstream
 import unittest
 from stratego import board as b
 from stratego import pieces as p
@@ -73,3 +74,6 @@ class TestBoard(unittest.TestCase):
 
         with self.assertRaises(b.InvalidMoveError):
             board.move('BLUE', (5, 5), (5, 6))
+=======
+from stratego import board as b
+>>>>>>> Stashed changes

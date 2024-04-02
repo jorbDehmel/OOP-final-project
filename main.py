@@ -2,11 +2,10 @@
 Driver for OOP Network-based Stratego in Python.
 '''
 
-from typing import List
-import sys
 from stratego.gui import StrategoGUI
 
 
+<<<<<<< Updated upstream
 def main(_: List[str]) -> int:
     '''
     Main function which drives Stratego.
@@ -34,6 +33,8 @@ def main(_: List[str]) -> int:
     return 0
 
 
+=======
+>>>>>>> Stashed changes
 # Call the main function, launching the game.
 if __name__ == '__main__':
-    sys.exit(main(sys.argv))
+    StrategoGUI()
