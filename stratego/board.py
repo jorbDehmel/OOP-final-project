@@ -128,7 +128,7 @@ class Board:
 
         return self._places[y][x]
 
-    def set(self, x: int, y: int, what: Square) -> None:
+    def set_piece(self, x: int, y: int, what: Square) -> None:
         '''
         Set the piece at the given point.
 
@@ -183,7 +183,10 @@ class Board:
 
             return 'GOOD'
 
-        raise InvalidMoveError('Failure in move checking algorithm')
+        else:
+
+            self._places[to_y][to_x] = t
+            return 'GOOD'
 
     @classmethod
     def __move_is_inside_board(cls,
