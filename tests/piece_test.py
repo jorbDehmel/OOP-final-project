@@ -2,7 +2,7 @@
 Tests the `Piece` classes for OOP Stratego.
 '''
 
-from typing import Optional, List, TypeAlias, Dict
+from typing import Optional, List, TypeAlias
 from unittest import TestCase
 from stratego import pieces as p
 from stratego import board as b
