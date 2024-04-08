@@ -48,7 +48,7 @@ class StrategoGUI:
         self.__root.option_add('*Font', 'Times 16')
         self.__root.geometry("384x416")
 
-        self.__board: b.Board = b.Board()
+        self.__board: b.Board = b.Board.get_instance()
         self.__networking: n.StrategoNetworker = n.StrategoNetworker()
         self.__color: str = 'Stratego'
 

@@ -31,9 +31,22 @@ class Board:
     aggregates pieces.
     '''
 
-    _IS_INSTANTIATED: bool = False
+    __INSTANCE: Optional['Board'] = None
     _WIDTH: int = 10
     _HEIGHT: int = 10
+
+    @classmethod
+    def get_instance(cls) -> 'Board':
+        '''
+        Returns the instance of this class, instantiating if
+        necessary.
+        :returns: The board.
+        '''
+
+        if cls.__INSTANCE is None:
+            cls.__INSTANCE = Board()
+
+        return cls.__INSTANCE
 
     def __init__(self) -> None:
         '''
@@ -42,10 +55,10 @@ class Board:
         '''
 
         # Ensure singleton-ness
-        if type(self)._IS_INSTANTIATED:
+        if type(self).__INSTANCE is not None:
             raise ValueError('Cannot instantiate multiple boards!')
 
-        type(self)._IS_INSTANTIATED = True
+        type(self).__INSTANCE = self
 
         self._places: List[List[Square]] = []
 

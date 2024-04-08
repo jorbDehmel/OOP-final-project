@@ -18,4 +18,4 @@ class GUITest(unittest.TestCase):
         '''
 
         with mock.patch('tkinter.Tk'):
-            g.StrategoGUI()
+            g.StrategoGUI.get_instance()
