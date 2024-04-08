@@ -46,7 +46,7 @@ class StrategoGUI:
         self.__root: tk.Tk = tk.Tk()
 
         self.__root.option_add('*Font', 'Times 16')
-        self.__root.geometry("384x416")
+        self.__root.geometry("448x448")
 
         self.__board: b.Board = b.Board.get_instance()
         self.__networking: n.StrategoNetworker = n.StrategoNetworker()
@@ -180,16 +180,21 @@ class StrategoGUI:
         :param y: The y-coord of the board button pressed.
         '''
 
-        if self.__from_selection is None:
-            self.__from_selection = (x, y)
-            return
+        # Red is able to place pieces in the TOP 4 rows
+        if self.__color == 'RED':
+            if y not in range(0, 4):
+                print('Invalid placement!')
+                return
 
-        self.__to_selection = (x, y)
+        # Blue is able to place pieces in the BOTTOM 4 rows
+        else:
+            if y not in range(6, 10):
+                print('Invalid placement!')
+                return
 
-        self.__check_move()
+        self.__board.set_piece(x, y, self.__left_to_place.pop(0))
 
-        self.__from_selection = None
-        self.__to_selection = None
+        self.__setup_screen()
 
     def __home_screen(self) -> None:
         '''
@@ -232,12 +237,13 @@ class StrategoGUI:
         self.__clear()
 
         tk.Label(self.__root,
-                 text='2024, N Barnaik, J Dehmel, K Eckhart').pack()
+                 text='2024\nN Barnaik, J Dehmel, K Eckhart').pack()
         tk.Label(self.__root,
-                 text='This software was developed as an exercise,\n' +
-                      'and the authors lay no claim to the copyright\n' +
-                      'of Stratego. This software is not to be used\n' +
-                      'commercially.'
+                 text='This software was developed as\n' +
+                      'an exercise, and the authors lay\n' +
+                      'no claim to the copyright of\n' +
+                      'Stratego. This software is not\n' +
+                      'to be used commercially.'
                  ).pack()
 
         tk.Button(self.__root,
@@ -314,7 +320,7 @@ class StrategoGUI:
             # Display waiting text
             self.__clear()
             tk.Label(self.__root,
-                     text=f'IP: {ip_str} Port: {port_int}'
+                     text=f'IP: {ip_str}\nPort: {port_int}\n'
                           + f'Password: {password}').pack()
             tk.Label(self.__root, text='Waiting for other player...').pack()
             self.__root.update()
@@ -452,7 +458,16 @@ class StrategoGUI:
 
             return
 
-        tk.Label(self.__root, text='Set up your pieces.').pack()
+        tk.Label(self.__root, text='Click to place this piece:').pack()
+
+        path: str = self.__piece_to_image_path(self.__left_to_place[0])
+        image: tk.PhotoImage = self.__get_image(path)
+
+        tk.Button(self.__root,
+                  image=image,
+                  border=0,
+                  width=32,
+                  height=32).pack()
 
         self.__display_board(self.__board_setup_callback)
 
