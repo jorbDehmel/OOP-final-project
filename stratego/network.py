@@ -168,23 +168,16 @@ class StrategoNetworker:
         except socket.error:
             pass
 
-    def sync_game(self, board: Board, state: str) -> Tuple[Board, str]:
+    def send_game(self, board: Board, state: str) -> None:
         '''
-        It would be wise to run this async.
-
-        Sends the board, syncs the game state.
-        If the game state is 'RED', 'BLUE', or 'HALT', stops.
-        Otherwise, waits until a board is received, then syncs
-        the game state again. Returns a tuple of the board and
-        the state after all this.
-
-        :param board: The current board state.
-        :param state: The current game state.
-        :returns: A tuple (synced_board, game_state).
         '''
 
         self.__send_board(board)
         self.__send_game_state(state)
+
+    def recv_game(self) -> Tuple[Board, str]:
+        '''
+        '''
 
         out_board: Board = self.__recv_board()
         out_state: str = self.__recv_game_state()

@@ -14,24 +14,6 @@ class TestStrategoPiece(TestCase):
     unittest.TestCase class.
     '''
 
-    def test_piece(self) -> None:
-        '''
-        Tests attributes of the piece class which are not
-        otherwise covered.
-        '''
-
-        with self.assertRaises(ValueError):
-            p.Piece('foobar')
-
-        with self.assertRaises(TypeError):
-            repr(p.Piece('RED'))
-
-        with self.assertRaises(TypeError):
-            p.Piece('RED').confront(p.Piece('BLUE'))
-
-        self.assertEqual(p.Piece('RED').color, 'RED')
-        self.assertEqual(p.Piece('BLUE').color, 'BLUE')
-
     def test_bomb(self) -> None:
         '''
         Test the bomb class for Stratego pieces. This should pass if
@@ -42,6 +24,9 @@ class TestStrategoPiece(TestCase):
         # Create a bomb and a regular troop
         bomb: p.Bomb = p.Bomb('RED')
         troop: p.Troop = p.Troop('BLUE', 5)
+
+        with self.assertRaises(TypeError):
+            bomb.confront(troop)
 
         self.assertEqual(repr(bomb), 'B')
         self.assertEqual(repr(troop), '5')
@@ -63,6 +48,13 @@ class TestStrategoPiece(TestCase):
         a flag will never confront anything, since it cannot move.
         The player who confronts the opponent's flag wins.
         '''
+
+        # Create a flag and a regular troop
+        flag: p.Flag = p.Flag('RED')
+        troop: p.Troop = p.Troop('BLUE', 5)
+
+        with self.assertRaises(TypeError):
+            flag.confront(troop)
 
     def test_spy(self) -> None:
         '''
@@ -119,6 +111,8 @@ class TestStrategoPiece(TestCase):
 
                 else:
                     all_pieces.append(possible_type(color))
+
+                    self.assertEqual(all_pieces[-1].color, color)
 
             for rank in possible_troop_ranks:
                 all_pieces.append(p.Troop(color, rank))

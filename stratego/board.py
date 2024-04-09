@@ -180,7 +180,7 @@ class Board:
             raise InvalidMoveError('Failed to make move')
 
         s: Square = self._places[from_y][from_x]
-        t: Square = self._places[to_y][to_y]
+        t: Square = self._places[to_y][to_x]
         if isinstance(s, p.Piece) and isinstance(t, p.Piece):
 
             # We have to put all this in the if statement due
@@ -190,16 +190,16 @@ class Board:
             defender: p.Piece = t
 
             self._places[to_y][to_x] = mover.confront(defender)
+            self._places[to_y][to_x] = None
 
             if isinstance(self._places[to_y][to_x], p.Flag):
                 return color
 
             return 'GOOD'
 
-        else:
-
-            self._places[to_y][to_x] = t
-            return 'GOOD'
+        self._places[to_y][to_x] = self._places[from_y][from_x]
+        self._places[from_y][from_x] = None
+        return 'GOOD'
 
     @classmethod
     def __move_is_inside_board(cls,

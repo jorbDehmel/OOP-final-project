@@ -18,10 +18,12 @@ class TestBoard(unittest.TestCase):
         class.
         '''
 
-        board: b.Board = b.Board()
+        board: b.Board = b.Board.get_instance()
 
         with self.assertRaises(ValueError):
             b.Board()
+
+        _ = b.Board.get_instance()
 
         self.assertEqual(board.height, 10)
         self.assertEqual(board.width, 10)
