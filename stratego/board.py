@@ -3,7 +3,7 @@ This module defines the board class for an Object-Oriented
 Stratego game.
 '''
 
-from typing import Union, List, Optional, Tuple
+from typing import Union, List, Optional, Tuple, Literal
 import stratego.pieces as p
 
 
@@ -159,9 +159,9 @@ class Board:
         self._places[y][x] = what
 
     def move(self,
-             color: str,
+             color: Literal['BLUE', 'RED'],
              from_pair: Tuple[int, int],
-             to_pair: Tuple[int, int]) -> str:
+             to_pair: Tuple[int, int]) -> Literal['RED', 'BLUE', 'GOOD']:
         '''
         Attempts to move from the given coordinates to the given
         coordinates. Raises error if the move is invalid. If
@@ -180,7 +180,7 @@ class Board:
             raise InvalidMoveError('Failed to make move')
 
         s: Square = self._places[from_y][from_x]
-        t: Square = self._places[to_y][to_y]
+        t: Square = self._places[to_y][to_x]
         if isinstance(s, p.Piece) and isinstance(t, p.Piece):
 
             # We have to put all this in the if statement due
@@ -190,16 +190,16 @@ class Board:
             defender: p.Piece = t
 
             self._places[to_y][to_x] = mover.confront(defender)
+            self._places[from_y][from_x] = None
 
             if isinstance(self._places[to_y][to_x], p.Flag):
                 return color
 
             return 'GOOD'
 
-        else:
-
-            self._places[to_y][to_x] = t
-            return 'GOOD'
+        self._places[to_y][to_x] = self._places[from_y][from_x]
+        self._places[from_y][from_x] = None
+        return 'GOOD'
 
     @classmethod
     def __move_is_inside_board(cls,
@@ -313,7 +313,7 @@ class Board:
                     if self._places[from_y][x] is not None:
                         return False
 
-            # If moving in the x-direction
+            # If moving in the y-direction
             else:
                 y_step: int = 1 if to_y > from_y else -1
 

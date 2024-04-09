@@ -17,5 +17,5 @@ class GUITest(unittest.TestCase):
         Test g.StrategoGUI.__init__() via patching.
         '''
 
-        with mock.patch('tkinter.Tk'):
+        with mock.patch('tkinter.Tk') as _:
             g.StrategoGUI.get_instance()

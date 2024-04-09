@@ -77,6 +77,9 @@ class TestStrategoPiece(TestCase):
         # Create a bomb
         bomb: p.Bomb = p.Bomb('RED')
 
+        with self.assertRaises(TypeError):
+            bomb.confront(troop)
+
         self.assertEqual(repr(bomb), 'B')
 
         # Simulate an interaction between a miner and a bomb
@@ -129,9 +132,19 @@ class TestStrategoPiece(TestCase):
 
 
     def test_spy_marshal(self) -> None:
+=======
+        # Create a flag and a regular troop
+        flag: p.Flag = p.Flag('RED')
+        troop: p.Troop = p.Troop('BLUE', 5)
+
+        with self.assertRaises(TypeError):
+            flag.confront(troop)
+
+    def test_spy_and_marshal(self) -> None:
         '''
-        Tests the spy piece for stratego. The spy should be killed
-        by everything except a marshal, which it will defeat.
+        Tests the spy piece for stratego. The spy should defeat
+        a marshal when the spy attacks, but not when the marshal
+        attacks.
         '''
 
         spy = p.Spy('RED')

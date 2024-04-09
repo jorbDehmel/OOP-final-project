@@ -109,6 +109,8 @@ Jordan Dehmel:
  - KanBan board management
  - Github issues
  - GUI + artwork
+ - GUI testing
+ - Piece testing
 
 Kate Eckhart:
  - 2 UML diagrams

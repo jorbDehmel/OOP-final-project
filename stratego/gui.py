@@ -4,8 +4,9 @@ aggregate the board and networking. This is what should be
 presented to the user.
 '''
 
+from random import randint
 import tkinter as tk
-from typing import Optional, List, Callable, Tuple, Dict
+from typing import Optional, List, Callable, Tuple, Dict, Literal
 from PIL import Image, ImageTk
 import stratego.board as b
 import stratego.network as n
@@ -44,13 +45,16 @@ class StrategoGUI:
         assert type(self).__INSTANCE is None, 'Cannot reinstantiate singleton'
 
         self.__root: tk.Tk = tk.Tk()
-
+        self.__root.configure(bg='white')
+        self.__root.option_add('*Background', 'white')
         self.__root.option_add('*Font', 'Times 16')
-        self.__root.geometry("384x416")
+        self.__root.geometry("448x448")
 
         self.__board: b.Board = b.Board.get_instance()
         self.__networking: n.StrategoNetworker = n.StrategoNetworker()
-        self.__color: str = 'Stratego'
+        self.__title: str = 'Stratego'
+
+        self.__color: Literal['BLUE', 'RED'] = 'RED'
 
         self.__keybindings: List[str] = []
         self.__image_cache: Dict[str, tk.PhotoImage] = {}
@@ -63,7 +67,7 @@ class StrategoGUI:
         # This keybinding is not tracked and thus not erased
         self.__root.bind('q', lambda _: self.__quit())
 
-        self.__root.title(self.__color)
+        self.__root.title(self.__title)
         self.__home_screen()
 
     def __piece_to_image_path(self, piece: b.Square) -> str:
@@ -85,7 +89,10 @@ class StrategoGUI:
                 if piece.color != self.__color:
                     return f'stratego/images/{piece.color}_blank.png'
 
-                return f'stratego/images/{piece.color}_{repr(piece)}.png'
+                try:
+                    return f'stratego/images/{piece.color}_{repr(piece)}.png'
+                except TypeError:
+                    return f'stratego/images/{piece.color}_blank.png'
 
         return 'stratego/images/blank.png'
 
@@ -148,29 +155,6 @@ class StrategoGUI:
                           height=32).pack(side='left')
             row.pack()
 
-    def __board_movement_callback(self, x: int, y: int) -> None:
-        '''
-        This is a callback function for board buttons. The first
-        time it is called, it loads into self.__from_selection.
-        The second time, it loads into self.__to_selection and
-        calls the given callback function. Then, it resets its
-        member variables.
-
-        :param x: The x-coord of the board button pressed.
-        :param y: The y-coord of the board button pressed.
-        '''
-
-        if self.__from_selection is None:
-            self.__from_selection = (x, y)
-            return
-
-        self.__to_selection = (x, y)
-
-        self.__check_move()
-
-        self.__from_selection = None
-        self.__to_selection = None
-
     def __board_setup_callback(self, x: int, y: int) -> None:
         '''
         This is a callback function for board buttons. This is
@@ -180,16 +164,38 @@ class StrategoGUI:
         :param y: The y-coord of the board button pressed.
         '''
 
-        if self.__from_selection is None:
-            self.__from_selection = (x, y)
+        # Red is able to place pieces in the TOP 4 rows
+        if self.__color == 'RED':
+            if y not in range(0, 4) or self.__board.get(x, y) is not None:
+                print('Invalid placement!')
+                return
+
+        # Blue is able to place pieces in the BOTTOM 4 rows
+        else:
+            if y not in range(6, 10) or self.__board.get(x, y) is not None:
+                print('Invalid placement!')
+                return
+
+        self.__board.set_piece(x, y, self.__left_to_place.pop(0))
+
+        # If done w/ setup, continue to play
+        if len(self.__left_to_place) == 0:
+
+            if self.__color == 'RED':
+                self.__your_turn_screen()
+
+            else:
+                their_board, _ = self.__networking.recv_game()
+                for y in range(6, 10):
+                    for x in range(0, 10):
+                        their_board.set_piece(x, y, self.__board.get(x, y))
+                self.__board = their_board
+
+                self.__your_turn_screen()
+
             return
 
-        self.__to_selection = (x, y)
-
-        self.__check_move()
-
-        self.__from_selection = None
-        self.__to_selection = None
+        self.__setup_screen()
 
     def __home_screen(self) -> None:
         '''
@@ -198,7 +204,7 @@ class StrategoGUI:
 
         self.__clear()
 
-        tk.Label(self.__root, text='Stratego').pack()
+        tk.Label(self.__root, text='Stratego\n\n').pack()
 
         tk.Button(self.__root,
                   text='Host Game',
@@ -232,12 +238,13 @@ class StrategoGUI:
         self.__clear()
 
         tk.Label(self.__root,
-                 text='2024, N Barnaik, J Dehmel, K Eckhart').pack()
+                 text='2024\nN Barnaik, J Dehmel, K Eckhart').pack()
         tk.Label(self.__root,
-                 text='This software was developed as an exercise,\n' +
-                      'and the authors lay no claim to the copyright\n' +
-                      'of Stratego. This software is not to be used\n' +
-                      'commercially.'
+                 text='This software was developed as\n' +
+                      'an exercise, and the authors lay\n' +
+                      'no claim to the copyright of\n' +
+                      'Stratego. This software is not\n' +
+                      'to be used commercially.'
                  ).pack()
 
         tk.Button(self.__root,
@@ -280,8 +287,7 @@ class StrategoGUI:
             self.__root.unbind(key)
 
         # Set title
-        if self.__color:
-            self.__root.title(self.__color)
+        self.__root.title(self.__title)
 
     def __host_game_screen(self) -> None:
         '''
@@ -307,15 +313,28 @@ class StrategoGUI:
 
             # Extract fields
             ip_str: str = ip.get()
-            port_int: int = int(port.get())
+            if ip_str == '':
+                ip_str = '127.0.0.1'
 
-            password: str = self.__networking.host_game(ip_str, port_int)
+            port_str: str = port.get()
+            if port_str == '':
+                port_str = '12345'
+
+            port_int: int = int(port_str)
+            password: str = ''
+
+            while password == '':
+                try:
+                    password = self.__networking.host_game(ip_str, port_int)
+                except OSError:
+                    port_int += 1
+                    password = ''
 
             # Display waiting text
             self.__clear()
             tk.Label(self.__root,
-                     text=f'IP: {ip_str} Port: {port_int}'
-                          + f'Password: {password}').pack()
+                     text=f'IP: {ip_str}\nPort: {port_int}\n'
+                     + f'Password: {password}').pack()
             tk.Label(self.__root, text='Waiting for other player...').pack()
             self.__root.update()
 
@@ -324,7 +343,9 @@ class StrategoGUI:
 
             # When API call is done, advance to next screen
             self.__color = 'RED'
-            self.__setup_screen(True)
+
+            self.__setup_left_to_place()
+            self.__setup_screen()
 
         tk.Button(self.__root,
                   text='Host This Game',
@@ -358,9 +379,20 @@ class StrategoGUI:
             '''
 
             # Extract fields
-            ip_str: str = ip.get()
-            port_int: int = int(port.get())
             password_str: str = password.get()
+
+            if password_str == '':
+                return
+
+            ip_str: str = ip.get()
+            if ip_str == '':
+                ip_str = '127.0.0.1'
+
+            port_str: str = port.get()
+            if port_str == '':
+                port_str = '12345'
+
+            port_int: int = int(port_str)
 
             # Make API call and wait
             result: int = self.__networking.join_game(ip_str,
@@ -370,7 +402,9 @@ class StrategoGUI:
             if result == 0:
                 # When API call is done, advance to next screen
                 self.__color = 'BLUE'
-                self.__setup_screen(True)
+
+                self.__setup_left_to_place()
+                self.__setup_screen()
 
             else:
                 tk.Label(self.__root,
@@ -383,78 +417,117 @@ class StrategoGUI:
 
     def __setup_left_to_place(self) -> None:
         '''
+        Sets up the self.__left_to_place variable, which is a
+        list of all the pieces which have not yet been placed
+        by this user.
         '''
 
         # 6 Bombs
-        for _ in range(6):
-            self.__left_to_place.append(p.Bomb(self.__color))
-
         # 8 Scouts
-        for _ in range(8):
-            self.__left_to_place.append(p.Scout(self.__color))
-
         # 5 Miners
-        for _ in range(5):
-            self.__left_to_place.append(p.Miner(self.__color))
-
         # 1 Marshal
         # 1 Spy
         # 1 Flag
         # 1x9
         # 2x8
-        self.__left_to_place += [p.Marshal(self.__color),
-                                 p.Spy(self.__color),
-                                 p.Flag(self.__color),
-                                 p.Troop(self.__color, 9),
-                                 p.Troop(self.__color, 8),
-                                 p.Troop(self.__color, 8)]
-
         # 3x7
-        for _ in range(3):
-            self.__left_to_place.append(p.Troop(self.__color, 7))
+        self.__left_to_place = ([p.Bomb(self.__color)] * 6
+                                + [p.Scout(self.__color)] * 8
+                                + [p.Miner(self.__color)] * 5
+                                + [p.Marshal(self.__color),
+                                   p.Spy(self.__color),
+                                   p.Flag(self.__color),
+                                   p.Troop(self.__color, 9),
+                                   p.Troop(self.__color, 8),
+                                   p.Troop(self.__color, 8)]
+                                + [p.Troop(self.__color, 7)] * 3
+                                + [p.Troop(self.__color, 6),
+                                   p.Troop(self.__color, 5),
+                                   p.Troop(self.__color, 4)] * 4)
 
-        # 4x6
-        for _ in range(4):
-            self.__left_to_place.append(p.Troop(self.__color, 6))
+        # Setup other color placeholder pieces (these will be
+        # replaced when the networking kicks in)
+        is_blue: bool = self.__color == 'BLUE'
+        for x in range(0, 10):
+            for y in range(0 if is_blue else 6, 4 if is_blue else 10):
+                self.__board.set_piece(x,
+                                       y,
+                                       p.Bomb('RED' if
+                                              is_blue
+                                              else 'BLUE'))
 
-        # 4x5
-        for _ in range(4):
-            self.__left_to_place.append(p.Troop(self.__color, 5))
-
-        # 4x4
-        for _ in range(4):
-            self.__left_to_place.append(p.Troop(self.__color, 4))
-
-        assert len(self.__left_to_place) == 40
-
-    def __setup_screen(self, first: bool = False) -> None:
+    def __setup_screen(self) -> None:
         '''
         The board setup screen.
-
-        :param first: Only true the first time this function is
-            called.
         '''
 
         self.__clear()
 
-        # Setup pieces left to place if need be
-        if first:
-            self.__setup_left_to_place()
+        tk.Label(self.__root, text='Click to place this piece:').pack()
 
-        # If done w/ setup, continue to play
-        if len(self.__left_to_place) == 0:
+        image: tk.PhotoImage = self.__get_image(self.__piece_to_image_path(self.__left_to_place[0]))
 
-            if self.__color == 'RED':
-                self.__your_turn_screen()
+        tk.Button(self.__root,
+                  image=image,
+                  border=0,
+                  width=32,
+                  height=32).pack()
 
-            else:
-                self.__their_turn_screen()
+        def randomize_all() -> None:
+            '''
+            Randomizes all remaining pieces
+            '''
 
-            return
+            m: int = -1
 
-        tk.Label(self.__root, text='Set up your pieces.').pack()
+            # Temp value is erased before used
+            i: p.Piece = p.Bomb(self.__color)
+
+            for x in range(0, 10):
+                if self.__color == 'RED':
+                    for y in range(0, 4):
+                        if self.__board.get(x, y) is None:
+                            m = randint(0, len(self.__left_to_place) - 1)
+                            i = self.__left_to_place.pop(m)
+                            self.__board.set_piece(x, y, i)
+
+                else:
+                    for y in range(6, 10):
+                        if self.__board.get(x, y) is None:
+                            m = randint(0, len(self.__left_to_place) - 1)
+                            i = self.__left_to_place.pop(m)
+                            self.__board.set_piece(x, y, i)
+
+                self.__setup_screen()
+
+        tk.Button(self.__root,
+                  text='Randomize all',
+                  command=randomize_all).pack()
 
         self.__display_board(self.__board_setup_callback)
+
+    def __board_movement_callback(self, x: int, y: int) -> None:
+        '''
+        This is a callback function for board buttons. The first
+        time it is called, it loads into self.__from_selection.
+        The second time, it loads into self.__to_selection and
+        calls the given callback function. Then, it resets its
+        member variables.
+
+        :param x: The x-coord of the board button pressed.
+        :param y: The y-coord of the board button pressed.
+        '''
+
+        if self.__from_selection is None:
+            self.__from_selection = (x, y)
+            return
+
+        self.__to_selection = (x, y)
+
+        self.__check_move()
+
+        self.__from_selection = None
+        self.__to_selection = None
 
     def __your_turn_screen(self) -> None:
         '''
@@ -474,24 +547,32 @@ class StrategoGUI:
 
         # Check validity
         try:
+
+            print(f'{self.__from_selection} -> {self.__to_selection}')
+
             state = self.__board.move(self.__color,
                                       self.__from_selection,
                                       self.__to_selection)
 
+            print(f'Set to: {self.__board.get(self.__to_selection[0], self.__to_selection[1])}')
+
         except b.InvalidMoveError:
+            print('Invalid move')
             self.__your_turn_screen()
             return
 
         # Send to other player
-        self.__board, state = self.__networking.sync_game(self.__board, state)
+        self.__networking.send_game(self.__board, state)
 
         # Check game state
-        if state == 'WIN':
+        if state == self.__color:
             self.__win_screen()
-        elif state == 'LOSE':
+
+        elif state != 'GOOD':
             self.__lose_screen()
-        elif state == 'HALT':
-            self.__error_screen()
+
+        else:
+            self.__their_turn_screen()
 
     def __their_turn_screen(self) -> None:
         '''
@@ -506,7 +587,7 @@ class StrategoGUI:
         self.__root.update()
 
         # Wait for move recv
-        self.__board, state = self.__networking.sync_game(self.__board, '')
+        self.__board, state = self.__networking.recv_game()
 
         # Check game state
         if state == 'WIN':
@@ -515,6 +596,8 @@ class StrategoGUI:
             self.__lose_screen()
         elif state == 'HALT':
             self.__error_screen()
+
+        self.__your_turn_screen()
 
     def __win_screen(self) -> None:
         '''
