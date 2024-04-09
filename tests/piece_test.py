@@ -10,6 +10,7 @@ from stratego import board as b
 def base_all_pieces(color: str) -> Iterable[p.Piece]:
     yield p.Flag(color)
     yield p.Spy(color)
+    yield p.Bomb(color)
     yield p.Scout(color)
     yield p.Miner(color)
     for i in range(4, 10):
