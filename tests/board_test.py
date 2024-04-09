@@ -35,6 +35,7 @@ class TestBoard(unittest.TestCase):
         '''
 
         board: b.Board = b.Board.get_instance()
+        board.clear()
 
         # Test populating
         board.set_piece(0, 0, p.Troop('RED', 5))
@@ -72,6 +73,7 @@ class TestBoard(unittest.TestCase):
         '''
 
         board: b.Board = b.Board.get_instance()
+        board.clear()
  
         board.set_piece(0, 1, p.Troop('BLUE', 3))
 
@@ -118,6 +120,7 @@ class TestBoard(unittest.TestCase):
         '''
 
         board: b.Board = b.Board.get_instance()
+        board.clear()
 
         # Clear board
         for y in range(10):
@@ -151,6 +154,7 @@ class TestBoard(unittest.TestCase):
         '''
 
         board: b.Board = b.Board.get_instance()
+        board.clear()
 
         board.set_piece(0, 0, p.Flag('RED'))
         board.set_piece(0, 1, p.Troop('BLUE', 6))
