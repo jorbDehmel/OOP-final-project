@@ -4,7 +4,7 @@ aggregate the board and networking. This is what should be
 presented to the user.
 '''
 
-from random import randint
+# from random import randint
 import tkinter as tk
 from typing import Optional, List, Callable, Tuple, Dict, Literal
 from PIL import Image, ImageTk
@@ -451,21 +451,16 @@ class StrategoGUI:
 
             if self.__color == 'RED':
                 self.__your_turn_screen()
-                return
 
-            # This is the only time we will need to clean the
-            # board like this.
+            else:
+                their_board, _ = self.__networking.recv_game()
+                for y in range(6, 10):
+                    for x in range(0, 10):
+                        their_board.set_piece(x, y, self.__board.get(x, y))
+                self.__board = their_board
 
-            self.__clear()
-            tk.Label(self.__root, text='Waiting...').pack()
+                self.__your_turn_screen()
 
-            their_board, _ = self.__networking.recv_game()
-            for y in range(6, 10):
-                for x in range(0, 10):
-                    their_board.set_piece(x, y, self.__board.get(x, y))
-            self.__board = their_board
-
-            self.__your_turn_screen()
             return
 
         tk.Label(self.__root, text='Click to place this piece:').pack()
@@ -478,36 +473,36 @@ class StrategoGUI:
                   width=32,
                   height=32).pack()
 
-        def randomize_all() -> None:
-            '''
-            Randomizes all remaining pieces
-            '''
+        # def randomize_all() -> None:
+        #     '''
+        #     Randomizes all remaining pieces
+        #     '''
 
-            m: int = -1
+        #     m: int = -1
 
-            # Temp value is erased before used
-            i: p.Piece = p.Bomb(self.__color)
+        #     # Temp value is erased before used
+        #     i: p.Piece = p.Bomb(self.__color)
 
-            for x in range(0, 10):
-                if self.__color == 'RED':
-                    for y in range(0, 4):
-                        if self.__board.get(x, y) is None:
-                            m = randint(0, len(self.__left_to_place) - 1)
-                            i = self.__left_to_place.pop(m)
-                            self.__board.set_piece(x, y, i)
+        #     for x in range(0, 10):
+        #         if self.__color == 'RED':
+        #             for y in range(0, 4):
+        #                 if self.__board.get(x, y) is None:
+        #                     m = randint(0, len(self.__left_to_place) - 1)
+        #                     i = self.__left_to_place.pop(m)
+        #                     self.__board.set_piece(x, y, i)
 
-                else:
-                    for y in range(6, 10):
-                        if self.__board.get(x, y) is None:
-                            m = randint(0, len(self.__left_to_place) - 1)
-                            i = self.__left_to_place.pop(m)
-                            self.__board.set_piece(x, y, i)
+        #         else:
+        #             for y in range(6, 10):
+        #                 if self.__board.get(x, y) is None:
+        #                     m = randint(0, len(self.__left_to_place) - 1)
+        #                     i = self.__left_to_place.pop(m)
+        #                     self.__board.set_piece(x, y, i)
 
-                self.__setup_screen()
+        #         self.__setup_screen()
 
-        tk.Button(self.__root,
-                  text='Randomize all',
-                  command=randomize_all).pack()
+        # tk.Button(self.__root,
+        #           text='Randomize all',
+        #           command=randomize_all).pack()
 
         self.__display_board(self.__board_setup_callback)
 
