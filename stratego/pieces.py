@@ -3,7 +3,7 @@ This module defines classes for an Object-Oriented Stratego
 game.
 '''
 
-from typing import Optional
+from typing import cast, Optional
 
 
 class Piece:
@@ -58,6 +58,28 @@ class Piece:
 
         return self.__color
 
+    @property
+    def rank(self) -> int:
+        '''
+        Return this piece's rank.
+
+        :returns: Rank.
+        '''
+
+        raise TypeError('Cannot call method on abstract base class!')
+
+    def __eq__(self, rhs: object) -> bool:
+        if self is rhs:
+            return True
+        if type(self) is not type(rhs):
+            return False
+
+        rhs = cast(Piece, rhs)
+        return self.rank == rhs.rank and self.color == rhs.color
+
+    def __hash__(self) -> int:
+        return hash((self.rank, self.color))
+
 
 class Bomb(Piece):
     '''
@@ -72,6 +94,16 @@ class Bomb(Piece):
         '''
 
         return 'B'
+
+    @property
+    def rank(self) -> int:
+        '''
+        Return this piece's rank.
+
+        :returns: Rank.
+        '''
+
+        return 11
 
 
 class Troop(Piece):
@@ -144,6 +176,16 @@ class Flag(Piece):
 
         return 'F'
 
+    @property
+    def rank(self) -> int:
+        '''
+        Return this piece's rank.
+
+        :returns: Rank.
+        '''
+
+        return 11
+
 
 class Spy(Troop):
     '''
@@ -171,6 +213,9 @@ class Spy(Troop):
 
         if isinstance(other, Marshal):
             return self
+
+        if isinstance(other, Spy):
+            return None
 
         return other
 
