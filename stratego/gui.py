@@ -7,10 +7,39 @@ presented to the user.
 from random import shuffle
 import tkinter as tk
 from typing import Optional, List, Callable, Tuple, Dict, Literal
-from PIL import Image, ImageTk
 import stratego.board as b
 import stratego.network as n
 import stratego.pieces as p
+
+
+def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
+    '''
+    Resizes a tk.PhotoImage object.
+    :param img: The image to resize.
+    :param w: The desired width.
+    :param h: The desired height.
+    :returns: The resized image.
+    '''
+
+    old_w = img.width()
+    old_h = img.height()
+
+    out: tk.PhotoImage = tk.PhotoImage(width=w, height=h)
+
+    if old_w and old_h:
+        for x in range(w):
+            for y in range(h):
+                old_x: int = int(x * old_w / w)
+                old_y: int = int(y * old_h / h)
+
+                result = img.get(old_x, old_y)
+                rgb: str = f'#{hex(result[0])[2:]}{hex(result[1])[2:]}' + \
+                           f'{hex(result[2])[2:]}'
+
+                out.put(rgb, (x, y))
+                out.transparency_set(x, y, img.transparency_get(old_x, old_y))
+
+    return out
 
 
 class StrategoGUI:
@@ -101,11 +130,8 @@ class StrategoGUI:
                     path = f'stratego/images/{piece.color}_blank.png'
 
         if path not in self.__image_cache:
-            s: int = type(self)._BUTTON_SIZE
-
-            pil_image = Image.open(path).resize((s, s), Image.Resampling.BOX)
-
-            self.__image_cache[path] = ImageTk.PhotoImage(pil_image)
+            raw: tk.PhotoImage = tk.PhotoImage(file=path)
+            self.__image_cache[path] = resize_image(raw, self._BUTTON_SIZE, self._BUTTON_SIZE)
 
         return self.__image_cache[path]
 
