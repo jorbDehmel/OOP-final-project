@@ -180,13 +180,10 @@ class Spy(Troop):
         :returns: The winning piece.
         '''
 
-        if other is None:
-            return self
-
         if isinstance(other, Marshal):
             return self
 
-        return other
+        return super().confront(other)
 
 
 class Scout(Troop):

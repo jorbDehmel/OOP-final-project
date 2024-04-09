@@ -190,7 +190,7 @@ class Board:
             defender: p.Piece = t
 
             self._places[to_y][to_x] = mover.confront(defender)
-            self._places[to_y][to_x] = None
+            self._places[from_y][from_x] = None
 
             if isinstance(self._places[to_y][to_x], p.Flag):
                 return color
