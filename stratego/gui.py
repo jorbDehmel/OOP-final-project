@@ -178,6 +178,23 @@ class StrategoGUI:
 
         self.__board.set_piece(x, y, self.__left_to_place.pop(0))
 
+        # If done w/ setup, continue to play
+        if len(self.__left_to_place) == 0:
+
+            if self.__color == 'RED':
+                self.__your_turn_screen()
+
+            else:
+                their_board, _ = self.__networking.recv_game()
+                for y in range(6, 10):
+                    for x in range(0, 10):
+                        their_board.set_piece(x, y, self.__board.get(x, y))
+                self.__board = their_board
+
+                self.__your_turn_screen()
+
+            return
+
         self.__setup_screen()
 
     def __home_screen(self) -> None:
@@ -446,23 +463,6 @@ class StrategoGUI:
 
         self.__clear()
 
-        # If done w/ setup, continue to play
-        if len(self.__left_to_place) == 0:
-
-            if self.__color == 'RED':
-                self.__your_turn_screen()
-
-            else:
-                their_board, _ = self.__networking.recv_game()
-                for y in range(6, 10):
-                    for x in range(0, 10):
-                        their_board.set_piece(x, y, self.__board.get(x, y))
-                self.__board = their_board
-
-                self.__your_turn_screen()
-
-            return
-
         tk.Label(self.__root, text='Click to place this piece:').pack()
 
         image: tk.PhotoImage = self.__get_image(self.__piece_to_image_path(self.__left_to_place[0]))
@@ -565,14 +565,14 @@ class StrategoGUI:
         self.__networking.send_game(self.__board, state)
 
         # Check game state
-        if state == 'WIN':
+        if state == self.__color:
             self.__win_screen()
-        elif state == 'LOSE':
-            self.__lose_screen()
-        elif state == 'HALT':
-            self.__error_screen()
 
-        self.__their_turn_screen()
+        elif state != 'GOOD':
+            self.__lose_screen()
+
+        else:
+            self.__their_turn_screen()
 
     def __their_turn_screen(self) -> None:
         '''
