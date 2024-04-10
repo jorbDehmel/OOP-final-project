@@ -84,11 +84,12 @@ class StrategoGUI:
             if isinstance(piece, b.LakeSquare):
                 return 'stratego/images/lake.png'
 
-            if isinstance(piece, p.Piece):
+            elif isinstance(piece, p.Piece):
 
                 if piece.color != self.__color:
                     return f'stratego/images/{piece.color}_blank.png'
 
+<<<<<<< Updated upstream
                 try:
                     return f'stratego/images/{piece.color}_{repr(piece)}.png'
                 except TypeError:
@@ -101,6 +102,13 @@ class StrategoGUI:
         :param path: The path to load the image from.
         :returns: A tk-compatible version of that image.
         '''
+=======
+                else:
+                    try:
+                        path = f'stratego/images/{piece.color}_{repr(piece)}.png'
+                    except TypeError:
+                        path = f'stratego/images/{piece.color}_blank.png'
+>>>>>>> Stashed changes
 
         if path not in self.__image_cache:
             s: int = type(self)._BUTTON_SIZE
@@ -428,6 +436,7 @@ class StrategoGUI:
                                    p.Troop(self.__color, 5),
                                    p.Troop(self.__color, 4)] * 4)
 
+<<<<<<< Updated upstream
         # Setup other color placeholder pieces (these will be
         # replaced when the networking kicks in)
         is_blue: bool = self.__color == 'BLUE'
@@ -438,6 +447,43 @@ class StrategoGUI:
                                        p.Bomb('RED' if
                                               is_blue
                                               else 'BLUE'))
+=======
+        # Setup other color placeholder pieces
+        if self.__color == 'BLUE':
+            self.__board.fill((0, 0), (10, 4), p.Bomb('RED'))
+        else:
+            self.__board.fill((0, 6), (10, 10), p.Bomb('BLUE'))
+
+    def __randomize_all(self) -> None:
+        '''
+        Randomizes all remaining pieces
+        '''
+
+        shuffle(self.__left_to_place)
+
+        if self.__color == 'RED':
+            self.__board.fill((0, 0),
+                              (10, 4),
+                              lambda _, __: self.__left_to_place.pop())
+            self.__your_turn_screen()
+
+        else:
+            self.__board.fill((0, 6),
+                              (10, 10),
+                              lambda _, __: self.__left_to_place.pop())
+
+            self.__clear()
+            tk.Label(self.__root, text='Waiting...').pack()
+            self.__root.update()
+
+            their_board, _ = self.__networking.recv_game()
+            for y in range(6, 10):
+                for x in range(0, 10):
+                    their_board.set_piece(x, y, self.__board.get(x, y))
+            self.__board = their_board
+
+            self.__your_turn_screen()
+>>>>>>> Stashed changes
 
     def __setup_screen(self) -> None:
         '''
@@ -538,7 +584,35 @@ class StrategoGUI:
         self.__clear()
         tk.Label(self.__root, text='Your turn.').pack()
 
+<<<<<<< Updated upstream
         self.__display_board(self.__board_movement_callback)
+=======
+            :param x: The x-coord of the board button pressed.
+            :param y: The y-coord of the board button pressed.
+            '''
+
+            if (self.__from_selection is None and
+                    self.__board.get(x, y) is not None):
+                self.__from_selection = (x, y)
+                return
+
+            self.__to_selection = (x, y)
+
+            self.__check_move()
+
+            self.__from_selection = None
+            self.__to_selection = None
+
+        try:
+            # Update screen
+            self.__clear()
+            tk.Label(self.__root, text='Your turn.').pack()
+
+            self.__display_board(board_movement_callback)
+
+        except ValueError:
+            self.__error_screen()
+>>>>>>> Stashed changes
 
     def __check_move(self) -> None:
 
@@ -548,13 +622,9 @@ class StrategoGUI:
         # Check validity
         try:
 
-            print(f'{self.__from_selection} -> {self.__to_selection}')
-
             state = self.__board.move(self.__color,
                                       self.__from_selection,
                                       self.__to_selection)
-
-            print(f'Set to: {self.__board.get(self.__to_selection[0], self.__to_selection[1])}')
 
         except b.InvalidMoveError:
             print('Invalid move')
@@ -608,6 +678,9 @@ class StrategoGUI:
 
         self.__networking.close_game()
 
+        tk.Label(self.__root,
+                 image=self.__get_image(p.Flag(self.__color))).pack()
+
         tk.Label(self.__root, text='You win!').pack()
 
         tk.Button(self.__root,
@@ -625,6 +698,9 @@ class StrategoGUI:
         self.__clear()
 
         self.__networking.close_game()
+
+        tk.Label(self.__root,
+                 image=self.__get_image(p.Bomb(self.__color))).pack()
 
         tk.Label(self.__root, text='You lose...').pack()
 
