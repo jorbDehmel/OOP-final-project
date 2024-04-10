@@ -56,17 +56,18 @@ class TestStrategoPiece(TestCase):
         with self.assertRaises(TypeError):
             flag.confront(troop)
 
-    def test_spy(self) -> None:
+    def test_spy_and_marshal(self) -> None:
         '''
-        Tests the spy piece for stratego. The spy should be killed
-        by everything except a marshal, which it will defeat.
+        Tests the spy piece for stratego. The spy should defeat
+        a marshal when the spy attacks, but not when the marshal
+        attacks.
         '''
 
-    def test_scout(self) -> None:
-        '''
-        Tests the scout piece for stratego. The scout piece is able
-        to move any number of spaces, instead of just one.
-        '''
+        s: p.Spy = p.Spy('RED')
+        m: p.Marshal = p.Marshal('BLUE')
+
+        self.assertEqual(s.confront(m), s)
+        self.assertEqual(m.confront(s), m)
 
     def test_miner(self) -> None:
         '''
@@ -74,17 +75,11 @@ class TestStrategoPiece(TestCase):
         defuse bombs.
         '''
 
-    def test_marshal(self) -> None:
-        '''
-        Tests the marshal piece for stratego. The marshal is the
-        highest rank (10), but is killed by spies and bombs.
-        '''
+        miner: p.Miner = p.Miner('BLUE')
+        bomb: p.Bomb = p.Bomb('RED')
 
-    def test_troop(self) -> None:
-        '''
-        Tests an arbitrary troop (IE not one of the above special
-        cases). These all use standard rules with no special cases.
-        '''
+        result: p.Piece = miner.confront(bomb)
+        self.assertEqual(result, miner)
 
     def test_confrontation(self) -> None:
         '''
@@ -118,17 +113,40 @@ class TestStrategoPiece(TestCase):
                 all_pieces.append(p.Troop(color, rank))
 
         for attacker in all_pieces:
-            if attacker is None:
-                continue
 
-            elif not isinstance(attacker, p.Troop):
+            if not isinstance(attacker, p.Troop):
                 continue
 
             for defender in all_pieces:
                 if defender is attacker:
                     continue
 
-                attacker.confront(defender)
+                result: Optional[p.Piece] = attacker.confront(defender)
 
                 repr(attacker)
                 repr(defender)
+                repr(result)
+
+                if defender is None:
+                    self.assertEqual(result, attacker)
+
+                elif isinstance(defender, p.Flag):
+                    self.assertEqual(result, defender)
+
+                elif (isinstance(defender, p.Bomb) and not
+                      isinstance(attacker, p.Miner)):
+                    self.assertEqual(result, defender)
+
+                elif (isinstance(defender, p.Marshal) and
+                      isinstance(attacker, p.Spy)):
+                    self.assertEqual(result, attacker)
+
+                elif isinstance(defender, p.Troop):
+                    if attacker.rank > defender.rank:
+                        self.assertEqual(result, attacker)
+
+                    elif attacker.rank == defender.rank:
+                        self.assertIsNone(result)
+
+                    else:
+                        self.assertEqual(result, defender)
