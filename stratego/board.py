@@ -83,32 +83,6 @@ class Board:
         self._places[5][6] = LakeSquare()
         self._places[5][7] = LakeSquare()
 
-    def __repr__(self) -> str:
-        '''
-        Represent the board as a string.
-
-        :returns: ASCII art of the board.
-        '''
-
-        rows: List[str] = []
-
-        for row in self._places:
-            cur_row: List[str] = [' ' for _ in row]
-
-            for i, piece in enumerate(row):
-
-                if isinstance(piece, LakeSquare):
-                    cur_row[i] = 'L'
-
-                elif isinstance(piece, p.Piece):
-                    cur_row[i] = str(piece)
-
-            rows.append('|' + ''.join(cur_row) + '|\n')
-
-        top: str = '+' + ('-' * type(self)._WIDTH) + '+\n'
-        out: str = top + ''.join(rows) + top
-        return out
-
     @staticmethod
     def all_pieces(color: Literal['RED', 'BLUE']) -> List[p.Piece]:
         '''

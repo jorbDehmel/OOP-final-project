@@ -2,7 +2,7 @@
 Tests the `Board` class for OOP Stratego.
 '''
 
-from typing import Literal
+from typing import Literal, List
 import unittest
 from stratego import board as b
 from stratego import pieces as p
@@ -29,6 +29,58 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.height, 10)
         self.assertEqual(board.width, 10)
 
+    def test_all_pieces(self) -> None:
+        '''
+        Tests the `all_pieces` method, which returns all the
+        pieces which need to be set up for a given color.
+        '''
+
+        for color in ['RED', 'BLUE']:
+            expected: List[p.Piece] = ([p.Bomb(color)] * 6
+                                    + [p.Scout(color)] * 8
+                                    + [p.Miner(color)] * 5
+                                    + [p.Marshal(color),
+                                        p.Spy(color),
+                                        p.Flag(color),
+                                        p.Troop(color, 9),
+                                        p.Troop(color, 8),
+                                        p.Troop(color, 8)]
+                                    + [p.Troop(color, 7)] * 3
+                                    + [p.Troop(color, 6),
+                                        p.Troop(color, 5),
+                                        p.Troop(color, 4)] * 4)
+
+            observed: List[p.Piece] = b.Board.all_pieces(color)
+
+            for i, item in enumerate(expected):
+                self.assertEqual(item.color, observed[i].color)
+                self.assertEqual(repr(item), repr(observed[i]))
+
+    def test_fill(self) -> None:
+        '''
+        Tests the b.Board.fill() function, which fills a given
+        rectangular range with pieces according to either a
+        given piece or a function.
+        '''
+
+        board: b.Board = b.Board.get_instance()
+        board.clear()
+
+        board.fill((0, 0), (10, 10), b.LakeSquare())
+
+        for y in range(10):
+            for x in range(10):
+                self.assertIsInstance(board.get(x, y), b.LakeSquare)
+
+        board.fill((0, 0), (10, 10), lambda x, y: b.LakeSquare()
+                                                  if x < 5 else None)
+
+        for y in range(10):
+            for x in range(5):
+                self.assertIsInstance(board.get(x, y), b.LakeSquare)
+            for x in range(5, 10):
+                self.assertIsNone(board.get(x, y))
+
     def test_moves(self) -> None:
         '''
         Tests various moves on the board.
@@ -45,9 +97,6 @@ class TestBoard(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             board.set_piece(0, 100, board.get(0, 0))
-
-        # Test repr
-        repr(board)
 
         # Test getting
         self.assertIsNone(board.get(-1, 0))
@@ -74,7 +123,7 @@ class TestBoard(unittest.TestCase):
 
         board: b.Board = b.Board.get_instance()
         board.clear()
- 
+
         board.set_piece(0, 1, p.Troop('BLUE', 3))
 
         with self.assertRaises(b.InvalidMoveError):
