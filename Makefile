@@ -25,6 +25,13 @@ run-cov:
 run-test:
 	$(TEST) $(TEST_ARGS) tests
 
+.PHONY: docs
+docs:
+	mkdir -p docs
+	pydoc -w ./
+	mv *.html docs
+	java -jar plantuml.jar docs/final_class_diagram.plantuml
+
 .PHONY: clean
 clean:
 	# remove all caches recursively
