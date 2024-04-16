@@ -163,6 +163,23 @@ class TestBoard(unittest.TestCase):
         with self.assertRaises(b.InvalidMoveError):
             board.move('BLUE', (0, 1), (0, 2))
 
+    def test_colors(self):
+        '''
+        Ensures that you cannot move pieces which are not yours.
+        '''
+
+        board: b.Board = b.Board.get_instance()
+        board.clear()
+
+        board.set_piece(0, 0, p.Scout('BLUE'))
+        board.set_piece(0, 9, p.Scout('RED'))
+
+        with self.assertRaises(b.InvalidMoveError):
+            board.move('RED', (0, 0), (0, 9))
+
+        with self.assertRaises(b.InvalidMoveError):
+            board.move('BLUE', (0, 9), (0, 0))
+
     def test_scout_movement(self) -> None:
         '''
         Tests the scout movement

@@ -14,7 +14,8 @@ import stratego.pieces as p
 
 def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
     '''
-    Resizes a tk.PhotoImage object.
+    Resizes a tk.PhotoImage object. There is a better way to do
+    this, but this is the only way that works with mypy.
     :param img: The image to resize.
     :param w: The desired width.
     :param h: The desired height.
@@ -26,16 +27,23 @@ def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
 
     out: tk.PhotoImage = tk.PhotoImage(width=w, height=h)
 
+    # Skip trivial case
     if old_w and old_h:
+
+        # Iterate over pixels
         for x in range(w):
             for y in range(h):
+
+                # Get pixel at the corresponding source coords
                 old_x: int = int(x * old_w / w)
                 old_y: int = int(y * old_h / h)
-
                 result = img.get(old_x, old_y)
+
+                # Format in desired way
                 rgb: str = f'#{hex(result[0])[2:]}{hex(result[1])[2:]}' + \
                            f'{hex(result[2])[2:]}'
 
+                # Write pixel
                 out.put(rgb, (x, y))
                 out.transparency_set(x, y, img.transparency_get(old_x, old_y))
 
@@ -80,7 +88,7 @@ class StrategoGUI:
         self.__root.configure(bg='white')
         self.__root.option_add('*Background', 'white')
         self.__root.option_add('*Font', 'Times 16')
-        self.__root.geometry("448x448")
+        # self.__root.geometry("448x448")
 
         # Game management objects
         self.__board: b.Board = b.Board.get_instance()
@@ -213,6 +221,9 @@ class StrategoGUI:
 
         # Set title
         self.__root.title(self.__title)
+
+        # Empty widget to maintain width
+        tk.Label(self.__root, height=0, width=25).pack()
 
     def __home_screen(self) -> None:
         '''
@@ -416,6 +427,17 @@ class StrategoGUI:
             self.__board.fill((0, 0),
                               (10, 4),
                               lambda _, __: self.__left_to_place.pop())
+
+            # Recv
+            their_board, _ = self.__networking.recv_game()
+            for y in range(0, 4):
+                for x in range(0, 10):
+                    their_board.set_piece(x, y, self.__board.get(x, y))
+            self.__board = their_board
+
+            # Send
+            self.__networking.send_game(self.__board, 'GOOD')
+
             self.__your_turn_screen()
 
         else:
@@ -425,15 +447,20 @@ class StrategoGUI:
 
             self.__clear()
             tk.Label(self.__root, text='Waiting...').pack()
+            self.__display_board(lambda _, __: None)
             self.__root.update()
 
+            # Send
+            self.__networking.send_game(self.__board, 'GOOD')
+
+            # Recv
             their_board, _ = self.__networking.recv_game()
             for y in range(6, 10):
                 for x in range(0, 10):
                     their_board.set_piece(x, y, self.__board.get(x, y))
             self.__board = their_board
 
-            self.__your_turn_screen()
+            self.__their_turn_screen()
 
     def __setup_screen(self) -> None:
         '''
