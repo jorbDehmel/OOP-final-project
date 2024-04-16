@@ -3,7 +3,7 @@ This module defines the board class for an Object-Oriented
 Stratego game.
 '''
 
-from typing import Union, List, Optional, Tuple, Literal
+from typing import Union, List, Optional, Tuple, Literal, Callable
 import stratego.pieces as p
 
 
@@ -83,31 +83,27 @@ class Board:
         self._places[5][6] = LakeSquare()
         self._places[5][7] = LakeSquare()
 
-    def __repr__(self) -> str:
+    @staticmethod
+    def all_pieces(color: Literal['RED', 'BLUE']) -> List[p.Piece]:
         '''
-        Represent the board as a string.
-
-        :returns: ASCII art of the board.
+        Returns all 40 pieces which need to be placed at game
+        setup.
+        :returns: A list of all 40 needed pieces.
         '''
 
-        rows: List[str] = []
-
-        for row in self._places:
-            cur_row: List[str] = [' ' for _ in row]
-
-            for i, piece in enumerate(row):
-
-                if isinstance(piece, LakeSquare):
-                    cur_row[i] = 'L'
-
-                elif isinstance(piece, p.Piece):
-                    cur_row[i] = str(piece)
-
-            rows.append('|' + ''.join(cur_row) + '|\n')
-
-        top: str = '+' + ('-' * type(self)._WIDTH) + '+\n'
-        out: str = top + ''.join(rows) + top
-        return out
+        return ([p.Bomb(color)] * 6
+                + [p.Scout(color)] * 8
+                + [p.Miner(color)] * 5
+                + [p.Marshal(color),
+                    p.Spy(color),
+                    p.Flag(color),
+                    p.Troop(color, 9),
+                    p.Troop(color, 8),
+                    p.Troop(color, 8)]
+                + [p.Troop(color, 7)] * 3
+                + [p.Troop(color, 6),
+                    p.Troop(color, 5),
+                    p.Troop(color, 4)] * 4)
 
     @property
     def height(self) -> int:
@@ -124,6 +120,37 @@ class Board:
         '''
 
         return self._WIDTH
+
+    def clear(self) -> None:
+        '''
+        Erase all pieces from the board.
+        '''
+
+        self.fill((0, 0), (self._WIDTH, self._HEIGHT), None)
+
+    def fill(self,
+             start: Tuple[int, int],
+             end: Tuple[int, int],
+             to: Union[Square, Callable[[int, int], Square]]) -> None:
+        '''
+        Sets every item in the given range to the given square.
+        :param start: A 2-tuple for the starting (x, y).
+        :param end: A 2-tuple for the ending (x, y).
+        :param to: The item to set each square in the range to.
+            This can also be a callable, in which case the
+            object copied will be to(x, y) for each (x, y) in
+            the range.
+        '''
+
+        if to is None or isinstance(to, (p.Piece, LakeSquare)):
+            for y in range(start[1], end[1]):
+                for x in range(start[0], end[0]):
+                    self._places[y][x] = to
+
+        else:
+            for y in range(start[1], end[1]):
+                for x in range(start[0], end[0]):
+                    self._places[y][x] = to(x, y)
 
     def get(self, x: int, y: int) -> Square:
         '''
@@ -188,6 +215,9 @@ class Board:
 
             mover: p.Piece = s
             defender: p.Piece = t
+
+            if s.color != color:
+                raise InvalidMoveError('Failed to make move')
 
             self._places[to_y][to_x] = mover.confront(defender)
             self._places[from_y][from_x] = None
@@ -273,10 +303,6 @@ class Board:
         if from_piece is None:
             return False
 
-        # Ok if destination is nothing
-        if to_piece is None:
-            return True
-
         # Cannot move lake, bomb, or flag
         if isinstance(from_piece, (LakeSquare, p.Bomb, p.Flag)):
             return False
@@ -286,7 +312,7 @@ class Board:
             return False
 
         # Cannot move onto own piece
-        if from_piece.color == to_piece.color:
+        if to_piece is not None and from_piece.color == to_piece.color:
             return False
 
         return True

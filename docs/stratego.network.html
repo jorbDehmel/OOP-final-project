@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module stratego.network</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="stratego.html" class="white">stratego</a>.network</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/stratego/network.py">/home/user/OOP-final-project/stratego/network.py</a></td></tr></table>
+    <p><span class="code">Network&nbsp;operations&nbsp;for&nbsp;OOP&nbsp;Stratego.&nbsp;Should&nbsp;send&nbsp;the&nbsp;game&nbsp;state<br>
+from&nbsp;GUI&nbsp;to&nbsp;GUI&nbsp;via&nbsp;JSON.&nbsp;This&nbsp;could&nbsp;take&nbsp;the&nbsp;form&nbsp;of&nbsp;a<br>
+singleton&nbsp;API&nbsp;handler&nbsp;wrapper&nbsp;class.</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="pickle.html">pickle</a><br>
+</td><td class="multicolumn"><a href="random.html">random</a><br>
+</td><td class="multicolumn"><a href="socket.html">socket</a><br>
+</td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.network.html#StrategoNetworker">StrategoNetworker</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="StrategoNetworker">class <strong>StrategoNetworker</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#StrategoNetworker">StrategoNetworker</a>()&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+Handles&nbsp;networking&nbsp;operations&nbsp;for&nbsp;Stratego.&nbsp;This&nbsp;is<br>
+aggregated&nbsp;by&nbsp;the&nbsp;GUI&nbsp;class&nbsp;in&nbsp;stratego.gui.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="StrategoNetworker-__init__"><strong>__init__</strong></a>(self) -&gt; None</dt><dd><span class="code">Create&nbsp;infrastructure,&nbsp;but&nbsp;do&nbsp;NOT&nbsp;open&nbsp;socket&nbsp;yet.</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-close_game"><strong>close_game</strong></a>(self) -&gt; None</dt><dd><span class="code">Closes&nbsp;the&nbsp;connection.</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-host_game"><strong>host_game</strong></a>(self, ip: str, port: int) -&gt; str</dt><dd><span class="code">Opens&nbsp;a&nbsp;game&nbsp;on&nbsp;the&nbsp;given&nbsp;IPv4&nbsp;and&nbsp;port.<br>
+&nbsp;<br>
+:param&nbsp;ip:&nbsp;The&nbsp;IPv4&nbsp;address&nbsp;to&nbsp;host&nbsp;on.&nbsp;Probably<br>
+&nbsp;&nbsp;&nbsp;&nbsp;localhost.<br>
+:param&nbsp;port:&nbsp;The&nbsp;port&nbsp;to&nbsp;listen&nbsp;on.<br>
+:returns:&nbsp;The&nbsp;join&nbsp;password&nbsp;(randomly&nbsp;generated).</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-host_wait_for_join"><strong>host_wait_for_join</strong></a>(self) -&gt; None</dt><dd><span class="code">Waits&nbsp;until&nbsp;another&nbsp;player&nbsp;joins.&nbsp;When&nbsp;they&nbsp;join,&nbsp;asks<br>
+for&nbsp;a&nbsp;password.&nbsp;If&nbsp;they&nbsp;get&nbsp;it&nbsp;wrong,&nbsp;goes&nbsp;back&nbsp;to<br>
+waiting.</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-join_game"><strong>join_game</strong></a>(self, ip: str, port: int, password: str) -&gt; int</dt><dd><span class="code">Attempts&nbsp;to&nbsp;join&nbsp;the&nbsp;game&nbsp;at&nbsp;the&nbsp;given&nbsp;IPv4&nbsp;and&nbsp;port.<br>
+&nbsp;<br>
+:param&nbsp;ip:&nbsp;The&nbsp;IPv4&nbsp;address&nbsp;to&nbsp;attempt&nbsp;to&nbsp;connect&nbsp;to.<br>
+:param&nbsp;port:&nbsp;The&nbsp;port&nbsp;to&nbsp;attempt&nbsp;to&nbsp;connect&nbsp;to.<br>
+:param&nbsp;password:&nbsp;The&nbsp;join&nbsp;password&nbsp;from&nbsp;the&nbsp;host.<br>
+:returns:&nbsp;0&nbsp;on&nbsp;success,&nbsp;1&nbsp;on&nbsp;socket&nbsp;failure,&nbsp;2&nbsp;on<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password&nbsp;failure.</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-recv_game"><strong>recv_game</strong></a>(self) -&gt; Tuple[stratego.board.Board, str]</dt><dd><span class="code">Read&nbsp;the&nbsp;board&nbsp;and&nbsp;state&nbsp;from&nbsp;the&nbsp;socket.</span></dd></dl>
+
+<dl><dt><a name="StrategoNetworker-send_game"><strong>send_game</strong></a>(self, board: stratego.board.Board, state: str) -&gt; None</dt><dd><span class="code">Send&nbsp;the&nbsp;board&nbsp;and&nbsp;state.</span></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="StrategoNetworker-get_instance"><strong>get_instance</strong></a>() -&gt; 'StrategoNetworker'</dt><dd><span class="code">Return&nbsp;the&nbsp;instance&nbsp;of&nbsp;this&nbsp;class,&nbsp;creating&nbsp;it&nbsp;if&nbsp;need<br>
+be.<br>
+&nbsp;<br>
+:returns:&nbsp;The&nbsp;instance&nbsp;of&nbsp;this&nbsp;class.</span></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="StrategoNetworker-is_terminal_state"><strong>is_terminal_state</strong></a>(cur_state: str) -&gt; bool</dt><dd><span class="code">Returns&nbsp;whether&nbsp;or&nbsp;not&nbsp;this&nbsp;state&nbsp;indicates&nbsp;cessation&nbsp;of<br>
+the&nbsp;game.<br>
+&nbsp;<br>
+:param&nbsp;cur_state:&nbsp;The&nbsp;current&nbsp;game&nbsp;state.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;the&nbsp;game&nbsp;is&nbsp;now&nbsp;over.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'_StrategoNetworker__INSTANCE': typing.Optional[ForwardRef('StrategoNetworker')], '_StrategoNetworker__PASSWORD_SIZE': &lt;class 'int'&gt;, '_StrategoNetworker__SIZE_STR_MAX_SIZE': &lt;class 'int'&gt;, '_StrategoNetworker__STATE_STR_MAX_SIZE': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Optional</strong> = typing.Optional<br>
+<strong>Tuple</strong> = typing.Tuple</td></tr></table>
+</body></html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module stratego.board</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="stratego.html" class="white">stratego</a>.board</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/stratego/board.py">/home/user/OOP-final-project/stratego/board.py</a></td></tr></table>
+    <p><span class="code">This&nbsp;module&nbsp;defines&nbsp;the&nbsp;board&nbsp;class&nbsp;for&nbsp;an&nbsp;Object-Oriented<br>
+Stratego&nbsp;game.</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#Exception">builtins.Exception</a>(<a href="builtins.html#BaseException">builtins.BaseException</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.board.html#InvalidMoveError">InvalidMoveError</a>
+</dt></dl>
+</dd>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.board.html#Board">Board</a>
+</dt><dt class="heading-text"><a href="stratego.board.html#LakeSquare">LakeSquare</a>
+</dt></dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Board">class <strong>Board</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Board">Board</a>()&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;board.&nbsp;This&nbsp;should&nbsp;be&nbsp;a&nbsp;singleton&nbsp;class&nbsp;which<br>
+aggregates&nbsp;pieces.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="Board-__init__"><strong>__init__</strong></a>(self) -&gt; None</dt><dd><span class="code">Constructs&nbsp;an&nbsp;empty&nbsp;Stratego&nbsp;board&nbsp;populated&nbsp;with&nbsp;the<br>
+standard&nbsp;lake&nbsp;setup.&nbsp;This&nbsp;will&nbsp;be&nbsp;a&nbsp;10x10&nbsp;board.</span></dd></dl>
+
+<dl><dt><a name="Board-clear"><strong>clear</strong></a>(self) -&gt; None</dt><dd><span class="code">Erase&nbsp;all&nbsp;pieces&nbsp;from&nbsp;the&nbsp;board.</span></dd></dl>
+
+<dl><dt><a name="Board-fill"><strong>fill</strong></a>(self, start: Tuple[int, int], end: Tuple[int, int], to: Union[stratego.pieces.Piece, stratego.board.LakeSquare, NoneType, Callable[[int, int], Union[stratego.pieces.Piece, stratego.board.LakeSquare, NoneType]]]) -&gt; None</dt><dd><span class="code">Sets&nbsp;every&nbsp;item&nbsp;in&nbsp;the&nbsp;given&nbsp;range&nbsp;to&nbsp;the&nbsp;given&nbsp;square.<br>
+:param&nbsp;start:&nbsp;A&nbsp;2-tuple&nbsp;for&nbsp;the&nbsp;starting&nbsp;(x,&nbsp;y).<br>
+:param&nbsp;end:&nbsp;A&nbsp;2-tuple&nbsp;for&nbsp;the&nbsp;ending&nbsp;(x,&nbsp;y).<br>
+:param&nbsp;to:&nbsp;The&nbsp;item&nbsp;to&nbsp;set&nbsp;each&nbsp;square&nbsp;in&nbsp;the&nbsp;range&nbsp;to.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;can&nbsp;also&nbsp;be&nbsp;a&nbsp;callable,&nbsp;in&nbsp;which&nbsp;case&nbsp;the<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="builtins.html#object">object</a>&nbsp;copied&nbsp;will&nbsp;be&nbsp;to(x,&nbsp;y)&nbsp;for&nbsp;each&nbsp;(x,&nbsp;y)&nbsp;in<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;range.</span></dd></dl>
+
+<dl><dt><a name="Board-get"><strong>get</strong></a>(self, x: int, y: int) -&gt; Union[stratego.pieces.Piece, stratego.board.LakeSquare, NoneType]</dt><dd><span class="code">Get&nbsp;the&nbsp;piece&nbsp;at&nbsp;the&nbsp;given&nbsp;point.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;The&nbsp;x&nbsp;position.<br>
+:param&nbsp;y:&nbsp;The&nbsp;y&nbsp;position.</span></dd></dl>
+
+<dl><dt><a name="Board-move"><strong>move</strong></a>(self, color: Literal['BLUE', 'RED'], from_pair: Tuple[int, int], to_pair: Tuple[int, int]) -&gt; Literal['RED', 'BLUE', 'GOOD']</dt><dd><span class="code">Attempts&nbsp;to&nbsp;move&nbsp;from&nbsp;the&nbsp;given&nbsp;coordinates&nbsp;to&nbsp;the&nbsp;given<br>
+coordinates.&nbsp;Raises&nbsp;error&nbsp;if&nbsp;the&nbsp;move&nbsp;is&nbsp;invalid.&nbsp;If<br>
+the&nbsp;move&nbsp;was&nbsp;valid,&nbsp;updates&nbsp;the&nbsp;board&nbsp;accordingly.<br>
+&nbsp;<br>
+:param&nbsp;from_pair:&nbsp;The&nbsp;origin&nbsp;(x,&nbsp;y).<br>
+:param&nbsp;to_pair:&nbsp;The&nbsp;destination&nbsp;(x,&nbsp;y).<br>
+:returns:&nbsp;The&nbsp;game&nbsp;state.</span></dd></dl>
+
+<dl><dt><a name="Board-set_piece"><strong>set_piece</strong></a>(self, x: int, y: int, what: Union[stratego.pieces.Piece, stratego.board.LakeSquare, NoneType]) -&gt; None</dt><dd><span class="code">Set&nbsp;the&nbsp;piece&nbsp;at&nbsp;the&nbsp;given&nbsp;point.<br>
+&nbsp;<br>
+:param&nbsp;x:&nbsp;The&nbsp;x&nbsp;position.<br>
+:param&nbsp;y:&nbsp;The&nbsp;y&nbsp;position.<br>
+:param&nbsp;what:&nbsp;The&nbsp;item&nbsp;to&nbsp;set.</span></dd></dl>
+
+<hr>
+Class methods defined here:<br>
+<dl><dt><a name="Board-get_instance"><strong>get_instance</strong></a>() -&gt; 'Board'</dt><dd><span class="code">Returns&nbsp;the&nbsp;instance&nbsp;of&nbsp;this&nbsp;class,&nbsp;instantiating&nbsp;if<br>
+necessary.<br>
+:returns:&nbsp;The&nbsp;board.</span></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Board-all_pieces"><strong>all_pieces</strong></a>(color: Literal['RED', 'BLUE']) -&gt; List[stratego.pieces.Piece]</dt><dd><span class="code">Returns&nbsp;all&nbsp;40&nbsp;pieces&nbsp;which&nbsp;need&nbsp;to&nbsp;be&nbsp;placed&nbsp;at&nbsp;game<br>
+setup.<br>
+:returns:&nbsp;A&nbsp;list&nbsp;of&nbsp;all&nbsp;40&nbsp;needed&nbsp;pieces.</span></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>height</strong></dt>
+<dd><span class="code">:return:&nbsp;The&nbsp;board&nbsp;height.</span></dd>
+</dl>
+<dl><dt><strong>width</strong></dt>
+<dd><span class="code">:return:&nbsp;The&nbsp;board&nbsp;width.</span></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'_Board__INSTANCE': typing.Optional[ForwardRef('Board')], '_HEIGHT': &lt;class 'int'&gt;, '_WIDTH': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="InvalidMoveError">class <strong>InvalidMoveError</strong></a>(<a href="builtins.html#Exception">builtins.Exception</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">An&nbsp;error&nbsp;raised&nbsp;by&nbsp;attempting&nbsp;to&nbsp;make&nbsp;an&nbsp;invalid&nbsp;move&nbsp;in<br>
+stratego.&nbsp;This&nbsp;should&nbsp;be&nbsp;left&nbsp;as&nbsp;a&nbsp;unit&nbsp;class.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.board.html#InvalidMoveError">InvalidMoveError</a></dd>
+<dd><a href="builtins.html#Exception">builtins.Exception</a></dd>
+<dd><a href="builtins.html#BaseException">builtins.BaseException</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="InvalidMoveError-__init__"><strong>__init__</strong></a>(self, /, *args, **kwargs)</dt><dd><span class="code">Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<hr>
+Static methods inherited from <a href="builtins.html#Exception">builtins.Exception</a>:<br>
+<dl><dt><a name="InvalidMoveError-__new__"><strong>__new__</strong></a>(*args, **kwargs)<span class="grey"><span class="heading-text"> class method of <a href="builtins.html#Exception">builtins.Exception</a></span></span></dt><dd><span class="code">Create&nbsp;and&nbsp;return&nbsp;a&nbsp;new&nbsp;<a href="builtins.html#object">object</a>.&nbsp;&nbsp;See&nbsp;help(type)&nbsp;for&nbsp;accurate&nbsp;signature.</span></dd></dl>
+
+<hr>
+Methods inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><a name="InvalidMoveError-__delattr__"><strong>__delattr__</strong></a>(self, name, /)</dt><dd><span class="code">Implement&nbsp;delattr(self,&nbsp;name).</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-__getattribute__"><strong>__getattribute__</strong></a>(self, name, /)</dt><dd><span class="code">Return&nbsp;getattr(self,&nbsp;name).</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-__reduce__"><strong>__reduce__</strong></a>(...)</dt><dd><span class="code">Helper&nbsp;for&nbsp;pickle.</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-__repr__"><strong>__repr__</strong></a>(self, /)</dt><dd><span class="code">Return&nbsp;repr(self).</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-__setattr__"><strong>__setattr__</strong></a>(self, name, value, /)</dt><dd><span class="code">Implement&nbsp;setattr(self,&nbsp;name,&nbsp;value).</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-__setstate__"><strong>__setstate__</strong></a>(...)</dt></dl>
+
+<dl><dt><a name="InvalidMoveError-__str__"><strong>__str__</strong></a>(self, /)</dt><dd><span class="code">Return&nbsp;str(self).</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-add_note"><strong>add_note</strong></a>(...)</dt><dd><span class="code"><a href="builtins.html#Exception">Exception</a>.<a href="#InvalidMoveError-add_note">add_note</a>(note)&nbsp;--<br>
+add&nbsp;a&nbsp;note&nbsp;to&nbsp;the&nbsp;exception</span></dd></dl>
+
+<dl><dt><a name="InvalidMoveError-with_traceback"><strong>with_traceback</strong></a>(...)</dt><dd><span class="code"><a href="builtins.html#Exception">Exception</a>.<a href="#InvalidMoveError-with_traceback">with_traceback</a>(tb)&nbsp;--<br>
+set&nbsp;self.<strong>__traceback__</strong>&nbsp;to&nbsp;tb&nbsp;and&nbsp;return&nbsp;self.</span></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="builtins.html#BaseException">builtins.BaseException</a>:<br>
+<dl><dt><strong>__cause__</strong></dt>
+<dd><span class="code">exception&nbsp;cause</span></dd>
+</dl>
+<dl><dt><strong>__context__</strong></dt>
+<dd><span class="code">exception&nbsp;context</span></dd>
+</dl>
+<dl><dt><strong>__dict__</strong></dt>
+</dl>
+<dl><dt><strong>__suppress_context__</strong></dt>
+</dl>
+<dl><dt><strong>__traceback__</strong></dt>
+</dl>
+<dl><dt><strong>args</strong></dt>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="LakeSquare">class <strong>LakeSquare</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code">A&nbsp;lake&nbsp;square&nbsp;on&nbsp;a&nbsp;Stratego&nbsp;board.&nbsp;This&nbsp;may&nbsp;not&nbsp;be&nbsp;moved<br>
+into,&nbsp;and&nbsp;never&nbsp;moves.&nbsp;This&nbsp;should&nbsp;be&nbsp;left&nbsp;as&nbsp;a&nbsp;unit&nbsp;class.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Callable</strong> = typing.Callable<br>
+<strong>List</strong> = typing.List<br>
+<strong>Literal</strong> = typing.Literal<br>
+<strong>Optional</strong> = typing.Optional<br>
+<strong>Square</strong> = typing.Union[stratego.pieces.Piece, stratego.board.LakeSquare, NoneType]<br>
+<strong>Tuple</strong> = typing.Tuple<br>
+<strong>Union</strong> = typing.Union</td></tr></table>
+</body></html>

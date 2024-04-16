@@ -103,14 +103,15 @@ Nate Barnaik:
  - 1 UML diagram
 
 Jordan Dehmel:
- - Basics framework for GUI, Networking, and Pieces
- - Initial piece unit testing
+ - Basic framework for GUI, Networking, and Pieces
  - 2 UML diagrams (development and physical)
  - KanBan board management
  - Github issues
- - GUI + artwork
+ - GUI artwork and design
  - GUI testing
- - Piece testing
+ - Piece testing to 100% coverage
+ - Board testing to 100% coverage
 
 Kate Eckhart:
  - 2 UML diagrams
+ - Github issues

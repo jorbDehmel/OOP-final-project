@@ -80,6 +80,9 @@ class TestStrategoPiece(TestCase):
         with self.assertRaises(TypeError):
             bomb.confront(troop)
 
+        with self.assertRaises(TypeError):
+            bomb.confront(troop)
+
         self.assertEqual(repr(bomb), 'B')
 
         # Simulate an interaction between a miner and a bomb
@@ -132,7 +135,6 @@ class TestStrategoPiece(TestCase):
 
 
     def test_spy_marshal(self) -> None:
-=======
         # Create a flag and a regular troop
         flag: p.Flag = p.Flag('RED')
         troop: p.Troop = p.Troop('BLUE', 5)
@@ -159,6 +161,25 @@ class TestStrategoPiece(TestCase):
         Tests the scout piece for stratego. The scout piece is able
         to move any number of spaces, instead of just one.
         '''
+        # Create a flag and a regular troop
+        flag: p.Flag = p.Flag('RED')
+        troop: p.Troop = p.Troop('BLUE', 5)
+
+        with self.assertRaises(TypeError):
+            flag.confront(troop)
+
+    def test_spy_and_marshal(self) -> None:
+        '''
+        Tests the spy piece for stratego. The spy should defeat
+        a marshal when the spy attacks, but not when the marshal
+        attacks.
+        '''
+
+        s: p.Spy = p.Spy('RED')
+        m: p.Marshal = p.Marshal('BLUE')
+
+        self.assertEqual(s.confront(m), s)
+        self.assertEqual(m.confront(s), m)
 
     def test_miner(self) -> None:
         '''
@@ -171,3 +192,78 @@ class TestStrategoPiece(TestCase):
         Tests the marshal piece for stratego. The marshal is the
         highest rank (10), but is killed by spies and bombs.
         '''
+        miner: p.Miner = p.Miner('BLUE')
+        bomb: p.Bomb = p.Bomb('RED')
+
+        result: p.Piece = miner.confront(bomb)
+        self.assertEqual(result, miner)
+
+    def test_confrontation(self) -> None:
+        '''
+        Tests random confrontations between arbitrary pieces.
+        '''
+
+        # Options to permute over
+        possible_types: List[TypeAlias] = [None, b.LakeSquare,
+                                           p.Bomb, p.Flag, p.Marshal,
+                                           p.Miner, p.Scout, p.Spy]
+        possible_colors: List[str] = ['BLUE', 'RED']
+        possible_troop_ranks: List[int] = [4, 5, 6, 7, 8, 9]
+
+        all_pieces: List[b.Square] = []
+
+        for color in possible_colors:
+
+            for possible_type in possible_types:
+                if possible_type is None:
+                    all_pieces.append(None)
+
+                elif possible_type is b.LakeSquare:
+                    all_pieces.append(b.LakeSquare())
+
+                else:
+                    all_pieces.append(possible_type(color))
+
+                    self.assertEqual(all_pieces[-1].color, color)
+
+            for rank in possible_troop_ranks:
+                all_pieces.append(p.Troop(color, rank))
+
+        for attacker in all_pieces:
+
+            if not isinstance(attacker, p.Troop):
+                continue
+
+            for defender in all_pieces:
+                if defender is attacker:
+                    continue
+
+                result: Optional[p.Piece] = attacker.confront(defender)
+
+                repr(attacker)
+                repr(defender)
+                repr(result)
+
+                if defender is None:
+                    self.assertEqual(result, attacker)
+
+                elif isinstance(defender, p.Flag):
+                    self.assertEqual(result, defender)
+
+                elif (isinstance(defender, p.Bomb) and not
+                      isinstance(attacker, p.Miner)):
+                    self.assertEqual(result, defender)
+
+                elif (isinstance(defender, p.Marshal) and
+                      isinstance(attacker, p.Spy)):
+                    self.assertEqual(result, attacker)
+
+                elif isinstance(defender, p.Troop):
+                    if attacker.rank > defender.rank:
+                        self.assertEqual(result, attacker)
+
+                    elif attacker.rank == defender.rank:
+                        self.assertIsNone(result)
+
+                    else:
+                        self.assertEqual(result, defender)

@@ -170,6 +170,10 @@ class StrategoNetworker:
 
     def send_game(self, board: Board, state: str) -> None:
         '''
+<<<<<<< HEAD
+=======
+        Send the board and state.
+>>>>>>> origin/main
         '''
 
         self.__send_board(board)
@@ -177,6 +181,7 @@ class StrategoNetworker:
 
     def recv_game(self) -> Tuple[Board, str]:
         '''
+        Read the board and state from the socket.
         '''
 
         out_board: Board = self.__recv_board()

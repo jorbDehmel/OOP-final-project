@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module stratego.pieces</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="stratego.html" class="white">stratego</a>.pieces</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/stratego/pieces.py">/home/user/OOP-final-project/stratego/pieces.py</a></td></tr></table>
+    <p><span class="code">This&nbsp;module&nbsp;defines&nbsp;classes&nbsp;for&nbsp;an&nbsp;Object-Oriented&nbsp;Stratego<br>
+game.</span></p>
+<p>
+<table class="section">
+<tr class="decor index-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
+    
+<tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="abc.html#ABC">abc.ABC</a>(<a href="builtins.html#object">builtins.object</a>)
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.pieces.html#Piece">Piece</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.pieces.html#Bomb">Bomb</a>
+</dt><dt class="heading-text"><a href="stratego.pieces.html#Flag">Flag</a>
+</dt><dt class="heading-text"><a href="stratego.pieces.html#Troop">Troop</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="stratego.pieces.html#Marshal">Marshal</a>
+</dt><dt class="heading-text"><a href="stratego.pieces.html#Miner">Miner</a>
+</dt><dt class="heading-text"><a href="stratego.pieces.html#Scout">Scout</a>
+</dt><dt class="heading-text"><a href="stratego.pieces.html#Spy">Spy</a>
+</dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Bomb">class <strong>Bomb</strong></a>(<a href="stratego.pieces.html#Piece">Piece</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Bomb">Bomb</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;can&nbsp;defeat&nbsp;all&nbsp;others&nbsp;except&nbsp;for<br>
+miners.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Bomb">Bomb</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Bomb-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<dl><dt><a name="Bomb-confront"><strong>confront</strong></a>(self, _: stratego.pieces.Piece) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">A&nbsp;dummy&nbsp;implementation&nbsp;to&nbsp;prevent&nbsp;this&nbsp;from&nbsp;being&nbsp;an<br>
+<a href="abc.html#ABC">ABC</a>.&nbsp;Never&nbsp;returns&nbsp;anything,&nbsp;since&nbsp;this&nbsp;should&nbsp;never&nbsp;be<br>
+called.</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Bomb-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
+color&nbsp;of&nbsp;the&nbsp;piece.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Flag">class <strong>Flag</strong></a>(<a href="stratego.pieces.html#Piece">Piece</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Flag">Flag</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;ends&nbsp;the&nbsp;game&nbsp;if&nbsp;captured.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Flag">Flag</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Flag-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<dl><dt><a name="Flag-confront"><strong>confront</strong></a>(self, _: stratego.pieces.Piece) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">A&nbsp;dummy&nbsp;implementation&nbsp;to&nbsp;prevent&nbsp;this&nbsp;from&nbsp;being&nbsp;an<br>
+<a href="abc.html#ABC">ABC</a>.&nbsp;Never&nbsp;returns&nbsp;anything,&nbsp;since&nbsp;this&nbsp;should&nbsp;never&nbsp;be<br>
+called.</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Flag-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
+color&nbsp;of&nbsp;the&nbsp;piece.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Marshal">class <strong>Marshal</strong></a>(<a href="stratego.pieces.html#Troop">Troop</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Marshal">Marshal</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;can&nbsp;only&nbsp;be&nbsp;killed&nbsp;by&nbsp;spies.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Marshal">Marshal</a></dd>
+<dd><a href="stratego.pieces.html#Troop">Troop</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Marshal-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">Create&nbsp;this&nbsp;piece&nbsp;by&nbsp;calling&nbsp;the&nbsp;superclass&nbsp;constructor.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'.</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><a name="Marshal-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<dl><dt><a name="Marshal-confront"><strong>confront</strong></a>(self, other: Optional[stratego.pieces.Piece]) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">Pit&nbsp;this&nbsp;item&nbsp;against&nbsp;another.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Miner">class <strong>Miner</strong></a>(<a href="stratego.pieces.html#Troop">Troop</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Miner">Miner</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;can&nbsp;diffuse&nbsp;bombs.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Miner">Miner</a></dd>
+<dd><a href="stratego.pieces.html#Troop">Troop</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Miner-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">Create&nbsp;this&nbsp;piece&nbsp;by&nbsp;calling&nbsp;the&nbsp;superclass&nbsp;constructor.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'</span></dd></dl>
+
+<dl><dt><a name="Miner-confront"><strong>confront</strong></a>(self, other: Optional[stratego.pieces.Piece]) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">A&nbsp;confrontation&nbsp;between&nbsp;another&nbsp;piece&nbsp;and&nbsp;this&nbsp;one.<br>
+&nbsp;<br>
+:returns:&nbsp;The&nbsp;winning&nbsp;piece.</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><a name="Miner-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Piece">class <strong>Piece</strong></a>(<a href="abc.html#ABC">abc.ABC</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Piece">Piece</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece.&nbsp;This&nbsp;should&nbsp;be&nbsp;an&nbsp;abstract&nbsp;base&nbsp;class<br>
+which&nbsp;is&nbsp;inherited&nbsp;by&nbsp;specific&nbsp;pieces.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Piece-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
+color&nbsp;of&nbsp;the&nbsp;piece.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'.</span></dd></dl>
+
+<dl><dt><a name="Piece-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;unique&nbsp;identifying&nbsp;char&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;A&nbsp;single&nbsp;char&nbsp;representing&nbsp;this&nbsp;piece.</span></dd></dl>
+
+<dl><dt><a name="Piece-confront"><strong>confront</strong></a>(self, other: 'Piece') -&gt; Optional[ForwardRef('Piece')]</dt><dd><span class="code">Move&nbsp;this&nbsp;piece&nbsp;onto&nbsp;the&nbsp;other.&nbsp;This&nbsp;will&nbsp;return&nbsp;the<br>
+piece&nbsp;which&nbsp;is&nbsp;the&nbsp;"winner".<br>
+&nbsp;<br>
+:param&nbsp;other:&nbsp;The&nbsp;piece&nbsp;which&nbsp;was&nbsp;already&nbsp;on&nbsp;this<br>
+&nbsp;&nbsp;&nbsp;&nbsp;square.<br>
+:returns:&nbsp;Either&nbsp;self&nbsp;if&nbsp;the&nbsp;other&nbsp;was&nbsp;defeated,&nbsp;other<br>
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self&nbsp;was&nbsp;defeated,&nbsp;None&nbsp;if&nbsp;both&nbsp;are&nbsp;defeated.&nbsp;If<br>
+&nbsp;&nbsp;&nbsp;&nbsp;the&nbsp;other&nbsp;is&nbsp;a&nbsp;flag,&nbsp;always&nbsp;returns&nbsp;it.</span></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset({'__repr__', 'confront'})</dl>
+
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Scout">class <strong>Scout</strong></a>(<a href="stratego.pieces.html#Troop">Troop</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Scout">Scout</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;can&nbsp;move&nbsp;any&nbsp;number&nbsp;of&nbsp;places&nbsp;instead<br>
+of&nbsp;just&nbsp;1&nbsp;per&nbsp;turn,&nbsp;possible&nbsp;attacking&nbsp;on&nbsp;the&nbsp;same&nbsp;turn&nbsp;as<br>
+moving.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Scout">Scout</a></dd>
+<dd><a href="stratego.pieces.html#Troop">Troop</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Scout-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">Create&nbsp;this&nbsp;piece&nbsp;by&nbsp;calling&nbsp;the&nbsp;superclass&nbsp;constructor.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><a name="Scout-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<dl><dt><a name="Scout-confront"><strong>confront</strong></a>(self, other: Optional[stratego.pieces.Piece]) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">Pit&nbsp;this&nbsp;item&nbsp;against&nbsp;another.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Spy">class <strong>Spy</strong></a>(<a href="stratego.pieces.html#Troop">Troop</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Spy">Spy</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'])&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;Stratego&nbsp;piece&nbsp;which&nbsp;can&nbsp;kill&nbsp;marshals.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Spy">Spy</a></dd>
+<dd><a href="stratego.pieces.html#Troop">Troop</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Spy-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">Create&nbsp;this&nbsp;piece&nbsp;by&nbsp;calling&nbsp;the&nbsp;superclass&nbsp;constructor.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'</span></dd></dl>
+
+<dl><dt><a name="Spy-confront"><strong>confront</strong></a>(self, other: Optional[stratego.pieces.Piece]) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">A&nbsp;confrontation&nbsp;between&nbsp;another&nbsp;piece&nbsp;and&nbsp;this&nbsp;one.<br>
+&nbsp;<br>
+:returns:&nbsp;The&nbsp;winning&nbsp;piece.</span></dd></dl>
+
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><a name="Spy-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a>:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="Troop">class <strong>Troop</strong></a>(<a href="stratego.pieces.html#Piece">Piece</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#Troop">Troop</a>(color:&nbsp;Literal['BLUE',&nbsp;'RED'],&nbsp;rank:&nbsp;int)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+A&nbsp;standard,&nbsp;non-special&nbsp;Stratego&nbsp;piece;&nbsp;This&nbsp;has&nbsp;no&nbsp;special<br>
+properties,&nbsp;just&nbsp;a&nbsp;rank.&nbsp;If&nbsp;confront&nbsp;is&nbsp;called&nbsp;here,&nbsp;it&nbsp;is<br>
+assumed&nbsp;that&nbsp;the&nbsp;caller&nbsp;has&nbsp;no&nbsp;special&nbsp;properties.&nbsp;However,<br>
+the&nbsp;piece&nbsp;being&nbsp;confronted&nbsp;might.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt>Method resolution order:</dt>
+<dd><a href="stratego.pieces.html#Troop">Troop</a></dd>
+<dd><a href="stratego.pieces.html#Piece">Piece</a></dd>
+<dd><a href="abc.html#ABC">abc.ABC</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Troop-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED'], rank: int) -&gt; None</dt><dd><span class="code">Initializes&nbsp;a&nbsp;new&nbsp;non-special&nbsp;ranked&nbsp;troop&nbsp;w/&nbsp;the&nbsp;given<br>
+rank&nbsp;value.<br>
+&nbsp;<br>
+:param&nbsp;color:&nbsp;Either&nbsp;'RED'&nbsp;or&nbsp;'BLUE'</span></dd></dl>
+
+<dl><dt><a name="Troop-__repr__"><strong>__repr__</strong></a>(self) -&gt; str</dt><dd><span class="code">Returns&nbsp;a&nbsp;string&nbsp;representation&nbsp;of&nbsp;this&nbsp;object.<br>
+:returns:&nbsp;The&nbsp;string&nbsp;representing&nbsp;this&nbsp;object.</span></dd></dl>
+
+<dl><dt><a name="Troop-confront"><strong>confront</strong></a>(self, other: Optional[stratego.pieces.Piece]) -&gt; Optional[stratego.pieces.Piece]</dt><dd><span class="code">Pit&nbsp;this&nbsp;item&nbsp;against&nbsp;another.</span></dd></dl>
+
+<hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
+&nbsp;<br>
+:returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
+</dl>
+<hr>
+Data descriptors inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Literal</strong> = typing.Literal<br>
+<strong>Optional</strong> = typing.Optional</td></tr></table>
+</body></html>
