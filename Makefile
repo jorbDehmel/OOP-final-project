@@ -3,7 +3,7 @@ TEST_ARGS = -s --verbose --color=yes
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8 --max-complexity=10 --max-line-length=100 --count --show-source --statistics
 COVERAGE = pytest --cov --cov-report term-missing
-TARGETS := main.py stratego/*.py
+TARGETS = main.py stratego/*.py
 
 .PHONY: all
 all: check-style check-type run-cov run-test clean
@@ -15,7 +15,7 @@ check-type:
 
 .PHONY: check-style
 check-style:
-	$(STYLE_CHECK) $(TARGETS)
+	$(STYLE_CHECK) $(TARGETS) tests/*.py
 
 .PHONY: run-cov
 run-cov:

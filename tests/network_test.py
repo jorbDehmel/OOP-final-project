@@ -4,49 +4,88 @@ Tests network operations for Stratego.
 
 import unittest
 from unittest import mock
-from stratego import network as n
 import multiprocessing as mp
 from multiprocessing import connection as mp_connect
+from stratego import network as n
+
 
 class MockSocket:
-    def __init__(self, _sock_type: object, _sock_proto: object):
-        pass
+    '''
+    For replacing sockets when testing.
+    '''
 
-    def accept(self):
+    def __init__(self, _sock_type: object, _sock_proto: object) -> None:
+        '''
+        Dummy function.
+        '''
+
+    def accept(self) -> None:
+        '''
+        Dummy function.
+        '''
+
         return (self, None)
 
-    def bind(self, _addr: object):
-        pass
+    def bind(self, _addr: object) -> None:
+        '''
+        Dummy function.
+        '''
 
-    def listen(self, _backlog: object):
-        pass
+    def listen(self, _backlog: object) -> None:
+        '''
+        Dummy function.
+        '''
 
-    def connect(self, _addr: object):
-        pass
+    def connect(self, _addr: object) -> None:
+        '''
+        Dummy function.
+        '''
 
-    def close(self):
+    def close(self) -> None:
+        '''
+        Dummy function.
+        '''
+
         self._pipe.close()
 
-    def send(self, data: bytes):
+    def send(self, data: bytes) -> None:
+        '''
+        Dummy function.
+        '''
+
         assert isinstance(data, bytes)
         self._pipe.send(data)
 
-    def recv(self, size: int):
+    def recv(self, size: int) -> None:
+        '''
+        Dummy function.
+        '''
+
         data = self._pipe.recv()
         assert isinstance(data, bytes) and len(data) == size
         return data
 
-def run_in_network_context(server_fn, client_fn):
-    def main(pipe, test_fn):
+
+def run_in_network_context(server_fn, client_fn) -> None:
+    '''
+    '''
+
+    def main(pipe, test_fn) -> int:
+        '''
+        '''
+
         with mock.patch('socket.socket', new=MockSocket):
             MockSocket._pipe = pipe
             test_fn()
 
+        return 0
+
     (server_pipe, client_pipe) = mp.Pipe()
-    server_process = mp.Process(target = main, args=(server_pipe, server_fn))
-    client_process = mp.Process(target = main, args=(client_pipe, client_fn))
+    server_process = mp.Process(target=main, args=(server_pipe, server_fn))
+    client_process = mp.Process(target=main, args=(client_pipe, client_fn))
     server_process.start()
     client_process.start()
+
     try:
         running_process = [server_process, client_process]
         while len(running_process) > 0:
@@ -57,9 +96,11 @@ def run_in_network_context(server_fn, client_fn):
                         assert running_process[i].exitcode == 0
                         del running_process[i]
                         break
+
     finally:
         server_process.kill()
         client_process.kill()
+
 
 class TestStrategoNetworking(unittest.TestCase):
     '''
@@ -76,21 +117,40 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests the host game and join game function.
         '''
-        def host_test(pass_sidechannel):
-            def main():
+
+        def host_test(pass_sidechannel) -> None:
+            '''
+            '''
+
+            def main() -> int:
+                '''
+                '''
+
                 nonlocal pass_sidechannel
                 net = n.StrategoNetworker.get_instance()
                 password = net.host_game('', 0)
                 pass_sidechannel.send(password)
                 net.host_wait_for_join()
+
+                return 0
+
             return main
 
-        def join_test(pass_sidechannel):
-            def main():
+        def join_test(pass_sidechannel) -> None:
+            '''
+            '''
+
+            def main() -> int:
+                '''
+                '''
+
                 nonlocal pass_sidechannel
                 password = pass_sidechannel.recv()
                 net = n.StrategoNetworker.get_instance()
                 assert net.join_game('', 0, password) == 0
+
+                return 0
+
             return main
 
         (pass_sidechannel_send, pass_sidechannel_recv) = mp.Pipe()
@@ -110,4 +170,3 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests all the above functions together.
         '''
-        pass
