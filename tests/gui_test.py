@@ -23,12 +23,12 @@ class GUITest(unittest.TestCase):
         error.
         '''
 
-        def call(self, args = None, kwargs = None) -> None:
+        def call(self, args=None, kwargs=None) -> None:
             '''
             Dummy function.
             '''
 
-        def getint(self, args = None, kwargs = None) -> None:
+        def getint(self, args=None, kwargs=None) -> None:
             '''
             Dummy function.
             '''
