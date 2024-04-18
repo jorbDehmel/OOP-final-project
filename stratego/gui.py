@@ -24,8 +24,8 @@ def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
     :returns: The resized image.
     '''
 
-    old_w = img.width()
-    old_h = img.height()
+    old_w: int = img.width()
+    old_h: int = img.height()
 
     out: tk.PhotoImage = tk.PhotoImage(width=w, height=h)
 

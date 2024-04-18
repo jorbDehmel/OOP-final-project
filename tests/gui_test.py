@@ -12,6 +12,25 @@ import stratego.gui
 import stratego.network
 
 
+class TKDummy:
+    '''
+    A special class to replace tkinter._default_root
+    with in order to avoid errors. The methods defined
+    herein are required in order for this to run without
+    error.
+    '''
+
+    def call(self, args = None, kwargs = None) -> None:
+        '''
+        Dummy function.
+        '''
+
+    def getint(self, args = None, kwargs = None) -> None:
+        '''
+        Dummy function.
+        '''
+
+
 class HelperTest(unittest.TestCase):
     '''
     Tests helper function(s).
@@ -22,14 +41,15 @@ class HelperTest(unittest.TestCase):
         Tests resize_image.
         '''
 
-        # Initialize TK; This theoretically avoids errors
-        tk.Tk()
+        with mock.patch('tkinter._default_root', TKDummy):
 
-        empty: tk.PhotoImage = tk.PhotoImage()
+            empty: tk.PhotoImage = tk.PhotoImage(width=16, height=16)
+            self.assertEqual(empty.width(), 16)
+            self.assertEqual(empty.height(), 16)
 
-        big_empty = stratego.gui.resize_image(empty, 1024, 1024)
-        self.assertEqual(big_empty.width(), 1024)
-        self.assertEqual(big_empty.height(), 1024)
+            big_empty = stratego.gui.resize_image(empty, 1024, 1024)
+            self.assertEqual(big_empty.width(), 1024)
+            self.assertEqual(big_empty.height(), 1024)
 
 
 class GUITest(unittest.TestCase):
@@ -42,7 +62,7 @@ class GUITest(unittest.TestCase):
         Tests the color property.
         '''
 
-        with mock.patch('tkinter.Tk') as _:
+        with mock.patch('tkinter.Tk'):
 
             # This has no public methods other than get_instance
             gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
@@ -60,7 +80,8 @@ class GUITest(unittest.TestCase):
         Test the GUI's screens via patching.
         '''
 
-        with mock.patch('tkinter.Tk') as fake_tk:
+        with (mock.patch('tkinter.Tk') as fake_tk,
+              mock.patch('tkinter._default_root', TKDummy)):
 
             # Setup winfo_children
             fake_tk.winfo_children.return_value = [mock.Mock()] * 5
@@ -83,7 +104,7 @@ class GUITest(unittest.TestCase):
         Test the GUI's hosting screen via patching.
         '''
 
-        with mock.patch('tkinter.Tk') as _:
+        with mock.patch('tkinter.Tk'):
 
             # This has no public methods other than get_instance
             gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
@@ -98,7 +119,7 @@ class GUITest(unittest.TestCase):
         Test the GUI's joining screen via patching.
         '''
 
-        with mock.patch('tkinter.Tk') as _:
+        with mock.patch('tkinter.Tk'):
 
             # This has no public methods other than get_instance
             gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
@@ -113,9 +134,10 @@ class GUITest(unittest.TestCase):
         Test the GUI's setup screen via patching.
         '''
 
-        with (mock.patch('tkinter.Tk') as _,
+        with (mock.patch('tkinter.Tk'),
               mock.patch('tkinter.Button') as fake_button,
-              mock.patch('stratego.network.StrategoNetworker') as fake_net):
+              mock.patch('stratego.network.StrategoNetworker') as fake_net,
+              mock.patch('tkinter._default_root', TKDummy)):
 
             fake_net.recv_game.return_value = (stratego.board.Board.get_instance(), 'GOOD')
 
