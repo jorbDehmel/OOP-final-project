@@ -55,14 +55,13 @@ class Piece(ABC):
         return self.__color
 
     @property
+    @abstractmethod
     def rank(self) -> int:
         '''
         Return this piece's rank.
 
         :returns: Rank.
         '''
-
-        raise TypeError('Cannot call method on abstract base class!')
 
     def __eq__(self, rhs: object) -> bool:
         if self is rhs:

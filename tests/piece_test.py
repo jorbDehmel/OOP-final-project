@@ -183,8 +183,6 @@ class TestStrategoPiece(TestCase):
         red_pieces = list(all_pieces('RED'))
         blue_pieces = list(all_pieces('BLUE'))
 
-        inverted_winners = {frozenset({p.Bomb, p.Miner}), frozenset({p.Spy, p.Marshal})}
-
         for red_piece in red_pieces:
             if type(red_piece) not in {p.Troop, p.Scout}:
                 continue
@@ -192,9 +190,6 @@ class TestStrategoPiece(TestCase):
             for blue_piece in blue_pieces:
                 red_rank = red_piece.rank
                 blue_rank = blue_piece.rank
-
-                if {type(red_piece), type(blue_piece)} in inverted_winners:
-                    continue
 
                 if red_rank < blue_rank:
                     assert_confront(red_piece, blue_piece, blue_piece)
@@ -269,7 +264,6 @@ class TestStrategoPiece(TestCase):
                     continue
 
                 for defender in all_pieces(other_color):
-                    if defender is attacker:
-                        continue
-
                     assert_confrontation_detailed(self, attacker, defender)
+
+                assert_confrontation_detailed(self, attacker, None)
