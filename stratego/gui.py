@@ -7,8 +7,10 @@ presented to the user.
 from random import shuffle
 import tkinter as tk
 from typing import Optional, List, Callable, Tuple, Dict, Literal
+
+import stratego
 import stratego.board as b
-import stratego.network as n
+import stratego.network
 import stratego.pieces as p
 
 
@@ -22,8 +24,8 @@ def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
     :returns: The resized image.
     '''
 
-    old_w = img.width()
-    old_h = img.height()
+    old_w: int = img.width()
+    old_h: int = img.height()
 
     out: tk.PhotoImage = tk.PhotoImage(width=w, height=h)
 
@@ -50,6 +52,11 @@ def resize_image(img: tk.PhotoImage, w: int, h: int) -> tk.PhotoImage:
     return out
 
 
+ScreenType = Literal['HOME', 'INFO', 'WIN', 'LOSE', 'ERROR',
+                     'SETUP', 'HOST_GAME', 'JOIN_GAME',
+                     'YOUR_TURN', 'THEIR_TURN', '']
+
+
 class StrategoGUI:
     '''
     An aggregate singleton class which encompasses the board,
@@ -73,6 +80,25 @@ class StrategoGUI:
 
         return cls.__INSTANCE
 
+    @classmethod
+    def clear_instance(cls) -> None:
+        '''
+        Reset this singleton class.
+        '''
+
+        if cls.__INSTANCE is not None:
+            del cls.__INSTANCE
+            cls.__INSTANCE = None
+
+    def press_key(self, key: str) -> None:
+        '''
+        Simulates the given keypress, given that it is bound.
+        :param key: The key event code.
+        '''
+
+        assert key in self.__keybindings
+        self.__keybindings[key]()
+
     def __init__(self) -> None:
         '''
         Initialize the GUI window, given that none already
@@ -80,6 +106,9 @@ class StrategoGUI:
         '''
 
         assert type(self).__INSTANCE is None, 'Cannot reinstantiate singleton'
+
+        # Used for testing purposes
+        self.__screen: ScreenType = ''
 
         # TK root object; This is the screen we write in.
         self.__root: tk.Tk = tk.Tk()
@@ -92,7 +121,8 @@ class StrategoGUI:
 
         # Game management objects
         self.__board: b.Board = b.Board.get_instance()
-        self.__networking: n.StrategoNetworker = n.StrategoNetworker()
+        self.__networking: stratego.network.StrategoNetworker = \
+            stratego.network.StrategoNetworker()
 
         # Game state objects
         self.__title: str = 'Stratego'
@@ -102,7 +132,7 @@ class StrategoGUI:
         self.__left_to_place: List[p.Piece] = []
 
         # Internal optimizations and bookkeeping
-        self.__keybindings: List[str] = []
+        self.__keybindings: Dict[str, Callable[[], None]] = {}
         self.__image_cache: Dict[str, tk.PhotoImage] = {}
 
         # This keybinding is not tracked and thus not erased
@@ -113,6 +143,52 @@ class StrategoGUI:
 
         # Initiate game
         self.__home_screen()
+
+    @property
+    def screen(self) -> ScreenType:
+        '''
+        Getter for the self.__screen variable.
+        '''
+
+        return self.__screen
+
+    @screen.setter
+    def screen(self, to: ScreenType) -> None:
+        '''
+        Moves to the given string, as long as it exists.
+        '''
+
+        cases: Dict[ScreenType, Callable[[], None]] = {
+            'HOME': self.__home_screen,
+            'INFO': self.__info_screen,
+            'WIN': self.__win_screen,
+            'LOSE': self.__lose_screen,
+            'ERROR': self.__error_screen,
+            'SETUP': self.__setup_screen,
+            'HOST_GAME': self.__host_game_screen,
+            'JOIN_GAME': self.__join_game_screen,
+            'YOUR_TURN': self.__your_turn_screen,
+            'THEIR_TURN': self.__their_turn_screen
+        }
+
+        assert to in cases
+        cases[to]()
+
+    @property
+    def color(self) -> Literal['RED', 'BLUE']:
+        '''
+        Getter for the color of the player.
+        '''
+
+        return self.__color
+
+    @color.setter
+    def color(self, to: Literal['RED', 'BLUE']) -> None:
+        '''
+        Setter for the color of the player.
+        '''
+
+        self.__color = to
 
     def __get_image(self, piece: b.Square) -> tk.PhotoImage:
         '''
@@ -196,7 +272,14 @@ class StrategoGUI:
         '''
 
         self.__root.bind(sequence, lambda _: event())
-        self.__keybindings.append(sequence)
+        self.__keybindings[sequence] = event
+
+    def quit(self) -> None:
+        '''
+        Kills the app.
+        '''
+
+        self.__quit()
 
     def __quit(self) -> None:
         '''
@@ -219,6 +302,9 @@ class StrategoGUI:
         for key in self.__keybindings:
             self.__root.unbind(key)
 
+        self.__keybindings = {}
+        self.__screen = ''
+
         # Set title
         self.__root.title(self.__title)
 
@@ -231,6 +317,7 @@ class StrategoGUI:
         '''
 
         self.__clear()
+        self.__screen = 'HOME'
 
         tk.Label(self.__root, text='\nStratego\n\n').pack()
 
@@ -256,6 +343,7 @@ class StrategoGUI:
         '''
 
         self.__clear()
+        self.__screen = 'INFO'
 
         tk.Label(self.__root,
                  text='2024\nN Barnaik, J Dehmel, K Eckhart').pack()
@@ -281,6 +369,7 @@ class StrategoGUI:
 
         # Clear screen
         self.__clear()
+        self.__screen = 'HOST_GAME'
 
         # Build form fields
         tk.Label(self.__root, text='IP:').pack()
@@ -329,7 +418,6 @@ class StrategoGUI:
             # When API call is done, advance to next screen
             self.__color = 'RED'
 
-            self.__setup_left_to_place()
             self.__setup_screen()
 
         tk.Button(self.__root,
@@ -344,6 +432,7 @@ class StrategoGUI:
 
         # Clear screen
         self.__clear()
+        self.__screen = 'JOIN_GAME'
 
         # Build form fields
         tk.Label(self.__root, text='IP:').pack()
@@ -388,7 +477,6 @@ class StrategoGUI:
                 # When API call is done, advance to next screen
                 self.__color = 'BLUE'
 
-                self.__setup_left_to_place()
                 self.__setup_screen()
 
             else:
@@ -428,6 +516,21 @@ class StrategoGUI:
                               (10, 4),
                               lambda _, __: self.__left_to_place.pop())
 
+        else:
+            self.__board.fill((0, 6),
+                              (10, 10),
+                              lambda _, __: self.__left_to_place.pop())
+
+        self.__setup_screen()
+
+    def __first_sync(self) -> None:
+        '''
+        Sync the two boards and begin play. This is to be called
+        when setup screen is done.
+        '''
+
+        if self.__color == 'RED':
+
             # Recv
             their_board, _ = self.__networking.recv_game()
             for y in range(0, 4):
@@ -439,28 +542,24 @@ class StrategoGUI:
             self.__networking.send_game(self.__board, 'GOOD')
 
             self.__your_turn_screen()
+            return
 
-        else:
-            self.__board.fill((0, 6),
-                              (10, 10),
-                              lambda _, __: self.__left_to_place.pop())
+        self.__clear()
+        tk.Label(self.__root, text='Waiting...').pack()
+        self.__display_board(lambda _, __: None)
+        self.__root.update()
 
-            self.__clear()
-            tk.Label(self.__root, text='Waiting...').pack()
-            self.__display_board(lambda _, __: None)
-            self.__root.update()
+        # Send
+        self.__networking.send_game(self.__board, 'GOOD')
 
-            # Send
-            self.__networking.send_game(self.__board, 'GOOD')
+        # Recv
+        their_board, _ = self.__networking.recv_game()
+        for y in range(6, 10):
+            for x in range(0, 10):
+                their_board.set_piece(x, y, self.__board.get(x, y))
+        self.__board = their_board
 
-            # Recv
-            their_board, _ = self.__networking.recv_game()
-            for y in range(6, 10):
-                for x in range(0, 10):
-                    their_board.set_piece(x, y, self.__board.get(x, y))
-            self.__board = their_board
-
-            self.__their_turn_screen()
+        self.__their_turn_screen()
 
     def __setup_screen(self) -> None:
         '''
@@ -492,24 +591,16 @@ class StrategoGUI:
 
             # If done w/ setup, continue to play
             if len(self.__left_to_place) == 0:
-
-                if self.__color == 'RED':
-                    self.__your_turn_screen()
-
-                else:
-                    their_board, _ = self.__networking.recv_game()
-                    for y in range(6, 10):
-                        for x in range(0, 10):
-                            their_board.set_piece(x, y, self.__board.get(x, y))
-                    self.__board = their_board
-
-                    self.__your_turn_screen()
-
+                self.__first_sync()
                 return
 
             self.__setup_screen()
 
         self.__clear()
+        self.__screen = 'SETUP'
+
+        if len(self.__left_to_place) == 0:
+            self.__setup_left_to_place()
 
         tk.Label(self.__root, text='Click to place this piece:').pack()
 
@@ -558,6 +649,7 @@ class StrategoGUI:
         try:
             # Update screen
             self.__clear()
+            self.__screen = 'YOUR_TURN'
             tk.Label(self.__root, text='Your turn.').pack()
 
             self.__display_board(board_movement_callback)
@@ -604,6 +696,7 @@ class StrategoGUI:
 
             # Update screen
             self.__clear()
+            self.__screen = 'THEIR_TURN'
             tk.Label(self.__root, text='Thier turn; Waiting.').pack()
 
             self.__display_board(lambda _, __: None)
@@ -631,6 +724,7 @@ class StrategoGUI:
         '''
 
         self.__clear()
+        self.__screen = 'WIN'
 
         self.__networking.close_game()
 
@@ -652,6 +746,7 @@ class StrategoGUI:
         '''
 
         self.__clear()
+        self.__screen = 'LOSE'
 
         self.__networking.close_game()
 
@@ -674,6 +769,7 @@ class StrategoGUI:
         '''
 
         self.__clear()
+        self.__screen = 'ERROR'
 
         self.__networking.close_game()
 

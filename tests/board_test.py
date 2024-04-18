@@ -178,7 +178,13 @@ class TestBoard(unittest.TestCase):
             board.move('RED', (0, 0), (0, 9))
 
         with self.assertRaises(b.InvalidMoveError):
+            board.move('RED', (0, 0), (0, 2))
+
+        with self.assertRaises(b.InvalidMoveError):
             board.move('BLUE', (0, 9), (0, 0))
+
+        with self.assertRaises(b.InvalidMoveError):
+            board.move('BLUE', (0, 9), (0, 7))
 
     def test_scout_movement(self) -> None:
         '''
