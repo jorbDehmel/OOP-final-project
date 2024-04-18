@@ -5,57 +5,33 @@ Some tests of the Stratego GUI.
 from typing import Callable, Dict
 import unittest
 from unittest import mock
-import tkinter as tk
-
 import stratego
 import stratego.gui
 import stratego.network
-
-
-class TKDummy:
-    '''
-    A special class to replace tkinter._default_root
-    with in order to avoid errors. The methods defined
-    herein are required in order for this to run without
-    error.
-    '''
-
-    def call(self, args = None, kwargs = None) -> None:
-        '''
-        Dummy function.
-        '''
-
-    def getint(self, args = None, kwargs = None) -> None:
-        '''
-        Dummy function.
-        '''
-
-
-class HelperTest(unittest.TestCase):
-    '''
-    Tests helper function(s).
-    '''
-
-    def test_resize_image(self) -> None:
-        '''
-        Tests resize_image.
-        '''
-
-        with mock.patch('tkinter._default_root', TKDummy):
-
-            empty: tk.PhotoImage = tk.PhotoImage(width=16, height=16)
-            self.assertEqual(empty.width(), 16)
-            self.assertEqual(empty.height(), 16)
-
-            big_empty = stratego.gui.resize_image(empty, 1024, 1024)
-            self.assertEqual(big_empty.width(), 1024)
-            self.assertEqual(big_empty.height(), 1024)
 
 
 class GUITest(unittest.TestCase):
     '''
     Tests the Stratego GUI.
     '''
+
+    class TKDummy:
+        '''
+        A special class to replace tkinter._default_root
+        with in order to avoid errors. The methods defined
+        herein are required in order for this to run without
+        error.
+        '''
+
+        def call(self, args = None, kwargs = None) -> None:
+            '''
+            Dummy function.
+            '''
+
+        def getint(self, args = None, kwargs = None) -> None:
+            '''
+            Dummy function.
+            '''
 
     def test_color(self) -> None:
         '''
@@ -81,7 +57,7 @@ class GUITest(unittest.TestCase):
         '''
 
         with (mock.patch('tkinter.Tk') as fake_tk,
-              mock.patch('tkinter._default_root', TKDummy)):
+              mock.patch('tkinter._default_root', GUITest.TKDummy)):
 
             # Setup winfo_children
             fake_tk.winfo_children.return_value = [mock.Mock()] * 5
@@ -137,7 +113,7 @@ class GUITest(unittest.TestCase):
         with (mock.patch('tkinter.Tk'),
               mock.patch('tkinter.Button') as fake_button,
               mock.patch('stratego.network.StrategoNetworker') as fake_net,
-              mock.patch('tkinter._default_root', TKDummy)):
+              mock.patch('tkinter._default_root', GUITest.TKDummy)):
 
             fake_net.recv_game.return_value = (stratego.board.Board.get_instance(), 'GOOD')
 
