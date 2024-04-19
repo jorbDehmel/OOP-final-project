@@ -4,6 +4,7 @@ Tests network operations for Stratego.
 
 import unittest
 from unittest import mock
+from typing import Tuple
 import multiprocessing as mp
 from multiprocessing import connection as mp_connect
 from stratego import network as n
@@ -19,7 +20,7 @@ class MockSocket:
         Dummy function.
         '''
 
-    def accept(self) -> None:
+    def accept(self) -> Tuple['MockSocket', None]:
         '''
         Dummy function.
         '''
@@ -68,14 +69,16 @@ class MockSocket:
 
 def run_in_network_context(server_fn, client_fn) -> None:
     '''
+    Run the given functions in a network context.
     '''
 
     def main(pipe, test_fn) -> int:
         '''
+        Main function for staging purposes.
         '''
 
         with mock.patch('socket.socket', new=MockSocket):
-            MockSocket._pipe = pipe
+            MockSocket._pipe = pipe  # TODO: Fix this!
             test_fn()
 
         return 0
@@ -91,7 +94,7 @@ def run_in_network_context(server_fn, client_fn) -> None:
         while len(running_process) > 0:
             done = mp_connect.wait([x.sentinel for x in running_process])
             for x in done:
-                for i in range(0, len(running_process)):
+                for i, _ in enumerate(running_process):
                     if x == running_process[i].sentinel:
                         assert running_process[i].exitcode == 0
                         del running_process[i]
@@ -120,10 +123,12 @@ class TestStrategoNetworking(unittest.TestCase):
 
         def host_test(pass_sidechannel) -> None:
             '''
+            Host function
             '''
 
             def main() -> int:
                 '''
+                Dummy main
                 '''
 
                 nonlocal pass_sidechannel
@@ -138,10 +143,12 @@ class TestStrategoNetworking(unittest.TestCase):
 
         def join_test(pass_sidechannel) -> None:
             '''
+            Join function
             '''
 
             def main() -> int:
                 '''
+                Dummy main
                 '''
 
                 nonlocal pass_sidechannel

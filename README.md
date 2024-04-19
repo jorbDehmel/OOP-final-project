@@ -114,4 +114,5 @@ Jordan Dehmel:
 
 Kate Eckhart:
  - 2 UML diagrams
+ - Initial network unit testing
  - Github issues
