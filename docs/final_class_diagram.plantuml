@@ -46,7 +46,30 @@ folder board {
 }
 
 folder network {
-    class StrategoNetworker {}
+    class StrategoNetworker {
+        {static} - __SIZE_STR_MAX_SIZE: int = 16
+        {static} - __STATE_STR_MAX_SIZE: int = 8
+        {static} - __PASSWORD_SIZE: int = 4
+        {static} - __INSTANCE: Optional['StrategoNetworker'] = None
+
+        {static} - is_terminal_state(cur_state: str) -> bool
+        {static} - get_instance(cls) -> 'StrategoNetworker'
+
+        + __init__(self) -> None
+        + host_game(self, ip: str, port: int) -> str
+        + host_wait_for_join(self) -> None
+        + join_game(self, ip: str, port: int, password: str) -> int
+        + close_game(self) -> None
+        + send_game(self, board: Board, state: str) -> None
+        + recv_game(self) -> Tuple[Board, str]
+
+        - __send_board(self, to_send: Board) -> None
+        - __recv_board(self) -> Board
+        - __send_game_state(self, state: str) -> None
+        - __recv_game_state(self) -> str
+    }
+    StrategoNetworker -- Board : Transmits >
+    StrategoNetworker -- Socket : Uses, contains >
 }
 
 folder gui {
