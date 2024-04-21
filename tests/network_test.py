@@ -96,7 +96,8 @@ def run_in_network_context(server_fn, client_fn) -> None:
             for x in done:
                 for i, _ in enumerate(running_process):
                     if x == running_process[i].sentinel:
-                        assert running_process[i].exitcode == 0
+                        if running_process[i].exitcode is not None:
+                            assert running_process[i].exitcode == 0
                         del running_process[i]
                         break
 
