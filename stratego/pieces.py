@@ -64,6 +64,12 @@ class Piece(ABC):
         '''
 
     def __eq__(self, rhs: object) -> bool:
+        '''
+        Equality operator for a piece.
+        :param rhs: The other object.
+        :returns: True if this is equal to the other.
+        '''
+
         if self is rhs:
             return True
         if type(self) is not type(rhs):
@@ -73,6 +79,11 @@ class Piece(ABC):
         return self.rank == rhs.rank and self.color == rhs.color
 
     def __hash__(self) -> int:
+        '''
+        Hash function for a Piece.
+        :returns: A unique hash value for this piece.
+        '''
+
         return hash((self.rank, self.color))
 
 
@@ -127,7 +138,7 @@ class Troop(Piece):
         '''
 
         super().__init__(color)
-        self.__rank = rank
+        self.__rank: int = rank
 
     def confront(self, other: Optional[Piece]) -> Optional[Piece]:
         '''

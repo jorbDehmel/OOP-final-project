@@ -1,3 +1,183 @@
 @startuml final_class_diagram
 
+() Exception
+() Socket
+() "TK Interface Handler" as Tk
+
+folder board {
+    class LakeSquare {}
+    class InvalidMoveError {}
+    InvalidMoveError -u- Exception : Extends >
+
+    enum Square {
+        Piece
+        None
+        LakeSquare
+    }
+    None -u- Square : Is an option of >
+    LakeSquare -u- Square : Is an option of >
+
+    class Board {
+        {static} - __INSTANCE: Optional['Board'] = None
+        {static} - _WIDTH: int = 10
+        {static} - _HEIGHT: int = 10
+        {static} + get_instance(cls) -> 'Board'
+        {static} + all_pieces(color: Literal['BLUE', 'RED']) -> List[Piece]
+
+        + property height(self) -> int
+        + property width(self) -> int
+        + clear(self) -> None
+        + fill(self, start: Tuple[int, int], end: Tuple[int, int], to: Union[Square, Callable[[int, int], Square]]) -> None
+        + get(self, x: int, y: int) -> Square
+        + set_piece(self, x: int, y: int, what: Square) -> None
+        + move(self, color: Literal['BLUE', 'RED], from_pair: Tuple[int, int], to_pair: Tuple[int, int]) -> Literal['RED', 'BLUE', 'GOOD']
+        + __init__(self) -> None
+
+        - _places: List[List[Square]]
+
+        {static} - __move_is_inside_board(cls, from_x: int, to_x: int, from_y: int, to_y: int) -> bool
+        {static} - __move_is_logical(from_x: int, to_x: int, from_y: int, to_y: int) -> bool
+        {static} - __types_are_legal(from_piece: Square, to_piece: Square) -> bool
+        - __move_makes_sense_for_type(self, from_x: int, to_x: int, from_y: int, to_y: int) -> bool
+        - __is_valid_move(self, from_x: int, from_y: int, to_x: int, to_y: int) -> bool
+    }
+    Board - Square : Contains >
+    Board -u- InvalidMoveError : Raises >
+}
+
+folder network {
+    class StrategoNetworker {}
+}
+
+folder gui {
+    enum ScreenType {
+        ""
+        HOME
+        INFO
+        WIN
+        LOSE
+        ERROR
+        SETUP
+        HOST_GAME
+        JOIN_GAME
+        YOUR_TURN
+        THEIR_TURN
+    }
+
+    class StrategoGUI {
+        {static} + resize_image(img: tkinter.PhotoImage, w: int, h: int) -> tkinter.PhotoImage
+        {static} + get_instance(cls) -> 'StrategoGUI'
+        {static} + clear_instance(cls) -> None
+
+        + press_key(self, key: str) -> None
+        + __init__(self) -> None
+        + property screen(self) -> ScreenType
+        + property screen(self, to: ScreenType) -> None
+        + property color(self) -> Literal['BLUE', 'RED']
+        + property color(self, to: Literal['BLUE', 'RED']) -> None
+        + quit(self) -> None
+
+        - __get_image(self, piece: b.Square) -> tk.PhotoImage
+        - __display_board(self, callback: Callable[[int, int], None]) -> None
+        - __bind(self, sequence: str, event: Callable[[], None]) -> None
+        - __quit(self) -> None
+        - __clear(self) -> None
+        - __home_screen(self) -> None
+        - __info_screen(self) -> None
+        - __host_game_screen(self) -> None
+        - __join_game_screen(self) -> None
+        - __setup_left_to_place(self) -> None
+        - __randomize_all(self) -> None
+        - __first_sync(self) -> None
+        - __setup_screen(self) -> None
+        - __your_turn_screen(self) -> None
+        - __check_move(self) -> None
+        - __their_turn_screen(self) -> None
+        - __win_screen(self) -> None
+        - __lose_screen(self) -> None
+        - __error_screen(self) -> None
+
+        {static} - __INSTANCE: Optional['StrategoGUI'] = None
+        {static} - _BUTTON_SIZE: int = 32
+
+        - __screen: ScreenType
+        - __root: tkinter.Tk
+        - __board: Board
+        - __networking: StrategoNetworker
+        - __title: str
+        - __color: Literal['BLUE', 'RED']
+        - __from_selection: Optional[Tuple[int, int]]
+        - __to_selection: Optional[Tuple[int, int]]
+        - __left_to_place: List[Piece]
+        - __keybindings: Dict[str, Callable[]]
+        - __image_cache: Dict[str, tkinter.PhotoImage]
+    }
+    StrategoGUI - ScreenType : Uses for typing >
+    StrategoGUI - Board : Contains >
+    StrategoGUI - StrategoNetworker : Contains >
+    StrategoGUI - Tk : Builds GUI via >
+}
+
+folder pieces {
+    class ABC {}
+
+    class Piece {
+        + __init__(self, color: Literal['BLUE', 'RED]) -> None
+        + __eq__(self, rhs: object) -> bool
+        + __hash__(self) -> int
+        + property color(self) -> str
+        {abstract} + __repr__(self) -> str
+        {abstract} + confront(self, other: 'Piece') -> Optional['Piece']
+        {abstract} + property rank(self) -> int
+
+        - __color: str
+    }
+    Piece -u- ABC : Extends >
+    Piece -u- Square : Is an option of >
+
+    class Bomb {
+        + __repr__(self) -> str
+        + property rank(self) -> int
+        + confront(self, _: Piece) -> Optional[Piece]
+    }
+    class Flag {
+        + __repr__(self) -> str
+        + property rank(self) -> int
+        + confront(self, _: Piece) -> Optional[Piece]
+    }
+    class Troop {
+        + __init__(self, color: Literal['BLUE', 'RED], rank: int) -> None
+        + __repr__(self) -> str
+        + property rank(self) -> int
+        + confront(self, other: Optional[Piece]) -> Optional[Piece]
+
+        - __rank: int
+    }
+    Flag -u- Piece : Extends >
+    Bomb -u- Piece : Extends >
+    Troop -u- Piece : Extends >
+
+    class Spy {
+        + __init__(self, color: Literal['BLUE', 'RED']) -> None
+        + confront(self, other: Optional[Piece]) -> Optional[Piece]
+    }
+    class Miner {
+        + __init__(self, color: Literal['BLUE', 'RED']) -> None
+        + confront(self, other: Optional[Piece]) -> Optional[Piece]
+    }
+    class Scout {
+        + __init__(self, color: Literal['BLUE', 'RED']) -> None
+    }
+    class Marshal {
+        + __init__(self, color: Literal['BLUE', 'RED']) -> None
+    }
+    Spy -u- Troop : Extends >
+    Scout -u- Troop : Extends >
+    Miner -u- Troop : Extends >
+    Marshal -u- Troop : Extends >
+}
+
+() main
+main -u- StrategoGUI : Instantiates >
+
 @enduml

@@ -8,7 +8,7 @@
 <table class="heading">
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="stratego.html" class="white">stratego</a>.pieces</strong></td>
-<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/stratego/pieces.py">/home/user/OOP-final-project/stratego/pieces.py</a></td></tr></table>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/jorb/Programs/OOP-final-project/stratego/pieces.py">/home/jorb/Programs/OOP-final-project/stratego/pieces.py</a></td></tr></table>
     <p><span class="code">This&nbsp;module&nbsp;defines&nbsp;classes&nbsp;for&nbsp;an&nbsp;Object-Oriented&nbsp;Stratego<br>
 game.</span></p>
 <p>
@@ -67,11 +67,25 @@ Methods defined here:<br>
 called.</span></dd></dl>
 
 <hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
 Data and other attributes defined here:<br>
 <dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
 
 <hr>
 Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Bomb-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Bomb-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
 <dl><dt><a name="Bomb-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
 color&nbsp;of&nbsp;the&nbsp;piece.<br>
 &nbsp;<br>
@@ -118,11 +132,25 @@ Methods defined here:<br>
 called.</span></dd></dl>
 
 <hr>
+Readonly properties defined here:<br>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
+<hr>
 Data and other attributes defined here:<br>
 <dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
 
 <hr>
 Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Flag-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Flag-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
 <dl><dt><a name="Flag-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
 color&nbsp;of&nbsp;the&nbsp;piece.<br>
 &nbsp;<br>
@@ -185,6 +213,15 @@ Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a
 :returns:&nbsp;Rank.</span></dd>
 </dl>
 <hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Marshal-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Marshal-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
+<hr>
 Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
 <dl><dt><strong>color</strong></dt>
 <dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
@@ -243,6 +280,15 @@ Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a
 :returns:&nbsp;Rank.</span></dd>
 </dl>
 <hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Miner-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Miner-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
+<hr>
 Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
 <dl><dt><strong>color</strong></dt>
 <dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
@@ -275,6 +321,13 @@ which&nbsp;is&nbsp;inherited&nbsp;by&nbsp;specific&nbsp;pieces.<br>&nbsp;</span>
 </dl>
 <hr>
 Methods defined here:<br>
+<dl><dt><a name="Piece-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Piece-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
 <dl><dt><a name="Piece-__init__"><strong>__init__</strong></a>(self, color: Literal['BLUE', 'RED']) -&gt; None</dt><dd><span class="code">A&nbsp;base&nbsp;constructor&nbsp;for&nbsp;a&nbsp;stratego&nbsp;piece.&nbsp;Must&nbsp;take&nbsp;the<br>
 color&nbsp;of&nbsp;the&nbsp;piece.<br>
 &nbsp;<br>
@@ -300,6 +353,11 @@ Readonly properties defined here:<br>
 &nbsp;<br>
 :returns:&nbsp;This&nbsp;piece's&nbsp;color.</span></dd>
 </dl>
+<dl><dt><strong>rank</strong></dt>
+<dd><span class="code">Return&nbsp;this&nbsp;piece's&nbsp;rank.<br>
+&nbsp;<br>
+:returns:&nbsp;Rank.</span></dd>
+</dl>
 <hr>
 Data descriptors defined here:<br>
 <dl><dt><strong>__dict__</strong></dt>
@@ -310,7 +368,7 @@ Data descriptors defined here:<br>
 </dl>
 <hr>
 Data and other attributes defined here:<br>
-<dl><dt><strong>__abstractmethods__</strong> = frozenset({'__repr__', 'confront'})</dl>
+<dl><dt><strong>__abstractmethods__</strong> = frozenset({'__repr__', 'confront', 'rank'})</dl>
 
 </td></tr></table> <p>
 <table class="section">
@@ -355,6 +413,15 @@ Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a
 &nbsp;<br>
 :returns:&nbsp;Rank.</span></dd>
 </dl>
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Scout-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Scout-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
 <hr>
 Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
 <dl><dt><strong>color</strong></dt>
@@ -414,6 +481,15 @@ Readonly properties inherited from <a href="stratego.pieces.html#Troop">Troop</a
 :returns:&nbsp;Rank.</span></dd>
 </dl>
 <hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Spy-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Spy-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
+
+<hr>
 Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
 <dl><dt><strong>color</strong></dt>
 <dd><span class="code">Gets&nbsp;the&nbsp;color&nbsp;of&nbsp;this&nbsp;piece.<br>
@@ -469,6 +545,15 @@ Readonly properties defined here:<br>
 <hr>
 Data and other attributes defined here:<br>
 <dl><dt><strong>__abstractmethods__</strong> = frozenset()</dl>
+
+<hr>
+Methods inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
+<dl><dt><a name="Troop-__eq__"><strong>__eq__</strong></a>(self, rhs: object) -&gt; bool</dt><dd><span class="code">Equality&nbsp;operator&nbsp;for&nbsp;a&nbsp;piece.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;other&nbsp;object.<br>
+:returns:&nbsp;True&nbsp;if&nbsp;this&nbsp;is&nbsp;equal&nbsp;to&nbsp;the&nbsp;other.</span></dd></dl>
+
+<dl><dt><a name="Troop-__hash__"><strong>__hash__</strong></a>(self) -&gt; int</dt><dd><span class="code">Hash&nbsp;function&nbsp;for&nbsp;a&nbsp;<a href="#Piece">Piece</a>.<br>
+:returns:&nbsp;A&nbsp;unique&nbsp;hash&nbsp;value&nbsp;for&nbsp;this&nbsp;piece.</span></dd></dl>
 
 <hr>
 Readonly properties inherited from <a href="stratego.pieces.html#Piece">Piece</a>:<br>
