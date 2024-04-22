@@ -95,6 +95,13 @@ Process: \
 Scenarios: \
 ![Scenarios view](4+1_view/scenarios.png)
 
+## Final Class Interaction UML Diagram
+
+This diagram shows the APIs as they existed at the conclusion of
+the project.
+
+![Class Interaction Diagram](docs/final_class_diagram.png)
+
 ## Attribution
 Please enter what you have done below.
 

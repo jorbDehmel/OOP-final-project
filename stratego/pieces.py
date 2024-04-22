@@ -165,6 +165,9 @@ class Troop(Piece):
         :returns: The string representing this object.
         '''
 
+        if self.__rank == 10:
+            return 'T'
+
         return str(self.__rank)
 
     @property

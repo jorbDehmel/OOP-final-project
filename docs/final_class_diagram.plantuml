@@ -98,6 +98,7 @@ folder gui {
         + property screen(self, to: ScreenType) -> None
         + property color(self) -> Literal['BLUE', 'RED']
         + property color(self, to: Literal['BLUE', 'RED']) -> None
+        + property board(self) -> Board
         + quit(self) -> None
 
         - __get_image(self, piece: b.Square) -> tk.PhotoImage

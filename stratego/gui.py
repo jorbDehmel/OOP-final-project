@@ -190,6 +190,14 @@ class StrategoGUI:
 
         self.__color = to
 
+    @property
+    def board(self) -> b.Board:
+        '''
+        Returns the board.
+        '''
+
+        return self.__board
+
     def __get_image(self, piece: b.Square) -> tk.PhotoImage:
         '''
         :param piece: The piece to load the image from.
@@ -240,12 +248,12 @@ class StrategoGUI:
                          x: int,
                          y: int,
                          c: Callable[[int, int], None]) -> None:
-                self.__x = x
-                self.__y = y
-                self.__c = c
+                self.x = x
+                self.y = y
+                self.c = c
 
             def __call__(self) -> None:
-                self.__c(self.__x, self.__y)
+                self.c(self.x, self.y)
 
         for y in range(self.__board.height - 1, -1, -1):
 

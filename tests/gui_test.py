@@ -2,11 +2,14 @@
 Some tests of the Stratego GUI.
 '''
 
-from typing import Callable, Dict
+from typing import Callable, Dict, List
 import unittest
 from unittest import mock
+import tkinter as tk
 import stratego
 import stratego.gui
+import stratego.pieces as p
+import stratego.board as b
 import stratego.network
 
 
@@ -32,6 +35,19 @@ class GUITest(unittest.TestCase):
             '''
             Dummy function.
             '''
+
+    def test_resize_image(self) -> None:
+        '''
+        Tests resizing images.
+        '''
+
+        tk.Tk()
+
+        img: tk.PhotoImage = tk.PhotoImage('stratego/images/blank.png')
+        big_img = stratego.gui.resize_image(img, 1024, 1024)
+
+        self.assertEqual(big_img.width(), 1024)
+        self.assertEqual(big_img.height(), 1024)
 
     def test_color(self) -> None:
         '''
@@ -75,6 +91,110 @@ class GUITest(unittest.TestCase):
 
             gui.quit()
 
+    def test_win(self) -> None:
+        '''
+        Tests making a move via the GUI. This should result in
+        a win screen.
+        '''
+
+        for color in ['RED', 'BLUE']:
+
+            with (mock.patch('tkinter.Tk'),
+                  mock.patch('tkinter._default_root', GUITest.TKDummy),
+                  mock.patch('stratego.network.StrategoNetworker'),
+                  mock.patch('tkinter.Button') as fake_button):
+
+                other_color: str = 'RED' if color == 'BLUE' else 'BLUE'
+
+                stratego.gui.StrategoGUI.clear_instance()
+                b.Board.get_instance().clear()
+                gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
+                gui.color = color
+
+                gui.board.set_piece(0, 9, p.Scout(color))
+                gui.board.set_piece(9, 9, p.Flag(other_color))
+
+                gui.screen = 'YOUR_TURN'
+
+                # Capture buttons
+                buttons: List[Callable[[], None]] = []
+
+                # Iterate over patched constructor calls
+                for item in fake_button.mock_calls:
+                    kwargs = item[2]  # Get only kwargs from mock call
+
+                    # Skip if not a commanded textless button
+                    if 'command' not in kwargs or 'text' in kwargs:
+                        continue
+
+                    # Add to dictionary
+                    buttons.append(kwargs['command'])
+
+                self.assertIsInstance(gui.board.get(0, 9), p.Scout)
+                self.assertIsInstance(gui.board.get(9, 9), p.Flag)
+
+                # Simulate press on (0, 9) (scout)
+                for item in buttons:
+                    if item.x == 0 and item.y == 9:
+                        item()
+                        break
+
+                # Simulate press on (9, 9) (opponent's flag)
+                for item in buttons:
+                    if item.x == 9 and item.y == 9:
+                        item()
+                        break
+
+                self.assertEqual(gui.screen, 'WIN')
+
+    def test_lose(self) -> None:
+        '''
+        Tests receiving a losing move via the GUI. This should
+        result in a loss.
+        '''
+
+        for color in ['RED', 'BLUE']:
+
+            with (mock.patch('tkinter.Tk'),
+                  mock.patch('tkinter._default_root', GUITest.TKDummy),
+                  mock.patch('stratego.network.StrategoNetworker') as fake_net):
+
+                other_color: str = 'RED' if color == 'BLUE' else 'BLUE'
+
+                # Setup networking patch
+                fake_net.get_instance.return_value = fake_net
+                fake_net.recv_game.return_value = (b.Board.get_instance(), other_color)
+
+                # Setup GUI
+                stratego.gui.StrategoGUI.clear_instance()
+                gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
+                gui.color = color
+
+                gui.screen = 'THEIR_TURN'
+
+                self.assertEqual(gui.screen, 'LOSE')
+
+    def test_error(self) -> None:
+        '''
+        Tests receiving a losing move via the GUI. This should
+        result in a loss.
+        '''
+
+        for color in ['RED', 'BLUE']:
+
+            with (mock.patch('tkinter.Tk'),
+                  mock.patch('tkinter._default_root', GUITest.TKDummy),
+                  mock.patch('stratego.network.StrategoNetworker')):
+
+                # Setup GUI
+                stratego.gui.StrategoGUI.clear_instance()
+                gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
+                gui.color = color
+
+                gui.screen = 'THEIR_TURN'
+
+                self.assertEqual(gui.screen, 'ERROR')
+
     def test_host(self) -> None:
         '''
         Test the GUI's hosting screen via patching.
@@ -117,42 +237,45 @@ class GUITest(unittest.TestCase):
 
             fake_net.recv_game.return_value = (stratego.board.Board.get_instance(), 'GOOD')
 
-            stratego.gui.StrategoGUI.clear_instance()
-            gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
+            for color in ['RED', 'BLUE']:
 
-            # Initialize host game interface
-            gui.screen = 'HOST_GAME'
+                stratego.gui.StrategoGUI.clear_instance()
+                gui: stratego.gui.StrategoGUI = stratego.gui.StrategoGUI.get_instance()
 
-            # Simulate pressing enter, moving on to next screen
-            # This will call host_game, then wait for join game
-            gui.press_key('<Return>')
+                # Initialize host game interface
+                gui.color = color
+                gui.screen = 'HOST_GAME'
 
-            # Here, the networking object attempts to connect
-            # with the patched socket. If successful, it will
-            # move on to the setup screen.
+                # Simulate pressing enter, moving on to next screen
+                # This will call host_game, then wait for join game
+                gui.press_key('<Return>')
 
-            self.assertEqual(gui.screen, 'SETUP')
+                # Here, the networking object attempts to connect
+                # with the patched socket. If successful, it will
+                # move on to the setup screen.
 
-            # Unwrap all labeled buttons currently on screen
-            buttons: Dict[str, Callable[[], None]] = {}
+                self.assertEqual(gui.screen, 'SETUP')
 
-            # Iterate over patched constructor calls
-            for item in fake_button.mock_calls:
-                kwargs = item[2]  # Get only kwargs from mock call
+                # Unwrap all labeled buttons currently on screen
+                buttons: Dict[str, Callable[[], None]] = {}
 
-                # Skip if not a labeled button
-                if 'command' not in kwargs or 'text' not in kwargs:
-                    continue
+                # Iterate over patched constructor calls
+                for item in fake_button.mock_calls:
+                    kwargs = item[2]  # Get only kwargs from mock call
 
-                # Add to dictionary
-                buttons[kwargs['text']] = kwargs['command']
+                    # Skip if not a labeled button
+                    if 'command' not in kwargs or 'text' not in kwargs:
+                        continue
 
-            # Call the randomize all function via the fetched
-            # buttons
-            self.assertIn('Randomize all', buttons)
-            buttons['Randomize all']()
+                    # Add to dictionary
+                    buttons[kwargs['text']] = kwargs['command']
 
-            gui.screen = 'THEIR_TURN'
-            gui.screen = 'YOUR_TURN'
+                # Call the randomize all function via the fetched
+                # buttons
+                self.assertIn('Randomize all', buttons)
+                buttons['Randomize all']()
+
+                gui.screen = 'THEIR_TURN'
+                gui.screen = 'YOUR_TURN'
 
             gui.quit()

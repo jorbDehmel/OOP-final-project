@@ -19,10 +19,12 @@ check-style:
 
 .PHONY: run-cov
 run-cov:
+	Xvfb :99 -screen 0 1024x768x24 &
 	$(COVERAGE) .
 
 .PHONY: run-test
 run-test:
+	Xvfb :99 -screen 0 1024x768x24 &
 	$(TEST) $(TEST_ARGS) tests
 
 .PHONY: docs

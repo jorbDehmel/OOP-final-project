@@ -16,8 +16,10 @@
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
     
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="unittest.mock.html">unittest.mock</a><br>
-</td><td class="multicolumn"><a href="stratego.html">stratego</a><br>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.board.html">stratego.board</a><br>
+<a href="unittest.mock.html">unittest.mock</a><br>
+</td><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
+<a href="stratego.html">stratego</a><br>
 </td><td class="multicolumn"><a href="unittest.html">unittest</a><br>
 </td><td class="multicolumn"></td></tr></table></td></tr></table><p>
 <table class="section">
@@ -380,7 +382,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="GUITest-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="GUITest-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x76d747984ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="GUITest-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724f561a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -425,10 +427,24 @@ Data and other attributes inherited from <a href="unittest.case.html#TestCase">u
 
 </td></tr></table></td></tr></table><p>
 <table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-construct_board"><strong>construct_board</strong></a>(red: str, blue: str) -&gt; stratego.board.Board</dt><dd><span class="code">Constructs&nbsp;a&nbsp;board&nbsp;via&nbsp;the&nbsp;given&nbsp;repr&nbsp;strings.&nbsp;This&nbsp;will<br>
+overwrite&nbsp;any&nbsp;existing&nbsp;board.<br>
+&nbsp;<br>
+:param&nbsp;red:&nbsp;The&nbsp;red&nbsp;pieces&nbsp;of&nbsp;the&nbsp;board.<br>
+:param&nbsp;blue:&nbsp;The&nbsp;blue&nbsp;pieces&nbsp;of&nbsp;the&nbsp;board.<br>
+:returns:&nbsp;The&nbsp;board&nbsp;constructed&nbsp;with&nbsp;the&nbsp;given&nbsp;strings.</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
 <tr class="decor data-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
     
 <tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
 <td class="singlecolumn"><strong>Callable</strong> = typing.Callable<br>
-<strong>Dict</strong> = typing.Dict</td></tr></table>
+<strong>Dict</strong> = typing.Dict<br>
+<strong>List</strong> = typing.List<br>
+<strong>Literal</strong> = typing.Literal</td></tr></table>
 </body></html>
