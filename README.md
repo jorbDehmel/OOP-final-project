@@ -118,7 +118,9 @@ Jordan Dehmel:
  - GUI testing
  - Piece testing to 100% coverage
  - Board testing to 100% coverage
+ - Final class UML diagram
 
 Kate Eckhart:
  - 2 UML diagrams
+ - Initial network unit testing
  - Github issues
