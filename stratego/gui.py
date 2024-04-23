@@ -682,18 +682,23 @@ class StrategoGUI:
             self.__your_turn_screen()
             return
 
-        # Send to other player
-        self.__networking.send_game(self.__board, state)
+        try:
 
-        # Check game state
-        if state == self.__color:
-            self.__win_screen()
+            # Send to other player
+            self.__networking.send_game(self.__board, state)
 
-        elif state != 'GOOD':
-            self.__lose_screen()
+            # Check game state
+            if state == self.__color:
+                self.__win_screen()
 
-        else:
-            self.__their_turn_screen()
+            elif state != 'GOOD':
+                self.__lose_screen()
+
+            else:
+                self.__their_turn_screen()
+
+        except ValueError:
+            self.__error_screen()
 
     def __their_turn_screen(self) -> None:
         '''
