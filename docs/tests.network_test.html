@@ -8,7 +8,7 @@
 <table class="heading">
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="tests.html" class="white">tests</a>.network_test</strong></td>
-<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/tests/network_test.py">/home/user/OOP-final-project/tests/network_test.py</a></td></tr></table>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/jorb/Programs/OOP-final-project/tests/network_test.py">/home/jorb/Programs/OOP-final-project/tests/network_test.py</a></td></tr></table>
     <p><span class="code">Tests&nbsp;network&nbsp;operations&nbsp;for&nbsp;Stratego.</span></p>
 <p>
 <table class="section">
@@ -16,15 +16,24 @@
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
     
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.network.html">stratego.network</a><br>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="unittest.mock.html">unittest.mock</a><br>
+<a href="multiprocessing.html">multiprocessing</a><br>
+</td><td class="multicolumn"><a href="multiprocessing.connection.html">multiprocessing.connection</a><br>
+<a href="stratego.network.html">stratego.network</a><br>
 </td><td class="multicolumn"><a href="unittest.html">unittest</a><br>
-</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+</td><td class="multicolumn"></td></tr></table></td></tr></table><p>
 <table class="section">
 <tr class="decor index-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
     
 <tr><td class="decor index-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
 <td class="singlecolumn"><dl>
+<dt class="heading-text"><a href="builtins.html#object">builtins.object</a>
+</dt><dd>
+<dl>
+<dt class="heading-text"><a href="tests.network_test.html#MockSocket">MockSocket</a>
+</dt></dl>
+</dd>
 <dt class="heading-text"><a href="unittest.case.html#TestCase">unittest.case.TestCase</a>(<a href="builtins.html#object">builtins.object</a>)
 </dt><dd>
 <dl>
@@ -33,6 +42,41 @@
 </dd>
 </dl>
  <p>
+<table class="section">
+<tr class="decor title-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><a name="MockSocket">class <strong>MockSocket</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
+    
+<tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#MockSocket">MockSocket</a>(_sock_type:&nbsp;<a href="builtins.html#object">object</a>,&nbsp;_sock_proto:&nbsp;<a href="builtins.html#object">object</a>)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+For&nbsp;replacing&nbsp;sockets&nbsp;when&nbsp;testing.<br>&nbsp;</span></td></tr>
+<tr><td>&nbsp;</td>
+<td class="singlecolumn">Methods defined here:<br>
+<dl><dt><a name="MockSocket-__init__"><strong>__init__</strong></a>(self, _sock_type: object, _sock_proto: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-accept"><strong>accept</strong></a>(self) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-bind"><strong>bind</strong></a>(self, _addr: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-close"><strong>close</strong></a>(self) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-connect"><strong>connect</strong></a>(self, _addr: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-listen"><strong>listen</strong></a>(self, _backlog: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-recv"><strong>recv</strong></a>(self, size: int) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<dl><dt><a name="MockSocket-send"><strong>send</strong></a>(self, data: bytes) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><span class="code">dictionary&nbsp;for&nbsp;instance&nbsp;variables</span></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
+</dl>
+</td></tr></table> <p>
 <table class="section">
 <tr class="decor title-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><a name="TestStrategoNetworking">class <strong>TestStrategoNetworking</strong></a>(<a href="unittest.case.html#TestCase">unittest.case.TestCase</a>)</td></tr>
@@ -49,13 +93,11 @@ Tests&nbsp;the&nbsp;stratego&nbsp;networking&nbsp;class.<br>&nbsp;</span></td></
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="TestStrategoNetworking-test_host"><strong>test_host</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;host&nbsp;game&nbsp;function.</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-test_host_join"><strong>test_host_join</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;host&nbsp;game&nbsp;and&nbsp;join&nbsp;game&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-test_init"><strong>test_init</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;init&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-test_integration"><strong>test_integration</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;all&nbsp;the&nbsp;above&nbsp;functions&nbsp;together.</span></dd></dl>
-
-<dl><dt><a name="TestStrategoNetworking-test_join"><strong>test_join</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;join&nbsp;game&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-test_recv_board"><strong>test_recv_board</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;recv_board&nbsp;function.</span></dd></dl>
 
@@ -107,6 +149,8 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 If&nbsp;the&nbsp;two&nbsp;objects&nbsp;compare&nbsp;equal&nbsp;then&nbsp;they&nbsp;will&nbsp;automatically<br>
 compare&nbsp;almost&nbsp;equal.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoNetworking-assertAlmostEquals"><strong>assertAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoNetworking-assertCountEqual"><strong>assertCountEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Asserts&nbsp;that&nbsp;two&nbsp;iterables&nbsp;have&nbsp;the&nbsp;same&nbsp;elements,&nbsp;the&nbsp;same&nbsp;number&nbsp;of<br>
 times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;<br>
@@ -117,10 +161,14 @@ times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;1,&nbsp;1]&nbsp;and&nbsp;[1,&nbsp;0,&nbsp;1]&nbsp;compare&nbsp;equal.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;0,&nbsp;1]&nbsp;and&nbsp;[0,&nbsp;1]&nbsp;compare&nbsp;unequal.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoNetworking-assertDictContainsSubset"><strong>assertDictContainsSubset</strong></a>(self, subset, dictionary, msg=None)</dt><dd><span class="code">Checks&nbsp;whether&nbsp;dictionary&nbsp;is&nbsp;a&nbsp;superset&nbsp;of&nbsp;subset.</span></dd></dl>
+
 <dl><dt><a name="TestStrategoNetworking-assertDictEqual"><strong>assertDictEqual</strong></a>(self, d1, d2, msg=None)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertEqual"><strong>assertEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-assertEquals"><strong>assertEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertFalse"><strong>assertFalse</strong></a>(self, expr, msg=None)</dt><dd><span class="code">Check&nbsp;that&nbsp;the&nbsp;expression&nbsp;is&nbsp;false.</span></dd></dl>
 
@@ -158,7 +206,7 @@ on&nbsp;*logger_name*&nbsp;or&nbsp;its&nbsp;children.&nbsp;&nbsp;If&nbsp;omitted
 INFO&nbsp;and&nbsp;*logger*&nbsp;defaults&nbsp;to&nbsp;the&nbsp;root&nbsp;logger.<br>
 &nbsp;<br>
 This&nbsp;method&nbsp;must&nbsp;be&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager,&nbsp;and&nbsp;will&nbsp;yield<br>
-a&nbsp;recording&nbsp;object&nbsp;with&nbsp;two&nbsp;attributes:&nbsp;`output`&nbsp;and&nbsp;`records`.<br>
+a&nbsp;recording&nbsp;<a href="builtins.html#object">object</a>&nbsp;with&nbsp;two&nbsp;attributes:&nbsp;`output`&nbsp;and&nbsp;`records`.<br>
 At&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;context&nbsp;manager,&nbsp;the&nbsp;`output`&nbsp;attribute&nbsp;will<br>
 be&nbsp;a&nbsp;list&nbsp;of&nbsp;the&nbsp;matching&nbsp;formatted&nbsp;log&nbsp;messages&nbsp;and&nbsp;the<br>
 `records`&nbsp;attribute&nbsp;will&nbsp;be&nbsp;a&nbsp;list&nbsp;of&nbsp;the&nbsp;corresponding&nbsp;LogRecord<br>
@@ -189,14 +237,20 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 &nbsp;<br>
 Objects&nbsp;that&nbsp;are&nbsp;equal&nbsp;automatically&nbsp;fail.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoNetworking-assertNotAlmostEquals"><strong>assertNotAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoNetworking-assertNotEqual"><strong>assertNotEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'!='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-assertNotEquals"><strong>assertNotEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertNotIn"><strong>assertNotIn</strong></a>(self, member, container, msg=None)</dt><dd><span class="code">Just&nbsp;like&nbsp;self.<a href="#TestStrategoNetworking-assertTrue">assertTrue</a>(a&nbsp;not&nbsp;in&nbsp;b),&nbsp;but&nbsp;with&nbsp;a&nbsp;nicer&nbsp;default&nbsp;message.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertNotIsInstance"><strong>assertNotIsInstance</strong></a>(self, obj, cls, msg=None)</dt><dd><span class="code">Included&nbsp;for&nbsp;symmetry&nbsp;with&nbsp;assertIsInstance.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertNotRegex"><strong>assertNotRegex</strong></a>(self, text, unexpected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;if&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-assertNotRegexpMatches"><strong>assertNotRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertRaises"><strong>assertRaises</strong></a>(self, expected_exception, *args, **kwargs)</dt><dd><span class="code">Fail&nbsp;unless&nbsp;an&nbsp;exception&nbsp;of&nbsp;class&nbsp;expected_exception&nbsp;is&nbsp;raised<br>
 by&nbsp;the&nbsp;callable&nbsp;when&nbsp;invoked&nbsp;with&nbsp;specified&nbsp;positional&nbsp;and<br>
@@ -206,13 +260,13 @@ deemed&nbsp;to&nbsp;have&nbsp;suffered&nbsp;an&nbsp;error,&nbsp;exactly&nbsp;as&
 unexpected&nbsp;exception.<br>
 &nbsp;<br>
 If&nbsp;called&nbsp;with&nbsp;the&nbsp;callable&nbsp;and&nbsp;arguments&nbsp;omitted,&nbsp;will&nbsp;return&nbsp;a<br>
-context&nbsp;object&nbsp;used&nbsp;like&nbsp;this::<br>
+context&nbsp;<a href="builtins.html#object">object</a>&nbsp;used&nbsp;like&nbsp;this::<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;self.<a href="#TestStrategoNetworking-assertRaises">assertRaises</a>(SomeException):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do_something()<br>
 &nbsp;<br>
 An&nbsp;optional&nbsp;keyword&nbsp;argument&nbsp;'msg'&nbsp;can&nbsp;be&nbsp;provided&nbsp;when&nbsp;assertRaises<br>
-is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;object.<br>
+is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;<a href="builtins.html#object">object</a>.<br>
 &nbsp;<br>
 The&nbsp;context&nbsp;manager&nbsp;keeps&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;exception&nbsp;as<br>
 the&nbsp;'exception'&nbsp;attribute.&nbsp;This&nbsp;allows&nbsp;you&nbsp;to&nbsp;inspect&nbsp;the<br>
@@ -227,14 +281,18 @@ exception&nbsp;after&nbsp;the&nbsp;assertion::<br>
 &nbsp;<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;expected_exception:&nbsp;Exception&nbsp;class&nbsp;expected&nbsp;to&nbsp;be&nbsp;raised.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expected_regex:&nbsp;Regex&nbsp;(re.Pattern&nbsp;object&nbsp;or&nbsp;string)&nbsp;expected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expected_regex:&nbsp;Regex&nbsp;(re.Pattern&nbsp;<a href="builtins.html#object">object</a>&nbsp;or&nbsp;string)&nbsp;expected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;found&nbsp;in&nbsp;error&nbsp;message.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;args:&nbsp;Function&nbsp;to&nbsp;be&nbsp;called&nbsp;and&nbsp;extra&nbsp;positional&nbsp;args.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kwargs:&nbsp;Extra&nbsp;kwargs.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertRaisesRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoNetworking-assertRaisesRegexp"><strong>assertRaisesRegexp</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoNetworking-assertRegex"><strong>assertRegex</strong></a>(self, text, expected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-assertRegexpMatches"><strong>assertRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-assertSequenceEqual"><strong>assertSequenceEqual</strong></a>(self, seq1, seq2, msg=None, seq_type=None)</dt><dd><span class="code">An&nbsp;equality&nbsp;assertion&nbsp;for&nbsp;ordered&nbsp;sequences&nbsp;(like&nbsp;lists&nbsp;and&nbsp;tuples).<br>
 &nbsp;<br>
@@ -279,13 +337,13 @@ warning&nbsp;filtering&nbsp;rules&nbsp;in&nbsp;effect,&nbsp;it&nbsp;might&nbsp;b
 out,&nbsp;or&nbsp;raised&nbsp;as&nbsp;an&nbsp;exception.<br>
 &nbsp;<br>
 If&nbsp;called&nbsp;with&nbsp;the&nbsp;callable&nbsp;and&nbsp;arguments&nbsp;omitted,&nbsp;will&nbsp;return&nbsp;a<br>
-context&nbsp;object&nbsp;used&nbsp;like&nbsp;this::<br>
+context&nbsp;<a href="builtins.html#object">object</a>&nbsp;used&nbsp;like&nbsp;this::<br>
 &nbsp;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;self.<a href="#TestStrategoNetworking-assertWarns">assertWarns</a>(SomeWarning):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do_something()<br>
 &nbsp;<br>
 An&nbsp;optional&nbsp;keyword&nbsp;argument&nbsp;'msg'&nbsp;can&nbsp;be&nbsp;provided&nbsp;when&nbsp;assertWarns<br>
-is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;object.<br>
+is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;<a href="builtins.html#object">object</a>.<br>
 &nbsp;<br>
 The&nbsp;context&nbsp;manager&nbsp;keeps&nbsp;a&nbsp;reference&nbsp;to&nbsp;the&nbsp;first&nbsp;matching<br>
 warning&nbsp;as&nbsp;the&nbsp;'warning'&nbsp;attribute;&nbsp;similarly,&nbsp;the&nbsp;'filename'<br>
@@ -305,12 +363,14 @@ are&nbsp;considered&nbsp;successful&nbsp;matches.<br>
 &nbsp;<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;expected_warning:&nbsp;Warning&nbsp;class&nbsp;expected&nbsp;to&nbsp;be&nbsp;triggered.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;expected_regex:&nbsp;Regex&nbsp;(re.Pattern&nbsp;object&nbsp;or&nbsp;string)&nbsp;expected<br>
+&nbsp;&nbsp;&nbsp;&nbsp;expected_regex:&nbsp;Regex&nbsp;(re.Pattern&nbsp;<a href="builtins.html#object">object</a>&nbsp;or&nbsp;string)&nbsp;expected<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;be&nbsp;found&nbsp;in&nbsp;error&nbsp;message.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;args:&nbsp;Function&nbsp;to&nbsp;be&nbsp;called&nbsp;and&nbsp;extra&nbsp;positional&nbsp;args.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;kwargs:&nbsp;Extra&nbsp;kwargs.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertWarnsRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-assert_"><strong>assert_</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-countTestCases"><strong>countTestCases</strong></a>(self)</dt></dl>
 
@@ -328,6 +388,20 @@ function&nbsp;and&nbsp;returns&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;__ente
 
 <dl><dt><a name="TestStrategoNetworking-fail"><strong>fail</strong></a>(self, msg=None)</dt><dd><span class="code">Fail&nbsp;immediately,&nbsp;with&nbsp;the&nbsp;given&nbsp;message.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoNetworking-failIf"><strong>failIf</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failIfAlmostEqual"><strong>failIfAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failIfEqual"><strong>failIfEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failUnless"><strong>failUnless</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failUnlessAlmostEqual"><strong>failUnlessAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failUnlessEqual"><strong>failUnlessEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoNetworking-failUnlessRaises"><strong>failUnlessRaises</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoNetworking-id"><strong>id</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="TestStrategoNetworking-run"><strong>run</strong></a>(self, result=None)</dt></dl>
@@ -342,7 +416,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x7f490a8d4ba0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724f561a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -352,22 +426,22 @@ block,&nbsp;allowing&nbsp;further&nbsp;test&nbsp;code&nbsp;to&nbsp;be&nbsp;execu
 
 <hr>
 Class methods inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
-<dl><dt><a name="TestStrategoNetworking-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+<dl><dt><a name="TestStrategoNetworking-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
 &nbsp;<br>
 The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
 overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)</dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
+<dl><dt><a name="TestStrategoNetworking-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
 setUpClass&nbsp;fails&nbsp;(unlike&nbsp;tearDownClass).</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-doClassCleanups"><strong>doClassCleanups</strong></a>()</dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
+<dl><dt><a name="TestStrategoNetworking-doClassCleanups"><strong>doClassCleanups</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
 tearDownClass.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-enterClassContext"><strong>enterClassContext</strong></a>(cm)</dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-enterClassContext"><strong>enterClassContext</strong></a>(cm)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-setUpClass"><strong>setUpClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-setUpClass"><strong>setUpClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-tearDownClass"><strong>tearDownClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-tearDownClass"><strong>tearDownClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
@@ -385,5 +459,12 @@ Data and other attributes inherited from <a href="unittest.case.html#TestCase">u
 
 <dl><dt><strong>maxDiff</strong> = 640</dl>
 
-</td></tr></table></td></tr></table>
+</td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-run_in_network_context"><strong>run_in_network_context</strong></a>(server_fn, client_fn) -&gt; None</dt></dl>
+</td></tr></table>
 </body></html>

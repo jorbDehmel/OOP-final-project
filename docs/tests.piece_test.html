@@ -8,7 +8,7 @@
 <table class="heading">
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="tests.html" class="white">tests</a>.piece_test</strong></td>
-<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/tests/piece_test.py">/home/user/OOP-final-project/tests/piece_test.py</a></td></tr></table>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/jorb/Programs/OOP-final-project/tests/piece_test.py">/home/jorb/Programs/OOP-final-project/tests/piece_test.py</a></td></tr></table>
     <p><span class="code">Tests&nbsp;the&nbsp;`Piece`&nbsp;classes&nbsp;for&nbsp;OOP&nbsp;Stratego.</span></p>
 <p>
 <table class="section">
@@ -16,9 +16,8 @@
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
     
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.board.html">stratego.board</a><br>
-</td><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
-</td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
 <table class="section">
 <tr class="decor index-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Classes</strong></td></tr>
@@ -62,12 +61,24 @@ flag&nbsp;will&nbsp;be&nbsp;returned&nbsp;no&nbsp;matter&nbsp;what&nbsp;confront
 a&nbsp;flag&nbsp;will&nbsp;never&nbsp;confront&nbsp;anything,&nbsp;since&nbsp;it&nbsp;cannot&nbsp;move.<br>
 The&nbsp;player&nbsp;who&nbsp;confronts&nbsp;the&nbsp;opponent's&nbsp;flag&nbsp;wins.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-test_marshal"><strong>test_marshal</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;marshal&nbsp;piece&nbsp;for&nbsp;stratego.&nbsp;The&nbsp;marshal&nbsp;is&nbsp;the<br>
+highest&nbsp;rank&nbsp;(10),&nbsp;but&nbsp;is&nbsp;killed&nbsp;by&nbsp;spies&nbsp;and&nbsp;bombs.</span></dd></dl>
+
 <dl><dt><a name="TestStrategoPiece-test_miner"><strong>test_miner</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;miner&nbsp;piece&nbsp;for&nbsp;stratego.&nbsp;The&nbsp;miner&nbsp;is&nbsp;able&nbsp;to<br>
 defuse&nbsp;bombs.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-test_piece"><strong>test_piece</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;attributes&nbsp;of&nbsp;the&nbsp;piece&nbsp;class&nbsp;which&nbsp;are&nbsp;not<br>
+otherwise&nbsp;covered.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-test_scout"><strong>test_scout</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;scout&nbsp;piece&nbsp;for&nbsp;stratego.&nbsp;The&nbsp;scout&nbsp;piece&nbsp;is&nbsp;able<br>
+to&nbsp;move&nbsp;any&nbsp;number&nbsp;of&nbsp;spaces,&nbsp;instead&nbsp;of&nbsp;just&nbsp;one.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoPiece-test_spy_and_marshal"><strong>test_spy_and_marshal</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;spy&nbsp;piece&nbsp;for&nbsp;stratego.&nbsp;The&nbsp;spy&nbsp;should&nbsp;defeat<br>
 a&nbsp;marshal&nbsp;when&nbsp;the&nbsp;spy&nbsp;attacks,&nbsp;but&nbsp;not&nbsp;when&nbsp;the&nbsp;marshal<br>
 attacks.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-test_troop"><strong>test_troop</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;troops.&nbsp;All&nbsp;troops&nbsp;should&nbsp;both&nbsp;die&nbsp;when&nbsp;confronting&nbsp;themselves.<br>
+Except&nbsp;for&nbsp;Bomb+Miner&nbsp;and&nbsp;Spy+Marshal,&nbsp;the&nbsp;one&nbsp;with&nbsp;the&nbsp;higher&nbsp;rank&nbsp;wins.</span></dd></dl>
 
 <hr>
 Methods inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
@@ -115,6 +126,8 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 If&nbsp;the&nbsp;two&nbsp;objects&nbsp;compare&nbsp;equal&nbsp;then&nbsp;they&nbsp;will&nbsp;automatically<br>
 compare&nbsp;almost&nbsp;equal.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-assertAlmostEquals"><strong>assertAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoPiece-assertCountEqual"><strong>assertCountEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Asserts&nbsp;that&nbsp;two&nbsp;iterables&nbsp;have&nbsp;the&nbsp;same&nbsp;elements,&nbsp;the&nbsp;same&nbsp;number&nbsp;of<br>
 times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;<br>
@@ -125,10 +138,14 @@ times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;1,&nbsp;1]&nbsp;and&nbsp;[1,&nbsp;0,&nbsp;1]&nbsp;compare&nbsp;equal.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;0,&nbsp;1]&nbsp;and&nbsp;[0,&nbsp;1]&nbsp;compare&nbsp;unequal.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-assertDictContainsSubset"><strong>assertDictContainsSubset</strong></a>(self, subset, dictionary, msg=None)</dt><dd><span class="code">Checks&nbsp;whether&nbsp;dictionary&nbsp;is&nbsp;a&nbsp;superset&nbsp;of&nbsp;subset.</span></dd></dl>
+
 <dl><dt><a name="TestStrategoPiece-assertDictEqual"><strong>assertDictEqual</strong></a>(self, d1, d2, msg=None)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertEqual"><strong>assertEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-assertEquals"><strong>assertEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertFalse"><strong>assertFalse</strong></a>(self, expr, msg=None)</dt><dd><span class="code">Check&nbsp;that&nbsp;the&nbsp;expression&nbsp;is&nbsp;false.</span></dd></dl>
 
@@ -197,14 +214,20 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 &nbsp;<br>
 Objects&nbsp;that&nbsp;are&nbsp;equal&nbsp;automatically&nbsp;fail.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-assertNotAlmostEquals"><strong>assertNotAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoPiece-assertNotEqual"><strong>assertNotEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'!='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-assertNotEquals"><strong>assertNotEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertNotIn"><strong>assertNotIn</strong></a>(self, member, container, msg=None)</dt><dd><span class="code">Just&nbsp;like&nbsp;self.<a href="#TestStrategoPiece-assertTrue">assertTrue</a>(a&nbsp;not&nbsp;in&nbsp;b),&nbsp;but&nbsp;with&nbsp;a&nbsp;nicer&nbsp;default&nbsp;message.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertNotIsInstance"><strong>assertNotIsInstance</strong></a>(self, obj, cls, msg=None)</dt><dd><span class="code">Included&nbsp;for&nbsp;symmetry&nbsp;with&nbsp;assertIsInstance.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertNotRegex"><strong>assertNotRegex</strong></a>(self, text, unexpected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;if&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-assertNotRegexpMatches"><strong>assertNotRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertRaises"><strong>assertRaises</strong></a>(self, expected_exception, *args, **kwargs)</dt><dd><span class="code">Fail&nbsp;unless&nbsp;an&nbsp;exception&nbsp;of&nbsp;class&nbsp;expected_exception&nbsp;is&nbsp;raised<br>
 by&nbsp;the&nbsp;callable&nbsp;when&nbsp;invoked&nbsp;with&nbsp;specified&nbsp;positional&nbsp;and<br>
@@ -242,7 +265,11 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertRaisesRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-assertRaisesRegexp"><strong>assertRaisesRegexp</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoPiece-assertRegex"><strong>assertRegex</strong></a>(self, text, expected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestStrategoPiece-assertRegexpMatches"><strong>assertRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-assertSequenceEqual"><strong>assertSequenceEqual</strong></a>(self, seq1, seq2, msg=None, seq_type=None)</dt><dd><span class="code">An&nbsp;equality&nbsp;assertion&nbsp;for&nbsp;ordered&nbsp;sequences&nbsp;(like&nbsp;lists&nbsp;and&nbsp;tuples).<br>
 &nbsp;<br>
@@ -320,6 +347,8 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertWarnsRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-assert_"><strong>assert_</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoPiece-countTestCases"><strong>countTestCases</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-debug"><strong>debug</strong></a>(self)</dt><dd><span class="code">Run&nbsp;the&nbsp;test&nbsp;without&nbsp;collecting&nbsp;errors&nbsp;in&nbsp;a&nbsp;TestResult</span></dd></dl>
@@ -336,6 +365,20 @@ function&nbsp;and&nbsp;returns&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;__ente
 
 <dl><dt><a name="TestStrategoPiece-fail"><strong>fail</strong></a>(self, msg=None)</dt><dd><span class="code">Fail&nbsp;immediately,&nbsp;with&nbsp;the&nbsp;given&nbsp;message.</span></dd></dl>
 
+<dl><dt><a name="TestStrategoPiece-failIf"><strong>failIf</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failIfAlmostEqual"><strong>failIfAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failIfEqual"><strong>failIfEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failUnless"><strong>failUnless</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failUnlessAlmostEqual"><strong>failUnlessAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failUnlessEqual"><strong>failUnlessEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestStrategoPiece-failUnlessRaises"><strong>failUnlessRaises</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestStrategoPiece-id"><strong>id</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="TestStrategoPiece-run"><strong>run</strong></a>(self, result=None)</dt></dl>
@@ -350,7 +393,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoPiece-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x7f490a8d4ba0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="TestStrategoPiece-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724f561a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -360,22 +403,22 @@ block,&nbsp;allowing&nbsp;further&nbsp;test&nbsp;code&nbsp;to&nbsp;be&nbsp;execu
 
 <hr>
 Class methods inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
-<dl><dt><a name="TestStrategoPiece-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+<dl><dt><a name="TestStrategoPiece-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
 &nbsp;<br>
 The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
 overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)</dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
+<dl><dt><a name="TestStrategoPiece-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
 setUpClass&nbsp;fails&nbsp;(unlike&nbsp;tearDownClass).</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-doClassCleanups"><strong>doClassCleanups</strong></a>()</dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
+<dl><dt><a name="TestStrategoPiece-doClassCleanups"><strong>doClassCleanups</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
 tearDownClass.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-enterClassContext"><strong>enterClassContext</strong></a>(cm)</dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
+<dl><dt><a name="TestStrategoPiece-enterClassContext"><strong>enterClassContext</strong></a>(cm)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-setUpClass"><strong>setUpClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestStrategoPiece-setUpClass"><strong>setUpClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoPiece-tearDownClass"><strong>tearDownClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestStrategoPiece-tearDownClass"><strong>tearDownClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
@@ -395,11 +438,35 @@ Data and other attributes inherited from <a href="unittest.case.html#TestCase">u
 
 </td></tr></table></td></tr></table><p>
 <table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-all_movable_pieces"><strong>all_movable_pieces</strong></a>(color: Literal['RED', 'BLUE'], but: Optional[set[stratego.pieces.Piece]] = None) -&gt; Iterable[stratego.pieces.Piece]</dt><dd><span class="code">Yields&nbsp;a&nbsp;list&nbsp;of&nbsp;only&nbsp;movable&nbsp;pieces.<br>
+:param&nbsp;color:&nbsp;RED&nbsp;or&nbsp;BLUE.<br>
+:param&nbsp;but:&nbsp;Pieces&nbsp;to&nbsp;exclude.<br>
+:yields:&nbsp;An&nbsp;iterable&nbsp;over&nbsp;the&nbsp;given&nbsp;pieces.</span></dd></dl>
+ <dl><dt><a name="-all_pieces"><strong>all_pieces</strong></a>(color: Literal['RED', 'BLUE'], but: Optional[set[stratego.pieces.Piece]] = None) -&gt; Iterable[stratego.pieces.Piece]</dt><dd><span class="code">Yields&nbsp;an&nbsp;iterable&nbsp;of&nbsp;pieces.<br>
+:param&nbsp;color:&nbsp;RED&nbsp;or&nbsp;BLUE.<br>
+:param&nbsp;but:&nbsp;Pieces&nbsp;to&nbsp;exclude.<br>
+:yields:&nbsp;An&nbsp;iterator&nbsp;of&nbsp;the&nbsp;given&nbsp;pieces.</span></dd></dl>
+ <dl><dt><a name="-assert_confront"><strong>assert_confront</strong></a>(lhs: stratego.pieces.Piece, rhs: stratego.pieces.Piece, expected: stratego.pieces.Piece) -&gt; None</dt><dd><span class="code">Asserts&nbsp;that&nbsp;lhs.confront(rhs)&nbsp;is&nbsp;expected.<br>
+:param&nbsp;lhs:&nbsp;The&nbsp;attacker.<br>
+:param&nbsp;rhs:&nbsp;The&nbsp;defender.<br>
+:param&nbsp;expected:&nbsp;The&nbsp;expected&nbsp;victor.</span></dd></dl>
+ <dl><dt><a name="-assert_confrontation_detailed"><strong>assert_confrontation_detailed</strong></a>(via: unittest.case.TestCase, attacker: stratego.pieces.Piece, defender: stratego.pieces.Piece) -&gt; None</dt><dd><span class="code">Assert&nbsp;that&nbsp;the&nbsp;correct&nbsp;result&nbsp;occurs&nbsp;given&nbsp;two<br>
+pieces.</span></dd></dl>
+ <dl><dt><a name="-base_all_pieces"><strong>base_all_pieces</strong></a>(color: str) -&gt; Iterable[stratego.pieces.Piece]</dt><dd><span class="code">Generator&nbsp;yielding&nbsp;all&nbsp;the&nbsp;valid&nbsp;pieces.<br>
+:param&nbsp;color:&nbsp;The&nbsp;color&nbsp;to&nbsp;use&nbsp;to&nbsp;create.<br>
+:yields:&nbsp;An&nbsp;iterator&nbsp;of&nbsp;pieces&nbsp;to&nbsp;use.</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
 <tr class="decor data-decor heading-text">
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
     
 <tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><strong>List</strong> = typing.List<br>
-<strong>Optional</strong> = typing.Optional<br>
-<strong>TypeAlias</strong> = typing.TypeAlias</td></tr></table>
+<td class="singlecolumn"><strong>Iterable</strong> = typing.Iterable<br>
+<strong>List</strong> = typing.List<br>
+<strong>Literal</strong> = typing.Literal<br>
+<strong>Optional</strong> = typing.Optional</td></tr></table>
 </body></html>

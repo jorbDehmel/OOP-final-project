@@ -37,18 +37,18 @@ class TestBoard(unittest.TestCase):
 
         for color in ['RED', 'BLUE']:
             expected: List[p.Piece] = ([p.Bomb(color)] * 6
-                                    + [p.Scout(color)] * 8
-                                    + [p.Miner(color)] * 5
-                                    + [p.Marshal(color),
-                                        p.Spy(color),
-                                        p.Flag(color),
-                                        p.Troop(color, 9),
-                                        p.Troop(color, 8),
-                                        p.Troop(color, 8)]
-                                    + [p.Troop(color, 7)] * 3
-                                    + [p.Troop(color, 6),
-                                        p.Troop(color, 5),
-                                        p.Troop(color, 4)] * 4)
+                                       + [p.Scout(color)] * 8
+                                       + [p.Miner(color)] * 5
+                                       + [p.Marshal(color),
+                                          p.Spy(color),
+                                          p.Flag(color),
+                                          p.Troop(color, 9),
+                                          p.Troop(color, 8),
+                                          p.Troop(color, 8)]
+                                       + [p.Troop(color, 7)] * 3
+                                       + [p.Troop(color, 6),
+                                          p.Troop(color, 5),
+                                          p.Troop(color, 4)] * 4)
 
             observed: List[p.Piece] = b.Board.all_pieces(color)
 
@@ -73,7 +73,7 @@ class TestBoard(unittest.TestCase):
                 self.assertIsInstance(board.get(x, y), b.LakeSquare)
 
         board.fill((0, 0), (10, 10), lambda x, y: b.LakeSquare()
-                                                  if x < 5 else None)
+                   if x < 5 else None)
 
         for y in range(10):
             for x in range(5):
@@ -178,7 +178,13 @@ class TestBoard(unittest.TestCase):
             board.move('RED', (0, 0), (0, 9))
 
         with self.assertRaises(b.InvalidMoveError):
+            board.move('RED', (0, 0), (0, 2))
+
+        with self.assertRaises(b.InvalidMoveError):
             board.move('BLUE', (0, 9), (0, 0))
+
+        with self.assertRaises(b.InvalidMoveError):
+            board.move('BLUE', (0, 9), (0, 7))
 
     def test_scout_movement(self) -> None:
         '''

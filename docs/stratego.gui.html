@@ -8,7 +8,7 @@
 <table class="heading">
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="stratego.html" class="white">stratego</a>.gui</strong></td>
-<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/stratego/gui.py">/home/user/OOP-final-project/stratego/gui.py</a></td></tr></table>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/jorb/Programs/OOP-final-project/stratego/gui.py">/home/jorb/Programs/OOP-final-project/stratego/gui.py</a></td></tr></table>
     <p><span class="code">Defines&nbsp;a&nbsp;Stratego&nbsp;GUI&nbsp;using&nbsp;tkinter.&nbsp;This&nbsp;class&nbsp;should<br>
 aggregate&nbsp;the&nbsp;board&nbsp;and&nbsp;networking.&nbsp;This&nbsp;is&nbsp;what&nbsp;should&nbsp;be<br>
 presented&nbsp;to&nbsp;the&nbsp;user.</span></p>
@@ -19,8 +19,8 @@ presented&nbsp;to&nbsp;the&nbsp;user.</span></p>
     
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
 <td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.board.html">stratego.board</a><br>
-</td><td class="multicolumn"><a href="stratego.network.html">stratego.network</a><br>
 </td><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
+</td><td class="multicolumn"><a href="stratego.html">stratego</a><br>
 </td><td class="multicolumn"><a href="tkinter.html">tkinter</a><br>
 </td></tr></table></td></tr></table><p>
 <table class="section">
@@ -51,9 +51,16 @@ GUI,&nbsp;and&nbsp;networking&nbsp;of&nbsp;a&nbsp;Stratego&nbsp;game.<br>&nbsp;<
 <dl><dt><a name="StrategoGUI-__init__"><strong>__init__</strong></a>(self) -&gt; None</dt><dd><span class="code">Initialize&nbsp;the&nbsp;GUI&nbsp;window,&nbsp;given&nbsp;that&nbsp;none&nbsp;already<br>
 exist.</span></dd></dl>
 
+<dl><dt><a name="StrategoGUI-press_key"><strong>press_key</strong></a>(self, key: str) -&gt; None</dt><dd><span class="code">Simulates&nbsp;the&nbsp;given&nbsp;keypress,&nbsp;given&nbsp;that&nbsp;it&nbsp;is&nbsp;bound.<br>
+:param&nbsp;key:&nbsp;The&nbsp;key&nbsp;event&nbsp;code.</span></dd></dl>
+
+<dl><dt><a name="StrategoGUI-quit"><strong>quit</strong></a>(self) -&gt; None</dt><dd><span class="code">Kills&nbsp;the&nbsp;app.</span></dd></dl>
+
 <hr>
 Class methods defined here:<br>
-<dl><dt><a name="StrategoGUI-get_instance"><strong>get_instance</strong></a>() -&gt; 'StrategoGUI'</dt><dd><span class="code">Returns&nbsp;the&nbsp;instance&nbsp;of&nbsp;this&nbsp;class,&nbsp;instantiating&nbsp;if<br>
+<dl><dt><a name="StrategoGUI-clear_instance"><strong>clear_instance</strong></a>() -&gt; None<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Reset&nbsp;this&nbsp;singleton&nbsp;class.</span></dd></dl>
+
+<dl><dt><a name="StrategoGUI-get_instance"><strong>get_instance</strong></a>() -&gt; 'StrategoGUI'<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Returns&nbsp;the&nbsp;instance&nbsp;of&nbsp;this&nbsp;class,&nbsp;instantiating&nbsp;if<br>
 none&nbsp;already&nbsp;exist.<br>
 &nbsp;<br>
 :returns:&nbsp;The&nbsp;instance&nbsp;of&nbsp;this&nbsp;singleton&nbsp;class.</span></dd></dl>
@@ -66,6 +73,15 @@ Data descriptors defined here:<br>
 <dl><dt><strong>__weakref__</strong></dt>
 <dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
 </dl>
+<dl><dt><strong>board</strong></dt>
+<dd><span class="code">Returns&nbsp;the&nbsp;board.</span></dd>
+</dl>
+<dl><dt><strong>color</strong></dt>
+<dd><span class="code">Getter&nbsp;for&nbsp;the&nbsp;color&nbsp;of&nbsp;the&nbsp;player.</span></dd>
+</dl>
+<dl><dt><strong>screen</strong></dt>
+<dd><span class="code">Getter&nbsp;for&nbsp;the&nbsp;self.<strong>__screen</strong>&nbsp;variable.</span></dd>
+</dl>
 <hr>
 Data and other attributes defined here:<br>
 <dl><dt><strong>__annotations__</strong> = {'_BUTTON_SIZE': &lt;class 'int'&gt;, '_StrategoGUI__INSTANCE': typing.Optional[ForwardRef('StrategoGUI')]}</dl>
@@ -76,7 +92,8 @@ Data and other attributes defined here:<br>
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
     
 <tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><dl><dt><a name="-resize_image"><strong>resize_image</strong></a>(img: tkinter.PhotoImage, w: int, h: int) -&gt; tkinter.PhotoImage</dt><dd><span class="code">Resizes&nbsp;a&nbsp;tk.PhotoImage&nbsp;<a href="builtins.html#object">object</a>.<br>
+<td class="singlecolumn"><dl><dt><a name="-resize_image"><strong>resize_image</strong></a>(img: tkinter.PhotoImage, w: int, h: int) -&gt; tkinter.PhotoImage</dt><dd><span class="code">Resizes&nbsp;a&nbsp;tk.PhotoImage&nbsp;<a href="builtins.html#object">object</a>.&nbsp;There&nbsp;is&nbsp;a&nbsp;better&nbsp;way&nbsp;to&nbsp;do<br>
+this,&nbsp;but&nbsp;this&nbsp;is&nbsp;the&nbsp;only&nbsp;way&nbsp;that&nbsp;works&nbsp;with&nbsp;mypy.<br>
 :param&nbsp;img:&nbsp;The&nbsp;image&nbsp;to&nbsp;resize.<br>
 :param&nbsp;w:&nbsp;The&nbsp;desired&nbsp;width.<br>
 :param&nbsp;h:&nbsp;The&nbsp;desired&nbsp;height.<br>
@@ -92,5 +109,6 @@ Data and other attributes defined here:<br>
 <strong>List</strong> = typing.List<br>
 <strong>Literal</strong> = typing.Literal<br>
 <strong>Optional</strong> = typing.Optional<br>
+<strong>ScreenType</strong> = typing.Literal['HOME', 'INFO', 'WIN', 'LOSE', 'E...AME', 'JOIN_GAME', 'YOUR_TURN', 'THEIR_TURN', '']<br>
 <strong>Tuple</strong> = typing.Tuple</td></tr></table>
 </body></html>

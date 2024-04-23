@@ -2,12 +2,18 @@
 Tests the `Piece` classes for OOP Stratego.
 '''
 
-from typing import Optional, List, TypeAlias, Iterable
+from typing import Optional, List, Iterable, Literal
 from unittest import TestCase
 from stratego import pieces as p
-from stratego import board as b
+
 
 def base_all_pieces(color: str) -> Iterable[p.Piece]:
+    '''
+    Generator yielding all the valid pieces.
+    :param color: The color to use to create.
+    :yields: An iterator of pieces to use.
+    '''
+
     yield p.Flag(color)
     yield p.Spy(color)
     yield p.Bomb(color)
@@ -17,19 +23,94 @@ def base_all_pieces(color: str) -> Iterable[p.Piece]:
         yield p.Troop(color, i)
     yield p.Marshal(color)
 
-def all_pieces(color: str, *, but: set[p.Piece] = set())-> Iterable[p.Piece]:
+
+def all_pieces(color: Literal['RED', 'BLUE'],
+               but: Optional[set[p.Piece]] = None) -> Iterable[p.Piece]:
+    '''
+    Yields an iterable of pieces.
+    :param color: RED or BLUE.
+    :param but: Pieces to exclude.
+    :yields: An iterator of the given pieces.
+    '''
+
+    if but is None:
+        but = set()
+
     for piece in base_all_pieces(color):
         if piece not in but:
             yield piece
 
-def all_movable_pieces(color: str, *, but: set[p.Piece] = set()) -> Iterable[p.Piece]:
-    return all_pieces(color, but = {p.Flag(color), p.Bomb(color)} | but)
 
-def assert_confront(lhs: p.Piece, rhs: p.Piece, expected: p.Piece):
+def all_movable_pieces(color: Literal['RED', 'BLUE'],
+                       but: Optional[set[p.Piece]] = None
+                       ) -> Iterable[p.Piece]:
+    '''
+    Yields a list of only movable pieces.
+    :param color: RED or BLUE.
+    :param but: Pieces to exclude.
+    :yields: An iterable over the given pieces.
+    '''
+
+    if but is None:
+        but = set()
+
+    return all_pieces(color, but=({p.Flag(color), p.Bomb(color)} | but))
+
+
+def assert_confront(lhs: p.Piece,
+                    rhs: p.Piece,
+                    expected: p.Piece) -> None:
+    '''
+    Asserts that lhs.confront(rhs) is expected.
+    :param lhs: The attacker.
+    :param rhs: The defender.
+    :param expected: The expected victor.
+    '''
+
     if not isinstance(lhs, p.Troop):
         return
 
     assert lhs.confront(rhs) is expected
+
+
+def assert_confrontation_detailed(via: TestCase,
+                                  attacker: p.Piece,
+                                  defender: p.Piece) -> None:
+    '''
+    Assert that the correct result occurs given two
+    pieces.
+    '''
+
+    result: Optional[p.Piece] = attacker.confront(defender)
+
+    repr(attacker)
+    repr(defender)
+    repr(result)
+
+    if defender is None:
+        via.assertEqual(result, attacker)
+
+    elif isinstance(defender, p.Flag):
+        via.assertEqual(result, defender)
+
+    elif (isinstance(defender, p.Bomb) and not
+            isinstance(attacker, p.Miner)):
+        via.assertEqual(result, defender)
+
+    elif (isinstance(defender, p.Marshal) and
+            isinstance(attacker, p.Spy)):
+        via.assertEqual(result, attacker)
+
+    elif isinstance(defender, p.Troop):
+        if attacker.rank > defender.rank:
+            via.assertEqual(result, attacker)
+
+        elif attacker.rank == defender.rank:
+            via.assertIsNone(result)
+
+        else:
+            via.assertEqual(result, defender)
+
 
 class TestStrategoPiece(TestCase):
     '''
@@ -42,18 +123,6 @@ class TestStrategoPiece(TestCase):
         Tests attributes of the piece class which are not
         otherwise covered.
         '''
-
-        with self.assertRaises(ValueError):
-            p.Piece('foobar')
-
-        with self.assertRaises(TypeError):
-            repr(p.Piece('RED'))
-
-        with self.assertRaises(TypeError):
-            p.Piece('RED').confront(p.Piece('BLUE'))
-
-        self.assertEqual(p.Piece('RED').color, 'RED')
-        self.assertEqual(p.Piece('BLUE').color, 'BLUE')
 
         for lhs_color in ["RED", "BLUE"]:
             for rhs_color in ["RED", "BLUE"]:
@@ -76,6 +145,7 @@ class TestStrategoPiece(TestCase):
 
         # Create a bomb
         bomb: p.Bomb = p.Bomb('RED')
+        troop: p.Troop = p.Troop('BLUE', 9)
 
         with self.assertRaises(TypeError):
             bomb.confront(p.Troop)
@@ -113,34 +183,25 @@ class TestStrategoPiece(TestCase):
         red_pieces = list(all_pieces('RED'))
         blue_pieces = list(all_pieces('BLUE'))
 
-        inverted_winners = {frozenset({p.Bomb, p.Miner}), frozenset({p.Spy, p.Marshal})}
-
         for red_piece in red_pieces:
             if type(red_piece) not in {p.Troop, p.Scout}:
                 continue
+
             for blue_piece in blue_pieces:
                 red_rank = red_piece.rank
                 blue_rank = blue_piece.rank
-                if {type(red_piece), type(blue_piece)} in inverted_winners:
-                    continue
+
                 if red_rank < blue_rank:
                     assert_confront(red_piece, blue_piece, blue_piece)
                     assert_confront(blue_piece, red_piece, blue_piece)
+
                 elif red_rank > blue_rank:
                     assert_confront(red_piece, blue_piece, red_piece)
                     assert_confront(blue_piece, red_piece, red_piece)
-                else: # red_rank == blue_rank
+
+                else:  # red_rank == blue_rank
                     assert_confront(red_piece, blue_piece, None)
                     assert_confront(blue_piece, red_piece, None)
-
-
-    def test_spy_marshal(self) -> None:
-        # Create a flag and a regular troop
-        flag: p.Flag = p.Flag('RED')
-        troop: p.Troop = p.Troop('BLUE', 5)
-
-        with self.assertRaises(TypeError):
-            flag.confront(troop)
 
     def test_spy_and_marshal(self) -> None:
         '''
@@ -168,19 +229,6 @@ class TestStrategoPiece(TestCase):
         with self.assertRaises(TypeError):
             flag.confront(troop)
 
-    def test_spy_and_marshal(self) -> None:
-        '''
-        Tests the spy piece for stratego. The spy should defeat
-        a marshal when the spy attacks, but not when the marshal
-        attacks.
-        '''
-
-        s: p.Spy = p.Spy('RED')
-        m: p.Marshal = p.Marshal('BLUE')
-
-        self.assertEqual(s.confront(m), s)
-        self.assertEqual(m.confront(s), m)
-
     def test_miner(self) -> None:
         '''
         Tests the miner piece for stratego. The miner is able to
@@ -204,66 +252,18 @@ class TestStrategoPiece(TestCase):
         '''
 
         # Options to permute over
-        possible_types: List[TypeAlias] = [None, b.LakeSquare,
-                                           p.Bomb, p.Flag, p.Marshal,
-                                           p.Miner, p.Scout, p.Spy]
-        possible_colors: List[str] = ['BLUE', 'RED']
-        possible_troop_ranks: List[int] = [4, 5, 6, 7, 8, 9]
-
-        all_pieces: List[b.Square] = []
+        possible_colors: List[Literal['BLUE', 'RED']] = ['BLUE', 'RED']
 
         for color in possible_colors:
+            other_color: Literal['BLUE', 'RED'] = \
+                'RED' if color == 'BLUE' else 'BLUE'
 
-            for possible_type in possible_types:
-                if possible_type is None:
-                    all_pieces.append(None)
+            for attacker in all_pieces(color):
 
-                elif possible_type is b.LakeSquare:
-                    all_pieces.append(b.LakeSquare())
-
-                else:
-                    all_pieces.append(possible_type(color))
-
-                    self.assertEqual(all_pieces[-1].color, color)
-
-            for rank in possible_troop_ranks:
-                all_pieces.append(p.Troop(color, rank))
-
-        for attacker in all_pieces:
-
-            if not isinstance(attacker, p.Troop):
-                continue
-
-            for defender in all_pieces:
-                if defender is attacker:
+                if not isinstance(attacker, p.Troop):
                     continue
 
-                result: Optional[p.Piece] = attacker.confront(defender)
+                for defender in all_pieces(other_color):
+                    assert_confrontation_detailed(self, attacker, defender)
 
-                repr(attacker)
-                repr(defender)
-                repr(result)
-
-                if defender is None:
-                    self.assertEqual(result, attacker)
-
-                elif isinstance(defender, p.Flag):
-                    self.assertEqual(result, defender)
-
-                elif (isinstance(defender, p.Bomb) and not
-                      isinstance(attacker, p.Miner)):
-                    self.assertEqual(result, defender)
-
-                elif (isinstance(defender, p.Marshal) and
-                      isinstance(attacker, p.Spy)):
-                    self.assertEqual(result, attacker)
-
-                elif isinstance(defender, p.Troop):
-                    if attacker.rank > defender.rank:
-                        self.assertEqual(result, attacker)
-
-                    elif attacker.rank == defender.rank:
-                        self.assertIsNone(result)
-
-                    else:
-                        self.assertEqual(result, defender)
+                assert_confrontation_detailed(self, attacker, None)

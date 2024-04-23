@@ -3,7 +3,7 @@ FROM python:3
 RUN apt update \
   && apt install -y \
   g++ gcc make sqlite3 time curl git nano dos2unix texlive \
-  net-tools iputils-ping iproute2 sudo gdb less pandoc \
+  net-tools iputils-ping iproute2 sudo gdb less pandoc xvfb \
   && apt clean;
 
 # Install Java and Graphviz for plantuml
@@ -14,6 +14,7 @@ ARG UID=1000
 ARG GID=1000
 
 # Set environment variables
+ENV DISPLAY             :99
 ENV USER                ${USER}
 ENV HOME                /home/${USER}
 
@@ -40,4 +41,5 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
 
 USER user
 
+# Run virtual X display (for GUI testing) and launch terminal
 CMD zsh

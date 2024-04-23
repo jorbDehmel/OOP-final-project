@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 '''
 Driver for OOP Network-based Stratego in Python.
 '''

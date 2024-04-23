@@ -170,10 +170,7 @@ class StrategoNetworker:
 
     def send_game(self, board: Board, state: str) -> None:
         '''
-<<<<<<< HEAD
-=======
         Send the board and state.
->>>>>>> origin/main
         '''
 
         self.__send_board(board)

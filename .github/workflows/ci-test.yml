@@ -23,6 +23,7 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       run: |
+        sudo apt install xvfb -y
         python -m pip install --upgrade pip
         pip install flake8
         if [ -f ci-cd-requirements.txt ]; then pip install -r ci-cd-requirements.txt; fi
@@ -34,7 +35,11 @@ jobs:
         mypy --strict --allow-untyped-decorators --ignore-missing-imports .
     - name: Test with pytest
       run: |
+        Xvfb :99 -screen 0 1024x768x24 &
+        export DISPLAY=:99
         pytest --verbose .
     - name: Generate coverage report
       run: |
+        Xvfb :99 -screen 0 1024x768x24 &
+        export DISPLAY=:99
         pytest --cov-report=xml:./coverage.xml --cov=stratego tests/

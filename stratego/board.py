@@ -207,6 +207,11 @@ class Board:
             raise InvalidMoveError('Failed to make move')
 
         s: Square = self._places[from_y][from_x]
+
+        if isinstance(s, p.Piece):
+            if s.color != color:
+                raise InvalidMoveError('Failed to make move')
+
         t: Square = self._places[to_y][to_x]
         if isinstance(s, p.Piece) and isinstance(t, p.Piece):
 
@@ -215,9 +220,6 @@ class Board:
 
             mover: p.Piece = s
             defender: p.Piece = t
-
-            if s.color != color:
-                raise InvalidMoveError('Failed to make move')
 
             self._places[to_y][to_x] = mover.confront(defender)
             self._places[from_y][from_x] = None

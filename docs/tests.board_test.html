@@ -8,7 +8,7 @@
 <table class="heading">
 <tr class="heading-text decor">
 <td class="title">&nbsp;<br><strong class="title"><a href="tests.html" class="white">tests</a>.board_test</strong></td>
-<td class="extra"><a href=".">index</a><br><a href="file:/home/user/OOP-final-project/tests/board_test.py">/home/user/OOP-final-project/tests/board_test.py</a></td></tr></table>
+<td class="extra"><a href=".">index</a><br><a href="file:/home/jorb/Programs/OOP-final-project/tests/board_test.py">/home/jorb/Programs/OOP-final-project/tests/board_test.py</a></td></tr></table>
     <p><span class="code">Tests&nbsp;the&nbsp;`Board`&nbsp;class&nbsp;for&nbsp;OOP&nbsp;Stratego.</span></p>
 <p>
 <table class="section">
@@ -52,6 +52,8 @@ A&nbsp;test&nbsp;case&nbsp;for&nbsp;testing&nbsp;the&nbsp;stratego.board.Board&n
 Methods defined here:<br>
 <dl><dt><a name="TestBoard-test_all_pieces"><strong>test_all_pieces</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;`all_pieces`&nbsp;method,&nbsp;which&nbsp;returns&nbsp;all&nbsp;the<br>
 pieces&nbsp;which&nbsp;need&nbsp;to&nbsp;be&nbsp;set&nbsp;up&nbsp;for&nbsp;a&nbsp;given&nbsp;color.</span></dd></dl>
+
+<dl><dt><a name="TestBoard-test_colors"><strong>test_colors</strong></a>(self)</dt><dd><span class="code">Ensures&nbsp;that&nbsp;you&nbsp;cannot&nbsp;move&nbsp;pieces&nbsp;which&nbsp;are&nbsp;not&nbsp;yours.</span></dd></dl>
 
 <dl><dt><a name="TestBoard-test_fill"><strong>test_fill</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;b.Board.fill()&nbsp;function,&nbsp;which&nbsp;fills&nbsp;a&nbsp;given<br>
 rectangular&nbsp;range&nbsp;with&nbsp;pieces&nbsp;according&nbsp;to&nbsp;either&nbsp;a<br>
@@ -114,6 +116,8 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 If&nbsp;the&nbsp;two&nbsp;objects&nbsp;compare&nbsp;equal&nbsp;then&nbsp;they&nbsp;will&nbsp;automatically<br>
 compare&nbsp;almost&nbsp;equal.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-assertAlmostEquals"><strong>assertAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestBoard-assertCountEqual"><strong>assertCountEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Asserts&nbsp;that&nbsp;two&nbsp;iterables&nbsp;have&nbsp;the&nbsp;same&nbsp;elements,&nbsp;the&nbsp;same&nbsp;number&nbsp;of<br>
 times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;<br>
@@ -124,10 +128,14 @@ times,&nbsp;without&nbsp;regard&nbsp;to&nbsp;order.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;1,&nbsp;1]&nbsp;and&nbsp;[1,&nbsp;0,&nbsp;1]&nbsp;compare&nbsp;equal.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[0,&nbsp;0,&nbsp;1]&nbsp;and&nbsp;[0,&nbsp;1]&nbsp;compare&nbsp;unequal.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-assertDictContainsSubset"><strong>assertDictContainsSubset</strong></a>(self, subset, dictionary, msg=None)</dt><dd><span class="code">Checks&nbsp;whether&nbsp;dictionary&nbsp;is&nbsp;a&nbsp;superset&nbsp;of&nbsp;subset.</span></dd></dl>
+
 <dl><dt><a name="TestBoard-assertDictEqual"><strong>assertDictEqual</strong></a>(self, d1, d2, msg=None)</dt></dl>
 
 <dl><dt><a name="TestBoard-assertEqual"><strong>assertEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;unequal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'=='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestBoard-assertEquals"><strong>assertEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestBoard-assertFalse"><strong>assertFalse</strong></a>(self, expr, msg=None)</dt><dd><span class="code">Check&nbsp;that&nbsp;the&nbsp;expression&nbsp;is&nbsp;false.</span></dd></dl>
 
@@ -196,14 +204,20 @@ as&nbsp;significant&nbsp;digits&nbsp;(measured&nbsp;from&nbsp;the&nbsp;most&nbsp
 &nbsp;<br>
 Objects&nbsp;that&nbsp;are&nbsp;equal&nbsp;automatically&nbsp;fail.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-assertNotAlmostEquals"><strong>assertNotAlmostEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestBoard-assertNotEqual"><strong>assertNotEqual</strong></a>(self, first, second, msg=None)</dt><dd><span class="code">Fail&nbsp;if&nbsp;the&nbsp;two&nbsp;objects&nbsp;are&nbsp;equal&nbsp;as&nbsp;determined&nbsp;by&nbsp;the&nbsp;'!='<br>
 operator.</span></dd></dl>
+
+<dl><dt><a name="TestBoard-assertNotEquals"><strong>assertNotEquals</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestBoard-assertNotIn"><strong>assertNotIn</strong></a>(self, member, container, msg=None)</dt><dd><span class="code">Just&nbsp;like&nbsp;self.<a href="#TestBoard-assertTrue">assertTrue</a>(a&nbsp;not&nbsp;in&nbsp;b),&nbsp;but&nbsp;with&nbsp;a&nbsp;nicer&nbsp;default&nbsp;message.</span></dd></dl>
 
 <dl><dt><a name="TestBoard-assertNotIsInstance"><strong>assertNotIsInstance</strong></a>(self, obj, cls, msg=None)</dt><dd><span class="code">Included&nbsp;for&nbsp;symmetry&nbsp;with&nbsp;assertIsInstance.</span></dd></dl>
 
 <dl><dt><a name="TestBoard-assertNotRegex"><strong>assertNotRegex</strong></a>(self, text, unexpected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;if&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestBoard-assertNotRegexpMatches"><strong>assertNotRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestBoard-assertRaises"><strong>assertRaises</strong></a>(self, expected_exception, *args, **kwargs)</dt><dd><span class="code">Fail&nbsp;unless&nbsp;an&nbsp;exception&nbsp;of&nbsp;class&nbsp;expected_exception&nbsp;is&nbsp;raised<br>
 by&nbsp;the&nbsp;callable&nbsp;when&nbsp;invoked&nbsp;with&nbsp;specified&nbsp;positional&nbsp;and<br>
@@ -241,7 +255,11 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertRaisesRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-assertRaisesRegexp"><strong>assertRaisesRegexp</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestBoard-assertRegex"><strong>assertRegex</strong></a>(self, text, expected_regex, msg=None)</dt><dd><span class="code">Fail&nbsp;the&nbsp;test&nbsp;unless&nbsp;the&nbsp;text&nbsp;matches&nbsp;the&nbsp;regular&nbsp;expression.</span></dd></dl>
+
+<dl><dt><a name="TestBoard-assertRegexpMatches"><strong>assertRegexpMatches</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
 
 <dl><dt><a name="TestBoard-assertSequenceEqual"><strong>assertSequenceEqual</strong></a>(self, seq1, seq2, msg=None, seq_type=None)</dt><dd><span class="code">An&nbsp;equality&nbsp;assertion&nbsp;for&nbsp;ordered&nbsp;sequences&nbsp;(like&nbsp;lists&nbsp;and&nbsp;tuples).<br>
 &nbsp;<br>
@@ -319,6 +337,8 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;Optional&nbsp;message&nbsp;used&nbsp;in&nbsp;case&nbsp;of&nbsp;failure.&nbsp;Can&nbsp;only&nbsp;be&nbsp;used<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;when&nbsp;assertWarnsRegex&nbsp;is&nbsp;used&nbsp;as&nbsp;a&nbsp;context&nbsp;manager.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-assert_"><strong>assert_</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestBoard-countTestCases"><strong>countTestCases</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="TestBoard-debug"><strong>debug</strong></a>(self)</dt><dd><span class="code">Run&nbsp;the&nbsp;test&nbsp;without&nbsp;collecting&nbsp;errors&nbsp;in&nbsp;a&nbsp;TestResult</span></dd></dl>
@@ -335,6 +355,20 @@ function&nbsp;and&nbsp;returns&nbsp;the&nbsp;result&nbsp;of&nbsp;the&nbsp;__ente
 
 <dl><dt><a name="TestBoard-fail"><strong>fail</strong></a>(self, msg=None)</dt><dd><span class="code">Fail&nbsp;immediately,&nbsp;with&nbsp;the&nbsp;given&nbsp;message.</span></dd></dl>
 
+<dl><dt><a name="TestBoard-failIf"><strong>failIf</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failIfAlmostEqual"><strong>failIfAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failIfEqual"><strong>failIfEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failUnless"><strong>failUnless</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failUnlessAlmostEqual"><strong>failUnlessAlmostEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failUnlessEqual"><strong>failUnlessEqual</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
+<dl><dt><a name="TestBoard-failUnlessRaises"><strong>failUnlessRaises</strong></a> = deprecated_func(*args, **kwargs)</dt></dl>
+
 <dl><dt><a name="TestBoard-id"><strong>id</strong></a>(self)</dt></dl>
 
 <dl><dt><a name="TestBoard-run"><strong>run</strong></a>(self, result=None)</dt></dl>
@@ -349,7 +383,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="TestBoard-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="TestBoard-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x7f490a8d4ba0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="TestBoard-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724f561a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -359,22 +393,22 @@ block,&nbsp;allowing&nbsp;further&nbsp;test&nbsp;code&nbsp;to&nbsp;be&nbsp;execu
 
 <hr>
 Class methods inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
-<dl><dt><a name="TestBoard-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)</dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
+<dl><dt><a name="TestBoard-__init_subclass__"><strong>__init_subclass__</strong></a>(*args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">This&nbsp;method&nbsp;is&nbsp;called&nbsp;when&nbsp;a&nbsp;class&nbsp;is&nbsp;subclassed.<br>
 &nbsp;<br>
 The&nbsp;default&nbsp;implementation&nbsp;does&nbsp;nothing.&nbsp;It&nbsp;may&nbsp;be<br>
 overridden&nbsp;to&nbsp;extend&nbsp;subclasses.</span></dd></dl>
 
-<dl><dt><a name="TestBoard-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)</dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
+<dl><dt><a name="TestBoard-addClassCleanup"><strong>addClassCleanup</strong></a>(function, /, *args, **kwargs)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;addCleanup,&nbsp;except&nbsp;the&nbsp;cleanup&nbsp;items&nbsp;are&nbsp;called&nbsp;even&nbsp;if<br>
 setUpClass&nbsp;fails&nbsp;(unlike&nbsp;tearDownClass).</span></dd></dl>
 
-<dl><dt><a name="TestBoard-doClassCleanups"><strong>doClassCleanups</strong></a>()</dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
+<dl><dt><a name="TestBoard-doClassCleanups"><strong>doClassCleanups</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Execute&nbsp;all&nbsp;class&nbsp;cleanup&nbsp;functions.&nbsp;Normally&nbsp;called&nbsp;for&nbsp;you&nbsp;after<br>
 tearDownClass.</span></dd></dl>
 
-<dl><dt><a name="TestBoard-enterClassContext"><strong>enterClassContext</strong></a>(cm)</dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
+<dl><dt><a name="TestBoard-enterClassContext"><strong>enterClassContext</strong></a>(cm)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
 
-<dl><dt><a name="TestBoard-setUpClass"><strong>setUpClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestBoard-setUpClass"><strong>setUpClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
-<dl><dt><a name="TestBoard-tearDownClass"><strong>tearDownClass</strong></a>()</dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
+<dl><dt><a name="TestBoard-tearDownClass"><strong>tearDownClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
 <hr>
 Data descriptors inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
