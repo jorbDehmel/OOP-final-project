@@ -1,5 +1,6 @@
 '''
 Some tests of the Stratego GUI.
+Jordan Dehmel, 2024
 '''
 
 from typing import Callable, Dict, List, Tuple
@@ -35,6 +36,43 @@ class GUITest(unittest.TestCase):
             Dummy function.
             '''
 
+    class DummyNet:
+        '''
+        Dummy class
+        '''
+
+        def recv_game(self):
+            '''
+            Dummy function
+            '''
+
+            return (b.Board.get_instance(), 'GOOD')
+
+        def send_game(self, _, __):
+            '''
+            Dummy function
+            '''
+
+        def host_game(self, _, __):
+            '''
+            Dummy function
+            '''
+
+        def host_wait_for_join(self):
+            '''
+            Dummy function
+            '''
+
+        def close_game(self):
+            '''
+            Dummy function
+            '''
+
+        def join_game(self, _, __, ___):
+            '''
+            Dummy function
+            '''
+
     def test_resize_image(self) -> None:
         '''
         Tests resizing images.
@@ -42,8 +80,16 @@ class GUITest(unittest.TestCase):
 
         tk.Tk()
 
-        img: tk.PhotoImage = tk.PhotoImage('stratego/images/blank.png')
-        big_img = g.resize_image(img, 1024, 1024)
+        blank_img: tk.PhotoImage = tk.PhotoImage('stratego/images/blank.png')
+
+        big_img: tk.PhotoImage = g.resize_image(blank_img, 1024, 1024)
+
+        self.assertEqual(big_img.width(), 1024)
+        self.assertEqual(big_img.height(), 1024)
+
+        lake_img: tk.PhotoImage = tk.PhotoImage('stratego/images/lake.png')
+
+        big_img = g.resize_image(lake_img, 1024, 1024)
 
         self.assertEqual(big_img.width(), 1024)
         self.assertEqual(big_img.height(), 1024)
@@ -100,7 +146,7 @@ class GUITest(unittest.TestCase):
 
             with (mock.patch('tkinter.Tk'),
                   mock.patch('tkinter._default_root', GUITest.TKDummy),
-                  mock.patch('stratego.network.StrategoNetworker'),
+                  mock.patch.object(n, 'StrategoNetworker', GUITest.DummyNet),
                   mock.patch('tkinter.Button') as fake_button):
 
                 other_color: str = 'RED' if color == 'BLUE' else 'BLUE'
@@ -179,7 +225,6 @@ class GUITest(unittest.TestCase):
                 # cause the GUI to transition to the loss
                 # screen.
 
-                print(color, other_color)
                 self.assertEqual(gui.screen, 'LOSE')
 
     def test_error(self) -> None:
@@ -254,7 +299,7 @@ class GUITest(unittest.TestCase):
 
         with (mock.patch('tkinter.Tk'),
               mock.patch('tkinter._default_root', GUITest.TKDummy),
-              mock.patch.object(n, 'StrategoNetworker')):
+              mock.patch.object(n, 'StrategoNetworker', GUITest.DummyNet)):
 
             # This has no public methods other than get_instance
             g.StrategoGUI.clear_instance()
@@ -273,7 +318,7 @@ class GUITest(unittest.TestCase):
 
         with (mock.patch('tkinter.Tk'),
               mock.patch('tkinter._default_root', GUITest.TKDummy),
-              mock.patch.object(n, 'StrategoNetworker')):
+              mock.patch.object(n, 'StrategoNetworker', GUITest.DummyNet)):
 
             # This has no public methods other than get_instance
             gui: g.StrategoGUI = g.StrategoGUI.get_instance()
@@ -289,15 +334,19 @@ class GUITest(unittest.TestCase):
         Test the GUI's setup screen via patching.
         '''
 
+        n.StrategoNetworker.clear_instance()
+        g.StrategoGUI.clear_instance()
+        b.Board.clear_instance()
+
         with (mock.patch('tkinter.Tk'),
               mock.patch('tkinter.Button') as fake_button,
-              mock.patch('stratego.network.StrategoNetworker') as fake_net,
+              mock.patch.object(n, 'StrategoNetworker', GUITest.DummyNet),
               mock.patch('tkinter._default_root', GUITest.TKDummy)):
 
-            fake_net.recv_game = mock.Mock(return_value=(b.Board.get_instance(),
-                                           'GOOD'))
-
             for color in ['RED', 'BLUE']:
+
+                g.StrategoGUI.clear_instance()
+                b.Board.clear_instance()
 
                 g.StrategoGUI.clear_instance()
                 gui: g.StrategoGUI = g.StrategoGUI.get_instance()

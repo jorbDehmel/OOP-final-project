@@ -217,10 +217,7 @@ class StrategoGUI:
                     path = f'stratego/images/{piece.color}_blank.png'
 
                 else:
-                    try:
-                        path = f'stratego/images/{piece.color}_{repr(piece)}.png'
-                    except TypeError:
-                        path = f'stratego/images/{piece.color}_blank.png'
+                    path = f'stratego/images/{piece.color}_{repr(piece)}.png'
 
         if path not in self.__image_cache:
             raw: tk.PhotoImage = tk.PhotoImage(file=path)
@@ -529,7 +526,7 @@ class StrategoGUI:
                               (10, 10),
                               lambda _, __: self.__left_to_place.pop())
 
-        self.__setup_screen()
+        self.__first_sync()
 
     def __first_sync(self) -> None:
         '''

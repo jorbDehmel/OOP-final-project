@@ -54,7 +54,7 @@ For&nbsp;replacing&nbsp;sockets&nbsp;when&nbsp;testing.<br>&nbsp;</span></td></t
 <td class="singlecolumn">Methods defined here:<br>
 <dl><dt><a name="MockSocket-__init__"><strong>__init__</strong></a>(self, _sock_type: object, _sock_proto: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
-<dl><dt><a name="MockSocket-accept"><strong>accept</strong></a>(self) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+<dl><dt><a name="MockSocket-accept"><strong>accept</strong></a>(self) -&gt; Tuple[ForwardRef('MockSocket'), NoneType]</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="MockSocket-bind"><strong>bind</strong></a>(self, _addr: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
@@ -416,7 +416,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724f561a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724ae3fa4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -465,6 +465,12 @@ Data and other attributes inherited from <a href="unittest.case.html#TestCase">u
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
     
 <tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><dl><dt><a name="-run_in_network_context"><strong>run_in_network_context</strong></a>(server_fn, client_fn) -&gt; None</dt></dl>
-</td></tr></table>
+<td class="singlecolumn"><dl><dt><a name="-run_in_network_context"><strong>run_in_network_context</strong></a>(server_fn, client_fn) -&gt; None</dt><dd><span class="code">Run&nbsp;the&nbsp;given&nbsp;functions&nbsp;in&nbsp;a&nbsp;network&nbsp;context.</span></dd></dl>
+</td></tr></table><p>
+<table class="section">
+<tr class="decor data-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
+    
+<tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><strong>Tuple</strong> = typing.Tuple</td></tr></table>
 </body></html>

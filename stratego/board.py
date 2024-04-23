@@ -36,6 +36,16 @@ class Board:
     _HEIGHT: int = 10
 
     @classmethod
+    def clear_instance(cls) -> None:
+        '''
+        Resets this singleton class.
+        '''
+
+        if cls.__INSTANCE is not None:
+            del cls.__INSTANCE
+            cls.__INSTANCE = None
+
+    @classmethod
     def get_instance(cls) -> 'Board':
         '''
         Returns the instance of this class, instantiating if

@@ -51,6 +51,16 @@ class StrategoNetworker:
 
         return cls.__INSTANCE
 
+    @classmethod
+    def clear_instance(cls) -> None:
+        '''
+        Clear the instance of this singleton class.
+        '''
+
+        if cls.__INSTANCE is not None:
+            del cls.__INSTANCE
+            cls.__INSTANCE = None
+
     def __init__(self) -> None:
         '''
         Create infrastructure, but do NOT open socket yet.

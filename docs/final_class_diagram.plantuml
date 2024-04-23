@@ -21,6 +21,7 @@ folder board {
         {static} - __INSTANCE: Optional['Board'] = None
         {static} - _WIDTH: int = 10
         {static} - _HEIGHT: int = 10
+        {static} + clear_instance(cls) -> None
         {static} + get_instance(cls) -> 'Board'
         {static} + all_pieces(color: Literal['BLUE', 'RED']) -> List[Piece]
 
@@ -53,6 +54,7 @@ folder network {
         {static} - __INSTANCE: Optional['StrategoNetworker'] = None
 
         {static} - is_terminal_state(cur_state: str) -> bool
+        {static} - clear_instance(cls) -> None
         {static} - get_instance(cls) -> 'StrategoNetworker'
 
         + __init__(self) -> None
