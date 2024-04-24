@@ -7,6 +7,8 @@ from typing import Callable, Dict, List, Tuple
 import unittest
 from unittest import mock
 import tkinter as tk
+from hypothesis import given, strategies as some
+
 import stratego.gui as g
 import stratego.pieces as p
 import stratego.board as b
@@ -101,7 +103,7 @@ class GUITest(unittest.TestCase):
 
         with mock.patch('tkinter.Tk'):
 
-            # This has no public methods other than get_instance
+            g.StrategoGUI.clear_instance()
             gui: g.StrategoGUI = g.StrategoGUI.get_instance()
 
             gui.color = 'BLUE'
@@ -111,6 +113,29 @@ class GUITest(unittest.TestCase):
             self.assertEqual(gui.color, 'RED')
 
             gui.quit()
+
+    @given(some.text())
+    def test_gen_screens(self, text) -> None:
+        '''
+        Test the GUI screen setter via hypothesis testing.
+        '''
+
+        valid_cases: List[str] = ['HOME',
+                                  'INFO',
+                                  'WIN',
+                                  'LOSE',
+                                  'ERROR',
+                                  'SETUP',
+                                  'HOST_GAME',
+                                  'JOIN_GAME',
+                                  'YOUR_TURN',
+                                  'THEIR_TURN']
+
+        gui: g.StrategoGUI = g.StrategoGUI.get_instance()
+
+        if text not in valid_cases:
+            with self.assertRaises(AssertionError):
+                gui.screen = text
 
     def test_misc_screens(self) -> None:
         '''
@@ -124,11 +149,10 @@ class GUITest(unittest.TestCase):
             fake_tk.winfo_children.return_value = [mock.Mock()] * 5
 
             # This has no public methods other than get_instance
+            g.StrategoGUI.clear_instance()
             gui: g.StrategoGUI = g.StrategoGUI.get_instance()
 
             gui.screen = 'HOME'
-            self.assertEqual(gui.screen, 'HOME')  # Tests setter
-
             gui.screen = 'INFO'
             gui.screen = 'ERROR'
             gui.screen = 'WIN'
@@ -206,14 +230,13 @@ class GUITest(unittest.TestCase):
                 nonlocal other_color
                 return (b.Board.get_instance(), other_color)
 
-            g.StrategoGUI.clear_instance()
-
             with (mock.patch('tkinter.Tk'),
                   mock.patch('tkinter._default_root', GUITest.TKDummy),
                   mock.patch.object(n.StrategoNetworker, 'recv_game',
                                     dummy_network_replacement)):
 
                 # Setup GUI
+                g.StrategoGUI.clear_instance()
                 gui: g.StrategoGUI = g.StrategoGUI.get_instance()
                 gui.color = color
 
@@ -227,10 +250,10 @@ class GUITest(unittest.TestCase):
 
                 self.assertEqual(gui.screen, 'LOSE')
 
-    def test_error(self) -> None:
+    def test_error_1(self) -> None:
         '''
-        Tests receiving a losing move via the GUI. This should
-        result in a loss.
+        Tests receiving an error via the GUI. This should
+        result in an error screen.
         '''
 
         for color in ['RED', 'BLUE']:
@@ -292,6 +315,31 @@ class GUITest(unittest.TestCase):
 
                 self.assertEqual(gui.screen, 'ERROR')
 
+    def test_error_2(self) -> None:
+        '''
+        Tests receiving an error via the GUI. This should
+        result in an error screen.
+        '''
+
+        def dummy_network_replacement(self) -> None:
+            raise ValueError('This was raised by a dummy')
+
+        with (mock.patch('tkinter.Tk'),
+              mock.patch('tkinter._default_root', GUITest.TKDummy),
+              mock.patch.object(n.StrategoNetworker, 'recv_game',
+                                dummy_network_replacement)):
+
+            g.StrategoGUI.clear_instance()
+            b.Board.get_instance().clear()
+            gui: g.StrategoGUI = g.StrategoGUI.get_instance()
+
+            gui.screen = 'THEIR_TURN'
+
+            # Here, it should try to send the game, which
+            # will cause an error.
+
+            self.assertEqual(gui.screen, 'ERROR')
+
     def test_host(self) -> None:
         '''
         Test the GUI's hosting screen via patching.
@@ -321,6 +369,7 @@ class GUITest(unittest.TestCase):
               mock.patch.object(n, 'StrategoNetworker', GUITest.DummyNet)):
 
             # This has no public methods other than get_instance
+            g.StrategoGUI.clear_instance()
             gui: g.StrategoGUI = g.StrategoGUI.get_instance()
 
             # Get to host screen

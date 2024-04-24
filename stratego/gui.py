@@ -688,9 +688,6 @@ class StrategoGUI:
             if state == self.__color:
                 self.__win_screen()
 
-            elif state != 'GOOD':
-                self.__lose_screen()
-
             else:
                 self.__their_turn_screen()
 
@@ -716,10 +713,7 @@ class StrategoGUI:
             self.__board, state = self.__networking.recv_game()
 
             # Check game state
-            if state == self.__color:
-                self.__win_screen()
-
-            elif state != 'GOOD':
+            if state != 'GOOD':
                 self.__lose_screen()
 
             else:

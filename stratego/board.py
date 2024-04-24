@@ -204,6 +204,9 @@ class Board:
         coordinates. Raises error if the move is invalid. If
         the move was valid, updates the board accordingly.
 
+        Note: Can only return 'GOOD' or `color`; It never
+        returns the other color.
+
         :param from_pair: The origin (x, y).
         :param to_pair: The destination (x, y).
         :returns: The game state.
