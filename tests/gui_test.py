@@ -80,21 +80,29 @@ class GUITest(unittest.TestCase):
         Tests resizing images.
         '''
 
+        # Connect to virtual display as set up externally
         tk.Tk()
+        s: int = 16
 
-        blank_img: tk.PhotoImage = tk.PhotoImage('stratego/images/blank.png')
+        blank_img: tk.PhotoImage = tk.PhotoImage(file='stratego/images/blank.png')
 
-        big_img: tk.PhotoImage = g.resize_image(blank_img, 1024, 1024)
+        self.assertEqual(blank_img.width(), s)
+        self.assertEqual(blank_img.height(), s)
 
-        self.assertEqual(big_img.width(), 1024)
-        self.assertEqual(big_img.height(), 1024)
+        big_img: tk.PhotoImage = g.resize_image(blank_img, 128, 128)
 
-        lake_img: tk.PhotoImage = tk.PhotoImage('stratego/images/lake.png')
+        self.assertEqual(big_img.width(), 128)
+        self.assertEqual(big_img.height(), 128)
 
-        big_img = g.resize_image(lake_img, 1024, 1024)
+        lake_img: tk.PhotoImage = tk.PhotoImage(file='stratego/images/lake.png')
 
-        self.assertEqual(big_img.width(), 1024)
-        self.assertEqual(big_img.height(), 1024)
+        self.assertEqual(lake_img.width(), s)
+        self.assertEqual(lake_img.height(), s)
+
+        big_img = g.resize_image(lake_img, 128, 128)
+
+        self.assertEqual(big_img.width(), 128)
+        self.assertEqual(big_img.height(), 128)
 
     def test_color(self) -> None:
         '''
