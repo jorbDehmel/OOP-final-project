@@ -203,16 +203,27 @@ class GUITest(unittest.TestCase):
                 self.assertIsInstance(gui.board.get(9, 9), p.Flag)
 
                 # Simulate press on (0, 9) (scout)
+                did_press: bool = False
                 for item in buttons:
                     if item.x == 0 and item.y == 9:
                         item()
+                        did_press = True
                         break
 
+                assert did_press
+
                 # Simulate press on (9, 9) (opponent's flag)
+                did_press = False
                 for item in buttons:
                     if item.x == 9 and item.y == 9:
                         item()
+                        did_press = True
                         break
+
+                assert did_press
+
+                self.assertIsNone(gui.board.get(0, 9))
+                self.assertIsInstance(gui.board.get(9, 9), p.Flag)
 
                 self.assertEqual(gui.screen, 'WIN')
 
@@ -403,6 +414,7 @@ class GUITest(unittest.TestCase):
                 # Initialize host game interface
                 gui.color = color
                 gui.screen = 'HOST_GAME'
+                self.assertEqual(gui.screen, 'HOST_GAME')
 
                 # Simulate pressing enter, moving on to next screen
                 # This will call host_game, then wait for join game

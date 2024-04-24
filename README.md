@@ -9,7 +9,7 @@ Final project for object oriented programming w/ Dr. Ram Basnet.
 
 Nate Barnaik \
 Jordan Dehmel \
-Kate Eckhart
+Kate Eckhart (no longer on team)
 
 # Abstract
 
@@ -120,7 +120,7 @@ Jordan Dehmel:
  - Board testing to 100% coverage
  - Final class UML diagram
 
-Kate Eckhart:
+Kate Eckhart (no longer on team):
  - 2 UML diagrams
  - Initial network unit testing
  - Github issues
