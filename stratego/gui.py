@@ -217,14 +217,6 @@ class StrategoGUI:
 
         return self.__board
 
-    @property
-    def widgets(self) -> Dict[str, tk.Widget]:
-        '''
-        Returns the misc_widgets.
-        '''
-
-        return self.__misc_widgets
-
     def __get_image(self, piece: b.Square) -> tk.PhotoImage:
         '''
         :param piece: The piece to load the image from.
@@ -337,6 +329,7 @@ class StrategoGUI:
         '''
 
         self.__quit()
+        type(self).clear_instance()
 
     def __quit(self) -> None:
         '''
@@ -447,27 +440,23 @@ class StrategoGUI:
 
             # Extract fields
             ip_str: str = ip.get()
-            if ip_str == '':
-                ip_str = '127.0.0.1'
-
             port_str: str = port.get()
-            if port_str == '':
-                port_str = '12345'
-
-            port_int: int = int(port_str)
             password: str = ''
 
             while password == '':
                 try:
-                    password = self.__networking.host_game(ip_str, port_int)
+                    password = self.__networking.host_game(ip_str if ip_str else '127.0.0.1',
+                                                           int(port_str) if port_str else 12345)
+
                 except OSError:
-                    port_int += 1
+                    port_str = str((int(port_str) if port_str else 12345) + 1)
                     password = ''
 
             # Display waiting text
             self.__clear()
             tk.Label(self.__root,
-                     text=f'IP: {ip_str}\nPort: {port_int}\n'
+                     text=f'IP: {ip_str if ip_str else "127.0.0.1"}\n'
+                          + f'Port: {port_str if port_str else "12345"}\n'
                           + f'Password: {password}').pack()
             tk.Label(self.__root, text='Waiting for other player...').pack()
             self.__root.update()
@@ -514,23 +503,12 @@ class StrategoGUI:
 
             # Extract fields
             password_str: str = password.get()
-
-            if password_str == '':
-                return
-
             ip_str: str = ip.get()
-            if ip_str == '':
-                ip_str = '127.0.0.1'
-
             port_str: str = port.get()
-            if port_str == '':
-                port_str = '12345'
-
-            port_int: int = int(port_str)
 
             # Make API call and wait
-            result: int = self.__networking.join_game(ip_str,
-                                                      port_int,
+            result: int = self.__networking.join_game(ip_str if ip_str else '127.0.0.1',
+                                                      int(port_str) if port_str else 12345,
                                                       password_str)
 
             if result == 0:
@@ -538,10 +516,6 @@ class StrategoGUI:
                 self.__color = 'BLUE'
 
                 self.__setup_screen()
-
-            else:
-                tk.Label(self.__root,
-                         text=f'Failed to connect (code: {result}).').pack()
 
         tk.Button(self.__root,
                   text='Join This Game',
@@ -755,32 +729,28 @@ class StrategoGUI:
             self.__from_selection = None
             self.__to_selection = None
 
-        try:
-            # Update screen
+        # Update screen
 
-            if 'turn_label' not in self.__misc_widgets:
-                self.__clear()
+        if 'turn_label' not in self.__misc_widgets:
+            self.__clear()
 
-                # Creates self.__misc_widgets['turn_label']
-                self.__misc_widgets['turn_label'] = \
-                    tk.Label(self.__root, text='Waiting...')
-                self.__misc_widgets['turn_label'].pack()
+            # Creates self.__misc_widgets['turn_label']
+            self.__misc_widgets['turn_label'] = \
+                tk.Label(self.__root, text='Waiting...')
+            self.__misc_widgets['turn_label'].pack()
 
-                # Creates self.__misc_widgets['board']
-                self.__display_board(board_movement_callback)
+            # Creates self.__misc_widgets['board']
+            self.__display_board(board_movement_callback)
 
-                self.__root.update()
+            self.__root.update()
 
-            self.__screen = 'YOUR_TURN'
+        self.__screen = 'YOUR_TURN'
 
-            assert 'turn_label' in self.__misc_widgets
-            assert isinstance(self.__misc_widgets['turn_label'], tk.Label)
+        assert 'turn_label' in self.__misc_widgets
+        assert isinstance(self.__misc_widgets['turn_label'], tk.Label)
 
-            self.__misc_widgets['turn_label'].configure(text='Your turn.')
-            self.__refresh_board(board_movement_callback)
-
-        except ValueError:
-            self.__error_screen()
+        self.__misc_widgets['turn_label'].configure(text='Your turn.')
+        self.__refresh_board(board_movement_callback)
 
     def __check_move(self) -> None:
 
