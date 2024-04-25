@@ -112,7 +112,7 @@ class TestStrategoNetworking(unittest.TestCase):
     '''
 
     def test_is_terminal_state(self) -> None:
-        """Test is_terminal_state function
+        """Tests is_terminal_state function
         """
         assert n.StrategoNetworker.is_terminal_state('RED') == True
         assert n.StrategoNetworker.is_terminal_state('BLUE') == True
