@@ -16,10 +16,10 @@
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
     
 <tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="unittest.mock.html">unittest.mock</a><br>
-<a href="multiprocessing.html">multiprocessing</a><br>
-</td><td class="multicolumn"><a href="multiprocessing.connection.html">multiprocessing.connection</a><br>
-<a href="stratego.network.html">stratego.network</a><br>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="stratego.board.html">stratego.board</a><br>
+<a href="unittest.mock.html">unittest.mock</a><br>
+</td><td class="multicolumn"><a href="stratego.network.html">stratego.network</a><br>
+<a href="socket.html">socket</a><br>
 </td><td class="multicolumn"><a href="unittest.html">unittest</a><br>
 </td><td class="multicolumn"></td></tr></table></td></tr></table><p>
 <table class="section">
@@ -47,12 +47,12 @@
 <td class="section-title" colspan=3>&nbsp;<br><a name="MockSocket">class <strong>MockSocket</strong></a>(<a href="builtins.html#object">builtins.object</a>)</td></tr>
     
 <tr><td class="decor title-decor" rowspan=2><span class="code">&nbsp;&nbsp;&nbsp;</span></td>
-<td class="decor title-decor" colspan=2><span class="code"><a href="#MockSocket">MockSocket</a>(_sock_type:&nbsp;<a href="builtins.html#object">object</a>,&nbsp;_sock_proto:&nbsp;<a href="builtins.html#object">object</a>)&nbsp;-&amp;gt;&nbsp;None<br>
+<td class="decor title-decor" colspan=2><span class="code"><a href="#MockSocket">MockSocket</a>(*_,&nbsp;**kwargs)&nbsp;-&amp;gt;&nbsp;None<br>
 &nbsp;<br>
 For&nbsp;replacing&nbsp;sockets&nbsp;when&nbsp;testing.<br>&nbsp;</span></td></tr>
 <tr><td>&nbsp;</td>
 <td class="singlecolumn">Methods defined here:<br>
-<dl><dt><a name="MockSocket-__init__"><strong>__init__</strong></a>(self, _sock_type: object, _sock_proto: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+<dl><dt><a name="MockSocket-__init__"><strong>__init__</strong></a>(self, *_, **kwargs) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="MockSocket-accept"><strong>accept</strong></a>(self) -&gt; Tuple[ForwardRef('MockSocket'), NoneType]</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
@@ -64,7 +64,7 @@ For&nbsp;replacing&nbsp;sockets&nbsp;when&nbsp;testing.<br>&nbsp;</span></td></t
 
 <dl><dt><a name="MockSocket-listen"><strong>listen</strong></a>(self, _backlog: object) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
-<dl><dt><a name="MockSocket-recv"><strong>recv</strong></a>(self, size: int) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
+<dl><dt><a name="MockSocket-recv"><strong>recv</strong></a>(self, _: int) -&gt; bytes</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
 <dl><dt><a name="MockSocket-send"><strong>send</strong></a>(self, data: bytes) -&gt; None</dt><dd><span class="code">Dummy&nbsp;function.</span></dd></dl>
 
@@ -76,6 +76,12 @@ Data descriptors defined here:<br>
 <dl><dt><strong>__weakref__</strong></dt>
 <dd><span class="code">list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object</span></dd>
 </dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'kwargs': typing.Dict[str, typing.Any]}</dl>
+
+<dl><dt><strong>kwargs</strong> = {}</dl>
+
 </td></tr></table> <p>
 <table class="section">
 <tr class="decor title-decor heading-text">
@@ -93,15 +99,15 @@ Tests&nbsp;the&nbsp;stratego&nbsp;networking&nbsp;class.<br>&nbsp;</span></td></
 </dl>
 <hr>
 Methods defined here:<br>
-<dl><dt><a name="TestStrategoNetworking-host_test"><strong>host_test</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;host_game&nbsp;function</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-test_host"><strong>test_host</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;host_game&nbsp;function</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-join_test"><strong>join_test</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;join_game&nbsp;function</span></dd></dl>
+<dl><dt><a name="TestStrategoNetworking-test_host_wait"><strong>test_host_wait</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;host_wait_for_join&nbsp;function</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-test_init"><strong>test_init</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;init&nbsp;function.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-test_integration"><strong>test_integration</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;all&nbsp;the&nbsp;above&nbsp;functions&nbsp;together.</span></dd></dl>
-
 <dl><dt><a name="TestStrategoNetworking-test_is_terminal_state"><strong>test_is_terminal_state</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;is_terminal_state&nbsp;function</span></dd></dl>
+
+<dl><dt><a name="TestStrategoNetworking-test_join"><strong>test_join</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;join_game&nbsp;function</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-test_recv_board"><strong>test_recv_board</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;recv_board&nbsp;function.</span></dd></dl>
 
@@ -420,7 +426,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="TestStrategoNetworking-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x726228784ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="TestStrategoNetworking-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x78c5271a4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -469,5 +475,6 @@ Data and other attributes inherited from <a href="unittest.case.html#TestCase">u
 <td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Data</strong></td></tr>
     
 <tr><td class="decor data-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
-<td class="singlecolumn"><strong>Tuple</strong> = typing.Tuple</td></tr></table>
+<td class="singlecolumn"><strong>Dict</strong> = typing.Dict<br>
+<strong>Tuple</strong> = typing.Tuple</td></tr></table>
 </body></html>
