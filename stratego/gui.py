@@ -253,12 +253,10 @@ class StrategoGUI:
         '''
 
         assert 'board' in self.__misc_widgets
-        assert isinstance(self.__misc_widgets['board'], tk.Frame)
 
-        board: tk.Frame = self.__misc_widgets['board']
+        board: tk.Widget = self.__misc_widgets['board']
 
         for y, row in enumerate(board.winfo_children()):
-            assert isinstance(row, tk.Frame)
 
             for x, button in enumerate(row.winfo_children()):
 
@@ -338,6 +336,13 @@ class StrategoGUI:
 
         self.__root.destroy()
 
+    def clear(self) -> None:
+        '''
+        Calls __clear.
+        '''
+
+        self.__clear()
+
     def __clear(self) -> None:
         '''
         Destroy all children and free all registered
@@ -345,7 +350,8 @@ class StrategoGUI:
         '''
 
         # Destroy all children
-        for child in self.__root.winfo_children():
+        children: List[tk.Widget] = self.__root.winfo_children()
+        for child in children:
             child.destroy()  # Metal
 
         # Destroy all stored widgets

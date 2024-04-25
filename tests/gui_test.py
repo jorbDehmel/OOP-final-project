@@ -145,10 +145,12 @@ class GUITest(unittest.TestCase):
         Test the GUI's screens via patching.
         '''
 
-        with mock.patch('tkinter.Tk') as fake_tk:
+        with (mock.patch('tkinter.Tk') as fake_tk,
+              mock.patch.object(fake_tk, 'winfo_children',
+                                mock.Mock(return_value=[mock.Mock(),
+                                                        mock.Mock()]))):
 
-            # Setup winfo_children
-            fake_tk.winfo_children.return_value = [mock.Mock()] * 5
+            fake_tk.return_value = fake_tk
 
             # This has no public methods other than get_instance
             g.StrategoGUI.clear_instance()
@@ -159,6 +161,9 @@ class GUITest(unittest.TestCase):
             gui.screen = 'ERROR'
             gui.screen = 'WIN'
             gui.screen = 'LOSE'
+
+            fake_tk.assert_called()
+            fake_tk.winfo_children.assert_called()
 
             gui.quit()
 
@@ -228,6 +233,24 @@ class GUITest(unittest.TestCase):
 
                 self.assertEqual(gui.screen, 'WIN')
 
+    def test_clear(self) -> None:
+        '''
+        Tests clearing the GUI screen.
+        '''
+
+        with mock.patch('tkinter.Tk') as fake_tk:
+
+            fake_tk.return_value = fake_tk
+            fake_tk.winfo_children.return_value = [fake_tk for _ in range(5)]
+
+            g.StrategoGUI.clear_instance()
+            gui: g.StrategoGUI = g.StrategoGUI.get_instance()
+
+            gui.screen = 'ERROR'
+            gui.clear()
+
+            fake_tk.destroy.assert_called()
+
     def test_lose(self) -> None:
         '''
         Tests receiving a losing move via the GUI. This should
@@ -247,7 +270,8 @@ class GUITest(unittest.TestCase):
                                     dummy_network_replacement)):
 
                 # Setup winfo_children
-                fake_tk.winfo_children.return_value = [mock.Mock()] * 5
+                fake_tk.return_value = fake_tk
+                fake_tk.winfo_children.return_value = [fake_tk for _ in range(5)]
 
                 # Setup GUI
                 g.StrategoGUI.clear_instance()
@@ -277,10 +301,13 @@ class GUITest(unittest.TestCase):
                                           __: str) -> None:
                 raise ValueError('This was raised by a dummy')
 
-            with (mock.patch('tkinter.Tk'),
+            with (mock.patch('tkinter.Tk') as fake_tk,
                   mock.patch.object(n.StrategoNetworker, 'send_game',
                                     dummy_network_replacement),
                   mock.patch('tkinter.Button') as fake_button):
+
+                fake_tk.return_value = fake_tk
+                fake_tk.winfo_children.return_value = [fake_tk for _ in range(5)]
 
                 other_color: str = 'RED' if color == 'BLUE' else 'BLUE'
 
@@ -337,11 +364,14 @@ class GUITest(unittest.TestCase):
         def dummy_network_replacement(self) -> None:
             raise ValueError('This was raised by a dummy')
 
-        with (mock.patch('tkinter.Tk'),
+        with (mock.patch('tkinter.Tk') as fake_tk,
               mock.patch.object(n.StrategoNetworker, 'recv_game',
                                 dummy_network_replacement),
               mock.patch.object(n.StrategoNetworker, 'send_game'),
               mock.patch('tkinter.Button') as fake_button):
+
+            fake_tk.return_value = fake_tk
+            fake_tk.winfo_children.return_value = [fake_tk for _ in range(5)]
 
             g.StrategoGUI.clear_instance()
             b.Board.get_instance().clear()
@@ -447,6 +477,35 @@ class GUITest(unittest.TestCase):
             # to remain on this screen.
 
             self.assertEqual(gui.screen, 'YOUR_TURN')
+
+    def test_refresh_board(self) -> None:
+        '''
+        Tests receiving an error via the GUI. This should
+        result in an error screen.
+        '''
+
+        with (mock.patch('tkinter.Tk'),
+              mock.patch('tkinter.Frame') as fake_frame,
+              mock.patch.object(n, 'StrategoNetworker')):
+
+            class RowLike:
+                '''
+                Replaces rows when refreshing the board.
+                '''
+
+                def winfo_children(self) -> List[tk.Button]:
+                    '''
+                    Returns the buttons of this row.
+                    '''
+
+                    return [tk.Button() for _ in range(10)]
+
+            fake_frame.return_value = fake_frame
+            fake_frame.winfo_children.return_value = [RowLike() for _ in range(10)]
+
+            g.StrategoGUI.clear_instance()
+            gui: g.StrategoGUI = g.StrategoGUI.get_instance()
+            gui.screen = 'YOUR_TURN'
 
     def test_host(self) -> None:
         '''
