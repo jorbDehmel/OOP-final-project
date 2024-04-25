@@ -5,8 +5,6 @@ Tests network operations for Stratego.
 import unittest
 from unittest import mock
 from typing import Tuple
-import multiprocessing as mp
-from multiprocessing import connection as mp_connect
 from stratego import network as n
 
 
@@ -66,6 +64,7 @@ class MockSocket:
         # assert isinstance(data, bytes) and len(data) == size
         # return data
 
+
 class TestStrategoNetworking(unittest.TestCase):
     '''
     Tests the stratego networking class.
@@ -85,19 +84,25 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         n.StrategoNetworker.get_instance()
 
-    def host_test(self) -> None:
+    def test_host(self) -> None:
         '''
         Tests the host_game function
         '''
-        # with (mock.patch('random.choice', mock.Mock(return_value='0')), mock('socket.socket')):
-        #     self.assertEqual(n.StrategoNetworker.host_game('127.0.0.1', 1234), '0000')
+        with (mock.patch('random.choice', mock.Mock(return_value='0')),
+              mock.patch('socket.socket')):
+
+            n.StrategoNetworker.clear_instance()
+            net: n.StrategoNetworker = n.StrategoNetworker.get_instance()
+
+            password: str = net.host_game('127.0.0.1', 12345)
+
+            self.assertEqual(password, '0000')
 
     def test_host_wait(self) -> None:
         """Tests the host_wait_for_join function
         """
-        
 
-    def join_test(self) -> None:
+    def test_join(self) -> None:
         '''
         Tests the join_game function
         '''
