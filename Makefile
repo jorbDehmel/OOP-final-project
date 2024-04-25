@@ -17,6 +17,10 @@ check-type:
 check-style:
 	$(STYLE_CHECK) $(TARGETS) tests/*.py
 
+.PHONY:	run
+run:
+	python3 main.py & python3 main.py
+
 .PHONY: run-cov
 run-cov:
 	Xvfb :99 -screen 0 1024x768x24 &

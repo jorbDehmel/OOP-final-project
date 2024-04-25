@@ -36,6 +36,16 @@ class Board:
     _HEIGHT: int = 10
 
     @classmethod
+    def clear_instance(cls) -> None:
+        '''
+        Resets this singleton class.
+        '''
+
+        if cls.__INSTANCE is not None:
+            del cls.__INSTANCE
+            cls.__INSTANCE = None
+
+    @classmethod
     def get_instance(cls) -> 'Board':
         '''
         Returns the instance of this class, instantiating if
@@ -193,6 +203,9 @@ class Board:
         Attempts to move from the given coordinates to the given
         coordinates. Raises error if the move is invalid. If
         the move was valid, updates the board accordingly.
+
+        Note: Can only return 'GOOD' or `color`; It never
+        returns the other color.
 
         :param from_pair: The origin (x, y).
         :param to_pair: The destination (x, y).

@@ -66,6 +66,23 @@ class StrategoGUI:
     __INSTANCE: Optional['StrategoGUI'] = None
     _BUTTON_SIZE: int = 32
 
+    class ButtonCallbackWrapper:
+        '''
+        An internal callable class for board button
+        callbacks.
+        '''
+
+        def __init__(self,
+                     x: int,
+                     y: int,
+                     c: Callable[[int, int], None]) -> None:
+            self.x = x
+            self.y = y
+            self.c = c
+
+        def __call__(self) -> None:
+            self.c(self.x, self.y)
+
     @classmethod
     def get_instance(cls) -> 'StrategoGUI':
         '''
@@ -117,7 +134,6 @@ class StrategoGUI:
         self.__root.configure(bg='white')
         self.__root.option_add('*Background', 'white')
         self.__root.option_add('*Font', 'Times 16')
-        # self.__root.geometry("448x448")
 
         # Game management objects
         self.__board: b.Board = b.Board.get_instance()
@@ -134,6 +150,9 @@ class StrategoGUI:
         # Internal optimizations and bookkeeping
         self.__keybindings: Dict[str, Callable[[], None]] = {}
         self.__image_cache: Dict[str, tk.PhotoImage] = {}
+
+        # For finding board buttons
+        self.__misc_widgets: Dict[str, tk.Widget] = {}
 
         # This keybinding is not tracked and thus not erased
         self.__root.bind('q', lambda _: self.__quit())
@@ -217,16 +236,43 @@ class StrategoGUI:
                     path = f'stratego/images/{piece.color}_blank.png'
 
                 else:
-                    try:
-                        path = f'stratego/images/{piece.color}_{repr(piece)}.png'
-                    except TypeError:
-                        path = f'stratego/images/{piece.color}_blank.png'
+                    path = f'stratego/images/{piece.color}_{repr(piece)}.png'
 
         if path not in self.__image_cache:
             raw: tk.PhotoImage = tk.PhotoImage(file=path)
-            self.__image_cache[path] = resize_image(raw, self._BUTTON_SIZE, self._BUTTON_SIZE)
+            self.__image_cache[path] = resize_image(raw,
+                                                    self._BUTTON_SIZE,
+                                                    self._BUTTON_SIZE)
 
         return self.__image_cache[path]
+
+    def __refresh_board(self,
+                        callback: Callable[[int, int], None]) -> None:
+        '''
+        Refreshes, but does not redraw, the board.
+        '''
+
+        assert 'board' in self.__misc_widgets
+        assert isinstance(self.__misc_widgets['board'], tk.Frame)
+
+        board: tk.Frame = self.__misc_widgets['board']
+
+        for y, row in enumerate(board.winfo_children()):
+            assert isinstance(row, tk.Frame)
+
+            for x, button in enumerate(row.winfo_children()):
+
+                assert isinstance(button, tk.Button)
+
+                img: tk.PhotoImage = self.__get_image(self.__board.get(x, y))
+                button.configure(image=img,
+                                 command=StrategoGUI.ButtonCallbackWrapper(x,
+                                                                           y,
+                                                                           callback))
+
+        self.__misc_widgets['board'] = board
+
+        self.__root.update()
 
     def __display_board(self,
                         callback: Callable[[int, int], None]) -> None:
@@ -238,38 +284,33 @@ class StrategoGUI:
             call.
         '''
 
-        class Ret:
-            '''
-            An internal callable class for board button
-            callbacks.
-            '''
+        board: tk.Frame = tk.Frame(self.__root)
 
-            def __init__(self,
-                         x: int,
-                         y: int,
-                         c: Callable[[int, int], None]) -> None:
-                self.x = x
-                self.y = y
-                self.c = c
+        for y in range(self.__board.height):
 
-            def __call__(self) -> None:
-                self.c(self.x, self.y)
-
-        for y in range(self.__board.height - 1, -1, -1):
-
-            row: tk.Frame = tk.Frame(self.__root)
+            row: tk.Frame = tk.Frame(board)
 
             for x in range(self.__board.width):
 
                 image: tk.PhotoImage = self.__get_image(self.__board.get(x, y))
 
-                tk.Button(row,
-                          command=Ret(x, y, callback),
-                          image=image,
-                          border=0,
-                          width=32,
-                          height=32).pack(side='left')
+                button: tk.Button = \
+                    tk.Button(row,
+                              command=StrategoGUI.ButtonCallbackWrapper(x,
+                                                                        y,
+                                                                        callback),
+                              image=image,
+                              border=0,
+                              width=32,
+                              height=32)
+
+                button.pack(side='left')
+
             row.pack()
+
+        board.pack()
+
+        self.__misc_widgets['board'] = board
 
     def __bind(self, sequence: str, event: Callable[[], None]) -> None:
         '''
@@ -288,6 +329,7 @@ class StrategoGUI:
         '''
 
         self.__quit()
+        type(self).clear_instance()
 
     def __quit(self) -> None:
         '''
@@ -305,6 +347,9 @@ class StrategoGUI:
         # Destroy all children
         for child in self.__root.winfo_children():
             child.destroy()  # Metal
+
+        # Destroy all stored widgets
+        self.__misc_widgets.clear()
 
         # Unbind all keybindings registered herein
         for key in self.__keybindings:
@@ -395,27 +440,23 @@ class StrategoGUI:
 
             # Extract fields
             ip_str: str = ip.get()
-            if ip_str == '':
-                ip_str = '127.0.0.1'
-
             port_str: str = port.get()
-            if port_str == '':
-                port_str = '12345'
-
-            port_int: int = int(port_str)
             password: str = ''
 
             while password == '':
                 try:
-                    password = self.__networking.host_game(ip_str, port_int)
+                    password = self.__networking.host_game(ip_str if ip_str else '127.0.0.1',
+                                                           int(port_str) if port_str else 12345)
+
                 except OSError:
-                    port_int += 1
+                    port_str = str((int(port_str) if port_str else 12345) + 1)
                     password = ''
 
             # Display waiting text
             self.__clear()
             tk.Label(self.__root,
-                     text=f'IP: {ip_str}\nPort: {port_int}\n'
+                     text=f'IP: {ip_str if ip_str else "127.0.0.1"}\n'
+                          + f'Port: {port_str if port_str else "12345"}\n'
                           + f'Password: {password}').pack()
             tk.Label(self.__root, text='Waiting for other player...').pack()
             self.__root.update()
@@ -462,23 +503,12 @@ class StrategoGUI:
 
             # Extract fields
             password_str: str = password.get()
-
-            if password_str == '':
-                return
-
             ip_str: str = ip.get()
-            if ip_str == '':
-                ip_str = '127.0.0.1'
-
             port_str: str = port.get()
-            if port_str == '':
-                port_str = '12345'
-
-            port_int: int = int(port_str)
 
             # Make API call and wait
-            result: int = self.__networking.join_game(ip_str,
-                                                      port_int,
+            result: int = self.__networking.join_game(ip_str if ip_str else '127.0.0.1',
+                                                      int(port_str) if port_str else 12345,
                                                       password_str)
 
             if result == 0:
@@ -486,10 +516,6 @@ class StrategoGUI:
                 self.__color = 'BLUE'
 
                 self.__setup_screen()
-
-            else:
-                tk.Label(self.__root,
-                         text=f'Failed to connect (code: {result}).').pack()
 
         tk.Button(self.__root,
                   text='Join This Game',
@@ -522,22 +548,41 @@ class StrategoGUI:
         if self.__color == 'RED':
             self.__board.fill((0, 0),
                               (10, 4),
-                              lambda _, __: self.__left_to_place.pop())
+                              lambda x, y: self.__left_to_place.pop() if
+                              self.__board.get(x, y) is None else
+                              self.__board.get(x, y))
 
         else:
             self.__board.fill((0, 6),
                               (10, 10),
-                              lambda _, __: self.__left_to_place.pop())
+                              lambda x, y: self.__left_to_place.pop() if
+                              self.__board.get(x, y) is None else
+                              self.__board.get(x, y))
 
-        self.__setup_screen()
+        self.__first_sync()
 
     def __first_sync(self) -> None:
         '''
         Sync the two boards and begin play. This is to be called
         when setup screen is done.
+
+        This will only be called once, before the turn loop.
+        Thus, this contains the setup for the widget system.
         '''
 
         if self.__color == 'RED':
+
+            self.__clear()
+
+            # Creates self.__misc_widgets['turn_label']
+            self.__misc_widgets['turn_label'] = \
+                tk.Label(self.__root, text='Waiting...')
+            self.__misc_widgets['turn_label'].pack()
+
+            # Creates self.__misc_widgets['board']
+            self.__display_board(lambda _, __: None)
+
+            self.__root.update()
 
             # Recv
             their_board, _ = self.__networking.recv_game()
@@ -553,8 +598,16 @@ class StrategoGUI:
             return
 
         self.__clear()
-        tk.Label(self.__root, text='Waiting...').pack()
+        self.__screen = 'THEIR_TURN'
+
+        # Creates self.__misc_widgets['turn_label']
+        self.__misc_widgets['turn_label'] = \
+            tk.Label(self.__root, text='Waiting...')
+        self.__misc_widgets['turn_label'].pack()
+
+        # Creates self.__misc_widgets['board']
         self.__display_board(lambda _, __: None)
+
         self.__root.update()
 
         # Send
@@ -568,6 +621,7 @@ class StrategoGUI:
         self.__board = their_board
 
         self.__their_turn_screen()
+        return
 
     def __setup_screen(self) -> None:
         '''
@@ -585,15 +639,25 @@ class StrategoGUI:
 
             # Red is able to place pieces in the TOP 4 rows
             if self.__color == 'RED':
-                if y not in range(0, 4) or self.__board.get(x, y) is not None:
+                if y not in range(0, 4):
                     print('Invalid placement!')
                     return
 
             # Blue is able to place pieces in the BOTTOM 4 rows
             else:
-                if y not in range(6, 10) or self.__board.get(x, y) is not None:
+                if y not in range(6, 10):
                     print('Invalid placement!')
                     return
+
+            existing_piece: b.Square = self.__board.get(x, y)
+            if isinstance(existing_piece, p.Piece):
+
+                self.__left_to_place.insert(0, existing_piece)
+
+                self.__board.set_piece(x, y, None)
+                self.__setup_screen()
+
+                return
 
             self.__board.set_piece(x, y, self.__left_to_place.pop(0))
 
@@ -604,27 +668,38 @@ class StrategoGUI:
 
             self.__setup_screen()
 
-        self.__clear()
         self.__screen = 'SETUP'
 
         if len(self.__left_to_place) == 0:
+            self.__clear()
+            self.__screen = 'SETUP'
             self.__setup_left_to_place()
 
-        tk.Label(self.__root, text='Click to place this piece:').pack()
+            tk.Label(self.__root, text='Click to place this piece:').pack()
 
-        image: tk.PhotoImage = self.__get_image(self.__left_to_place[0])
+            img: tk.PhotoImage = self.__get_image(self.__left_to_place[0])
+            self.__misc_widgets['next_to_place'] = \
+                tk.Label(self.__root,
+                         image=img,
+                         border=0,
+                         width=32,
+                         height=32)
+            self.__misc_widgets['next_to_place'].pack()
 
-        tk.Label(self.__root,
-                 image=image,
-                 border=0,
-                 width=32,
-                 height=32).pack()
+            tk.Button(self.__root,
+                      text='Randomize all',
+                      command=self.__randomize_all).pack()
 
-        tk.Button(self.__root,
-                  text='Randomize all',
-                  command=self.__randomize_all).pack()
+            self.__display_board(board_setup_callback)
+            return
 
-        self.__display_board(board_setup_callback)
+        assert 'next_to_place' in self.__misc_widgets
+        assert isinstance(self.__misc_widgets['next_to_place'], tk.Label)
+
+        img = self.__get_image(self.__left_to_place[0])
+        self.__misc_widgets['next_to_place'].configure(image=img)
+
+        self.__refresh_board(board_setup_callback)
 
     def __your_turn_screen(self) -> None:
         '''
@@ -654,16 +729,28 @@ class StrategoGUI:
             self.__from_selection = None
             self.__to_selection = None
 
-        try:
-            # Update screen
-            self.__clear()
-            self.__screen = 'YOUR_TURN'
-            tk.Label(self.__root, text='Your turn.').pack()
+        # Update screen
 
+        if 'turn_label' not in self.__misc_widgets:
+            self.__clear()
+
+            # Creates self.__misc_widgets['turn_label']
+            self.__misc_widgets['turn_label'] = \
+                tk.Label(self.__root, text='Waiting...')
+            self.__misc_widgets['turn_label'].pack()
+
+            # Creates self.__misc_widgets['board']
             self.__display_board(board_movement_callback)
 
-        except ValueError:
-            self.__error_screen()
+            self.__root.update()
+
+        self.__screen = 'YOUR_TURN'
+
+        assert 'turn_label' in self.__misc_widgets
+        assert isinstance(self.__misc_widgets['turn_label'], tk.Label)
+
+        self.__misc_widgets['turn_label'].configure(text='Your turn.')
+        self.__refresh_board(board_movement_callback)
 
     def __check_move(self) -> None:
 
@@ -678,8 +765,14 @@ class StrategoGUI:
                                       self.__to_selection)
 
         except b.InvalidMoveError:
-            print('Invalid move')
+            # Invalid move
             self.__your_turn_screen()
+
+            assert 'turn_label' in self.__misc_widgets
+            assert isinstance(self.__misc_widgets['turn_label'], tk.Label)
+            self.__misc_widgets['turn_label'].configure(text='Invalid move.')
+            self.__root.update()
+
             return
 
         try:
@@ -690,9 +783,6 @@ class StrategoGUI:
             # Check game state
             if state == self.__color:
                 self.__win_screen()
-
-            elif state != 'GOOD':
-                self.__lose_screen()
 
             else:
                 self.__their_turn_screen()
@@ -708,21 +798,34 @@ class StrategoGUI:
         try:
 
             # Update screen
-            self.__clear()
             self.__screen = 'THEIR_TURN'
-            tk.Label(self.__root, text='Thier turn; Waiting.').pack()
 
-            self.__display_board(lambda _, __: None)
+            if 'turn_label' not in self.__misc_widgets:
+                self.__clear()
+
+                # Creates self.__misc_widgets['turn_label']
+                self.__misc_widgets['turn_label'] = \
+                    tk.Label(self.__root, text='Waiting...')
+                self.__misc_widgets['turn_label'].pack()
+
+                # Creates self.__misc_widgets['board']
+                self.__display_board(lambda _, __: None)
+
+                self.__root.update()
+
+            assert 'turn_label' in self.__misc_widgets
+            assert isinstance(self.__misc_widgets['turn_label'], tk.Label)
+
+            self.__misc_widgets['turn_label'].configure(text='Thier turn; Waiting.')
+            self.__refresh_board(lambda _, __: None)
+
             self.__root.update()
 
             # Wait for move recv
             self.__board, state = self.__networking.recv_game()
 
             # Check game state
-            if state == self.__color:
-                self.__win_screen()
-
-            elif state != 'GOOD':
+            if state != 'GOOD':
                 self.__lose_screen()
 
             else:
