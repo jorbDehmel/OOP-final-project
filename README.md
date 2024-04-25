@@ -121,6 +121,7 @@ Jordan Dehmel:
  - Piece testing to 100% coverage
  - Board testing to 100% coverage
  - Final class UML diagram
+ - API documentation, discussion of design patterns
 
 Kate Eckhart (no longer on team):
  - 2 UML diagrams
