@@ -106,6 +106,15 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests the join_game function
         '''
+        with (mock.patch('random.choice', mock.Mock(return_value='0')),
+              mock.patch('socket.socket')):
+
+            n.StrategoNetworker.clear_instance()
+            net: n.StrategoNetworker = n.StrategoNetworker.get_instance()
+
+            joined: int = net.join_game('127.0.0.1', 12345, '0000')
+
+            self.assertEqual(joined, 0)
 
     def test_send_board(self) -> None:
         '''
