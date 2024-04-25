@@ -4,6 +4,7 @@ Tests network operations for Stratego.
 
 import unittest
 from unittest import mock
+import pickle
 import socket
 from typing import Tuple, Dict, Any
 from stratego import network as n
@@ -190,3 +191,16 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests the recv_board function.
         '''
+
+        with mock.patch('socket.socket', MockSocket):
+
+            serialized: bytes = pickle.dumps(b.Board.get_instance())
+            size: int = len(serialized)
+            size_str: str = str(size)
+            size_str += (' ' * (16 - len(size_str)))
+
+            MockSocket.kwargs['recv'] = [b'GOOD', bytes(size_str, 'UTF-8'), serialized, b'GOOD']
+
+            net: n.StrategoNetworker = n.StrategoNetworker.get_instance()
+            net.join_game('127.0.0.1', 12345, '0000')
+            net.recv_game()
