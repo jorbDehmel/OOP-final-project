@@ -108,6 +108,8 @@ Please enter what you have done below.
 Nate Barnaik:
  - Abstract
  - 1 UML diagram
+ - Network debugging
+ - Network testing
 
 Jordan Dehmel:
  - Basic framework for GUI, Networking, and Pieces
@@ -115,7 +117,7 @@ Jordan Dehmel:
  - KanBan board management
  - Github issues
  - GUI artwork and design
- - GUI testing
+ - GUI unit testing to 100% coverage
  - Piece testing to 100% coverage
  - Board testing to 100% coverage
  - Final class UML diagram
