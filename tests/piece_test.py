@@ -148,10 +148,10 @@ class TestStrategoPiece(TestCase):
         troop: p.Troop = p.Troop('BLUE', 9)
 
         with self.assertRaises(TypeError):
-            bomb.confront(p.Troop)
+            bomb.confront(troop)
 
         with self.assertRaises(TypeError):
-            bomb.confront(p.Troop)
+            bomb.confront(troop)
 
         self.assertEqual(repr(bomb), 'B')
 
