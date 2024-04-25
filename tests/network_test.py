@@ -74,10 +74,10 @@ class TestStrategoNetworking(unittest.TestCase):
     def test_is_terminal_state(self) -> None:
         """Tests the is_terminal_state function
         """
-        assert n.StrategoNetworker.is_terminal_state('RED') == True
-        assert n.StrategoNetworker.is_terminal_state('BLUE') == True
-        assert n.StrategoNetworker.is_terminal_state('HALT') == True
-        assert n.StrategoNetworker.is_terminal_state('') == False
+        assert n.StrategoNetworker.is_terminal_state('RED')
+        assert n.StrategoNetworker.is_terminal_state('BLUE')
+        assert n.StrategoNetworker.is_terminal_state('HALT')
+        assert not n.StrategoNetworker.is_terminal_state('')
 
     def test_init(self) -> None:
         '''
@@ -89,6 +89,13 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests the host_game function
         '''
+        # with (mock.patch('random.choice', mock.Mock(return_value='0')), mock('socket.socket')):
+        #     self.assertEqual(n.StrategoNetworker.host_game('127.0.0.1', 1234), '0000')
+
+    def test_host_wait(self) -> None:
+        """Tests the host_wait_for_join function
+        """
+        
 
     def join_test(self) -> None:
         '''
@@ -103,9 +110,4 @@ class TestStrategoNetworking(unittest.TestCase):
     def test_recv_board(self) -> None:
         '''
         Tests the recv_board function.
-        '''
-
-    def test_integration(self) -> None:
-        '''
-        Tests all the above functions together.
         '''
