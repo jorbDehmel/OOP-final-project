@@ -3,7 +3,7 @@ Tests network operations for Stratego.
 '''
 
 import unittest
-# from unittest import mock
+from unittest import mock
 from typing import Tuple
 import multiprocessing as mp
 from multiprocessing import connection as mp_connect
@@ -72,7 +72,7 @@ class TestStrategoNetworking(unittest.TestCase):
     '''
 
     def test_is_terminal_state(self) -> None:
-        """Tests is_terminal_state function
+        """Tests the is_terminal_state function
         """
         assert n.StrategoNetworker.is_terminal_state('RED') == True
         assert n.StrategoNetworker.is_terminal_state('BLUE') == True
@@ -85,14 +85,14 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         n.StrategoNetworker.get_instance()
 
-    def host_test(pass_sidechannel) -> None:
+    def host_test(self) -> None:
         '''
-        Tests host_game function
+        Tests the host_game function
         '''
 
-    def join_test(pass_sidechannel) -> None:
+    def join_test(self) -> None:
         '''
-        Tests join_game function
+        Tests the join_game function
         '''
 
     def test_send_board(self) -> None:
