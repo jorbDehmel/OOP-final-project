@@ -22,8 +22,9 @@ Jordan&nbsp;Dehmel,&nbsp;2024</span></p>
 </td><td class="multicolumn"><a href="unittest.mock.html">unittest.mock</a><br>
 <a href="stratego.network.html">stratego.network</a><br>
 </td><td class="multicolumn"><a href="stratego.pieces.html">stratego.pieces</a><br>
-<a href="tkinter.html">tkinter</a><br>
-</td><td class="multicolumn"><a href="unittest.html">unittest</a><br>
+<a href="hypothesis.strategies.html">hypothesis.strategies</a><br>
+</td><td class="multicolumn"><a href="tkinter.html">tkinter</a><br>
+<a href="unittest.html">unittest</a><br>
 </td></tr></table></td></tr></table><p>
 <table class="section">
 <tr class="decor index-decor heading-text">
@@ -55,35 +56,53 @@ Tests&nbsp;the&nbsp;Stratego&nbsp;GUI.<br>&nbsp;</span></td></tr>
 </dl>
 <hr>
 Methods defined here:<br>
+<dl><dt><a name="GUITest-test_clear"><strong>test_clear</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;clearing&nbsp;the&nbsp;GUI&nbsp;screen.</span></dd></dl>
+
 <dl><dt><a name="GUITest-test_color"><strong>test_color</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;the&nbsp;color&nbsp;property.</span></dd></dl>
 
-<dl><dt><a name="GUITest-test_error"><strong>test_error</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;a&nbsp;losing&nbsp;move&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
-result&nbsp;in&nbsp;a&nbsp;loss.</span></dd></dl>
+<dl><dt><a name="GUITest-test_error_1"><strong>test_error_1</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;an&nbsp;error&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
+result&nbsp;in&nbsp;an&nbsp;error&nbsp;screen.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_error_2"><strong>test_error_2</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;an&nbsp;error&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
+result&nbsp;in&nbsp;an&nbsp;error&nbsp;screen.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_error_3"><strong>test_error_3</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;an&nbsp;error&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
+result&nbsp;in&nbsp;an&nbsp;error&nbsp;screen.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_gen_screens"><strong>test_gen_screens</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI&nbsp;screen&nbsp;setter&nbsp;via&nbsp;hypothesis&nbsp;testing.</span></dd></dl>
 
 <dl><dt><a name="GUITest-test_host"><strong>test_host</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;hosting&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
 
 <dl><dt><a name="GUITest-test_join"><strong>test_join</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;joining&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_join_2"><strong>test_join_2</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;joining&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
 
 <dl><dt><a name="GUITest-test_lose"><strong>test_lose</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;a&nbsp;losing&nbsp;move&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
 result&nbsp;in&nbsp;a&nbsp;loss.</span></dd></dl>
 
 <dl><dt><a name="GUITest-test_misc_screens"><strong>test_misc_screens</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;screens&nbsp;via&nbsp;patching.</span></dd></dl>
 
+<dl><dt><a name="GUITest-test_refresh_board"><strong>test_refresh_board</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;receiving&nbsp;an&nbsp;error&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should<br>
+result&nbsp;in&nbsp;an&nbsp;error&nbsp;screen.</span></dd></dl>
+
 <dl><dt><a name="GUITest-test_resize_image"><strong>test_resize_image</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;resizing&nbsp;images.</span></dd></dl>
 
-<dl><dt><a name="GUITest-test_setup"><strong>test_setup</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;setup&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
+<dl><dt><a name="GUITest-test_setup_1"><strong>test_setup_1</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;setup&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_setup_2"><strong>test_setup_2</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;setup&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
+
+<dl><dt><a name="GUITest-test_setup_3"><strong>test_setup_3</strong></a>(self) -&gt; None</dt><dd><span class="code">Test&nbsp;the&nbsp;GUI's&nbsp;setup&nbsp;screen&nbsp;via&nbsp;patching.</span></dd></dl>
 
 <dl><dt><a name="GUITest-test_win"><strong>test_win</strong></a>(self) -&gt; None</dt><dd><span class="code">Tests&nbsp;making&nbsp;a&nbsp;move&nbsp;via&nbsp;the&nbsp;GUI.&nbsp;This&nbsp;should&nbsp;result&nbsp;in<br>
 a&nbsp;win&nbsp;screen.</span></dd></dl>
 
 <hr>
-Data and other attributes defined here:<br>
-<dl><dt><strong>NetworkingDummy</strong> = &lt;class 'tests.gui_test.GUITest.NetworkingDummy'&gt;<dd><span class="code">For&nbsp;replacing&nbsp;the&nbsp;StrategoNetworking&nbsp;class.</span></dl>
+Class methods defined here:<br>
+<dl><dt><a name="GUITest-setUpClass"><strong>setUpClass</strong></a>() -&gt; None<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Connects&nbsp;to&nbsp;the&nbsp;virtual&nbsp;X&nbsp;display.</span></dd></dl>
 
-<dl><dt><strong>TKDummy</strong> = &lt;class 'tests.gui_test.GUITest.TKDummy'&gt;<dd><span class="code">A&nbsp;special&nbsp;class&nbsp;to&nbsp;replace&nbsp;tkinter._default_root<br>
-with&nbsp;in&nbsp;order&nbsp;to&nbsp;avoid&nbsp;errors.&nbsp;The&nbsp;methods&nbsp;defined<br>
-herein&nbsp;are&nbsp;required&nbsp;in&nbsp;order&nbsp;for&nbsp;this&nbsp;to&nbsp;run&nbsp;without<br>
-error.</span></dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>DummyNet</strong> = &lt;class 'tests.gui_test.GUITest.DummyNet'&gt;<dd><span class="code">Dummy&nbsp;class</span></dl>
 
 <hr>
 Methods inherited from <a href="unittest.case.html#TestCase">unittest.case.TestCase</a>:<br>
@@ -398,7 +417,7 @@ the&nbsp;specified&nbsp;test&nbsp;method's&nbsp;docstring.</span></dd></dl>
 
 <dl><dt><a name="GUITest-skipTest"><strong>skipTest</strong></a>(self, reason)</dt><dd><span class="code">Skip&nbsp;this&nbsp;test.</span></dd></dl>
 
-<dl><dt><a name="GUITest-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x724ae3fa4ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
+<dl><dt><a name="GUITest-subTest"><strong>subTest</strong></a>(self, msg=&lt;object object at 0x72229c984ae0&gt;, **params)</dt><dd><span class="code">Return&nbsp;a&nbsp;context&nbsp;manager&nbsp;that&nbsp;will&nbsp;return&nbsp;the&nbsp;enclosed&nbsp;block<br>
 of&nbsp;code&nbsp;in&nbsp;a&nbsp;subtest&nbsp;identified&nbsp;by&nbsp;the&nbsp;optional&nbsp;message&nbsp;and<br>
 keyword&nbsp;parameters.&nbsp;&nbsp;A&nbsp;failure&nbsp;in&nbsp;the&nbsp;subtest&nbsp;marks&nbsp;the&nbsp;test<br>
 case&nbsp;as&nbsp;failed&nbsp;but&nbsp;resumes&nbsp;execution&nbsp;at&nbsp;the&nbsp;end&nbsp;of&nbsp;the&nbsp;enclosed<br>
@@ -420,8 +439,6 @@ setUpClass&nbsp;fails&nbsp;(unlike&nbsp;tearDownClass).</span></dd></dl>
 tearDownClass.</span></dd></dl>
 
 <dl><dt><a name="GUITest-enterClassContext"><strong>enterClassContext</strong></a>(cm)<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Same&nbsp;as&nbsp;enterContext,&nbsp;but&nbsp;class-wide.</span></dd></dl>
-
-<dl><dt><a name="GUITest-setUpClass"><strong>setUpClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;setting&nbsp;up&nbsp;class&nbsp;fixture&nbsp;before&nbsp;running&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 
 <dl><dt><a name="GUITest-tearDownClass"><strong>tearDownClass</strong></a>()<span class="grey"><span class="heading-text"> from <a href="builtins.html#type">builtins.type</a></span></span></dt><dd><span class="code">Hook&nbsp;method&nbsp;for&nbsp;deconstructing&nbsp;the&nbsp;class&nbsp;fixture&nbsp;after&nbsp;running&nbsp;all&nbsp;tests&nbsp;in&nbsp;the&nbsp;class.</span></dd></dl>
 

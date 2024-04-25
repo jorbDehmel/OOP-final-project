@@ -89,6 +89,11 @@ folder gui {
         THEIR_TURN
     }
 
+    class ButtonCallbackWrapper {
+        + __init__(self, x: int, y: int, c: Callable[[int, int], None]) -> None
+        + __call__(self) -> None
+    }
+
     class StrategoGUI {
         {static} + resize_image(img: tkinter.PhotoImage, w: int, h: int) -> tkinter.PhotoImage
         {static} + get_instance(cls) -> 'StrategoGUI'
@@ -102,8 +107,10 @@ folder gui {
         + property color(self, to: Literal['BLUE', 'RED']) -> None
         + property board(self) -> Board
         + quit(self) -> None
+        + clear(self) -> None
 
         - __get_image(self, piece: b.Square) -> tk.PhotoImage
+        - __refresh_board(self, callback: Callable[[int, int], None]) -> None
         - __display_board(self, callback: Callable[[int, int], None]) -> None
         - __bind(self, sequence: str, event: Callable[[], None]) -> None
         - __quit(self) -> None
