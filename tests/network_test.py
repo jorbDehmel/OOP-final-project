@@ -111,6 +111,14 @@ class TestStrategoNetworking(unittest.TestCase):
     Tests the stratego networking class.
     '''
 
+    def test_is_terminal_state(self) -> None:
+        """Test is_terminal_state function
+        """
+        assert n.StrategoNetworker.is_terminal_state('RED') == True
+        assert n.StrategoNetworker.is_terminal_state('BLUE') == True
+        assert n.StrategoNetworker.is_terminal_state('HALT') == True
+        assert n.StrategoNetworker.is_terminal_state('') == False
+
     def test_init(self) -> None:
         '''
         Tests the init function.
