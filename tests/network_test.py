@@ -7,6 +7,7 @@ from unittest import mock
 import socket
 from typing import Tuple, Dict, Any
 from stratego import network as n
+from stratego import board as b
 
 
 class MockSocket:
@@ -176,6 +177,14 @@ class TestStrategoNetworking(unittest.TestCase):
         '''
         Tests the send_board function.
         '''
+
+        with mock.patch('socket.socket', MockSocket):
+
+            MockSocket.kwargs['recv'] = [b'GOOD']
+
+            net: n.StrategoNetworker = n.StrategoNetworker.get_instance()
+            net.join_game('127.0.0.1', 12345, '0000')
+            net.send_game(b.Board.get_instance(), 'GOOD')
 
     def test_recv_board(self) -> None:
         '''
