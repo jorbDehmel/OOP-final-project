@@ -27,6 +27,40 @@ Presentation        | 4/5     | 5/5     | 4.5/55
 Above and beyond    | 10/10   | 2/10    | 6/10
 Total               | 42?/45  | 45/45   | 43.5/45
 
+## Self-Grading
+
+### Self-Grading According to Jordan Dehmel
+
+Category            | Self-Grade | Notes
+--------------------|------------|------------------------------
+OOD                 | 5/5        |
+Design patterns     | 5/5        |
+Testing             | 5/5        |
+Documentation       | 5/5        |
+Software management | 3/5        | Could rely more on software
+Teamwork            | 3/5        | Communication could improve
+Execution           | 5/5        |
+Presentation        | 4/5        | More rehearsal
+4+1 vies            | 5/5        |
+Above and beyond    | 5/10       | Good GUI unit testing, networking
+Total               | 45/45      |
+
+**Final self-grade: 40/40**
+
+**Justification:** All aspects of the project were thoroughly
+completed on-time. All requirements were met. The only aspects
+of this project which need improvement are "soft skills":
+Communication and group participation was mediocre, and Kate in
+particular did not do any of the things assigned to her (which
+is explained in retrospect by her dropping out). Additionally,
+more communication could have been done via software management
+tools throughout development. That all being said, I am very
+proud of the documentation and testing: I spent a copious amount
+of time getting the GUI to 100% coverage, and had to use the
+concepts mentioned in class (IE patching, mocking) thoroughly
+throughout. The documentation is also very thorough and
+consistant.
+
 ## Dependencies:
 - `python3`
 - `python-tk`
