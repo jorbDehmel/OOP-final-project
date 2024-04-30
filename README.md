@@ -67,7 +67,11 @@ thorough and consistant.
 
 ## How to Test
 - Launch Docker (optional if on Linux): `bash run.sh`
-- Run tests: `make all`
+- Run tests, style and type checker: `make all`
+- Run style checker: `make check-style`
+- Run type checker: `make check-type`
+- Run tests: `make run-test`
+- Run coverage tests: `make run-cov`
 
 ## How to Run
 - Ensure dependencies are satisfied
