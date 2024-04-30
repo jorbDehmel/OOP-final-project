@@ -50,16 +50,14 @@ Total               | 45/45      |
 **Justification:** All aspects of the project were thoroughly
 completed on-time. All requirements were met. The only aspects
 of this project which need improvement are "soft skills":
-Communication and group participation was mediocre, and Kate in
-particular did not do any of the things assigned to her (which
-is explained in retrospect by her dropping out). Additionally,
-more communication could have been done via software management
-tools throughout development. That all being said, I am very
-proud of the documentation and testing: I spent a copious amount
-of time getting the GUI to 100% coverage, and had to use the
-concepts mentioned in class (IE patching, mocking) thoroughly
-throughout. The documentation is also very thorough and
-consistant.
+Communication and group participation was mediocre.
+Additionally, more communication could have been done via
+software management tools throughout development. That all being
+said, I am very proud of the documentation and testing: I spent
+a copious amount of time getting the GUI to 100% coverage, and
+had to use the concepts mentioned in class (IE patching,
+mocking) thoroughly throughout. The documentation is also very
+thorough and consistant.
 
 ## Dependencies:
 - `python3`
