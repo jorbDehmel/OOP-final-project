@@ -27,19 +27,20 @@ Presentation        | 4/5     | 5/5     | 4.5/55
 Above and beyond    | 10/10   | 2/10    | 6/10
 Total               | 42?/45  | 45/45   | 43.5/45
 
-## How to Run
-
-Dependencies:
+## Dependencies:
 - `python3`
 - `python-tk`
 - `python-hypothesis`
 - `python-unittest`
 
-To launch Docker for testing purposes: `bash run.sh`
+## How to Test
+- Launch Docker (optional if on Linux): `bash run.sh`
+- Run tests: `make all`
 
-To run all tests from within Docker: `make`
-
-To run game from **outside** of Docker: `python3 main.py`
+## How to Run
+- Ensure dependencies are satisfied
+- Ensure `tkinter` works with your OS (Linux and MacOS are fine)
+- Run from **outside** of Docker: `python3 main.py`
 
 # Abstract
 
