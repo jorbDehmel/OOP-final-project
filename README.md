@@ -11,6 +11,36 @@ Nate Barnaik \
 Jordan Dehmel \
 Kate Eckhart (no longer on team)
 
+## Judge Scores from Showcase
+
+Category            | Judge 1 | Judge 2 | Average
+--------------------|---------|---------|----------
+OOD                 | 5/5     | 5/5     | 5/5
+Design patterns     | 5/5     | 4/5     | 4.5/5
+Testing             | 5/5     | 5/5     | 5/5
+Documentation       | 5/5     | 4/5     | 4.5/5
+Software management | 5/5     | 5/5     | 5/5
+Teamwork            | 3/5     | 5/5     | 4/5
+Execution           | 5/5     | 5/5     | 5/5
+Presentation        | 4/5     | 5/5     | 4.5/55
+4+1 vies            | 5/5     | 5/5     | 5/5
+Above and beyond    | 10/10   | 2/10    | 6/10
+Total               | 42?/45  | 45/45   | 43.5/45
+
+## How to Run
+
+Dependencies:
+- `python3`
+- `python-tk`
+- `python-hypothesis`
+- `python-unittest`
+
+To launch Docker for testing purposes: `bash run.sh`
+
+To run all tests from within Docker: `make`
+
+To run game from **outside** of Docker: `python3 main.py`
+
 # Abstract
 
 Stratego is a board game in which two players command an
