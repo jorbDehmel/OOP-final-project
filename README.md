@@ -78,6 +78,47 @@ thorough and consistant.
 - Ensure `tkinter` works with your OS (Linux and MacOS are fine)
 - Run from **outside** of Docker: `python3 main.py`
 
+### How to Host
+- On the main menu click on Host Game.
+
+![Main menu.](screenshots/How_To_Run_Screenshots/Main_Menu.PNG)
+
+- From there you'll see a menu to input an IP and a Port, fill
+    each box out with the desired IP and Port the press Host
+    This Game.
+- Note: Pressing "Host This Game" without anything typed into
+    the boxes will use 127.0.0.1 for the IP and 12345 for the
+    Port.
+
+![A empty host menu.](screenshots/How_To_Run_Screenshots/Host_Menu_Empty.PNG)
+![A filed host menu.](screenshots/How_To_Run_Screenshots/Host_Menu_Filled.PNG)
+
+- After doing the step above you'll be put to a waiting menu
+    with the selected IP, Port and a random 4 character password.
+- Give the password to the person you wish to play with and wait.
+
+![Waiting host menu](screenshots/How_To_Run_Screenshots/Host_Menu_Waiting.PNG)
+
+### How to Join
+- On the main menu click on Join Game.
+
+![Main menu.](screenshots/How_To_Run_Screenshots/Main_Menu.PNG)
+
+- From there you'll see a menu to input an IP, Port and Password,
+    fill out each box with the IP and Port decided by the host user
+    and fill out the Password givin from the host user.
+- Once all the boxes are filled click on Join This Game.
+- Note: Like with hosting IP and Port will default to 127.0.0.1 and
+    12345 respectfully if kept blank and you join a game, however
+    a password will still be needed to join.
+
+![A empty join menu.](screenshots/How_To_Run_Screenshots/Join_Menu_Empty.PNG)
+![A filled join menu.](screenshots/How_To_Run_Screenshots/Join_Menu_Filled.PNG)
+
+- You should now see your board and be able to start playing!
+
+![Both games connected](screenshots/How_To_Run_Screenshots/Both_Boards_Connected.PNG)
+
 # Abstract
 
 Stratego is a board game in which two players command an
