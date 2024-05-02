@@ -116,9 +116,8 @@ early problems that we where able to fix by the end.
 - From there you'll see a menu to input an IP and a Port, fill
     each box out with the desired IP and Port the press Host
     This Game.
-- Note: Pressing "Host This Game" without anything typed into
-    the boxes will use 127.0.0.1 for the IP and 12345 for the
-    Port.
+- Note: Pressing "Host This Game" without providing an IP or Port
+    will use 127.0.0.1 for the IP and 12345 for the Port by default.
 
 ![A empty host menu.](screenshots/How_To_Run_Screenshots/Host_Menu_Empty.PNG)
 ![A filed host menu.](screenshots/How_To_Run_Screenshots/Host_Menu_Filled.PNG)
