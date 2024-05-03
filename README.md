@@ -77,7 +77,7 @@ OOD                 | 5/5        |
 Design patterns     | 5/5        |
 Testing             | 5/5        |
 Documentation       | 5/5        |
-Software management | 3/5        | Better use of managment tools
+Software management | 3/5        | Better use of management tools
 Teamwork            | 2/5        | Communcation was poor and the distribution of work was skewed to one member
 Execution           | 5/5        |
 Presentation        | 4/5        | More time to rehearse
@@ -93,7 +93,7 @@ the project was skewed to one member in particular.  Part of this
 was due to poor communcation between members during the start of
 the project.  This did improved as time went on, but the effects
 are still there.  While we did plan to better use software
-managment tools, the one we looked at wouldn't work for me
+management tools, the one we looked at wouldn't work for me
 and we ended up just using GitHub.  Getting to 100% testing
 coverage took a lot of work and was very pleasing to do.
 All in all, bad communcation at the start of the project caused
