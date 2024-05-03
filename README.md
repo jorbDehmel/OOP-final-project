@@ -27,6 +27,16 @@ Presentation        | 4/5     | 5/5     | 4.5/55
 Above and beyond    | 10/10   | 2/10    | 6/10
 Total               | 42?/45  | 45/45   | 43.5/45
 
+### Judge 1 (Johnson)
+
+![](showcase-grades/johnson_1.jpg)
+![](showcase-grades/johnson_2.jpg)
+
+### Judge 2 (Bergen)
+
+![](showcase-grades/bergen_1.jpg)
+![](showcase-grades/bergen_2.jpg)
+
 ## Self-Grading
 
 ### Self-Grading According to Jordan Dehmel
